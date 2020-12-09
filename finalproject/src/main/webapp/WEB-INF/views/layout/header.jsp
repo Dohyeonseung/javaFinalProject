@@ -25,19 +25,19 @@
     <div class="header-right">
         <div style="padding-top: 20px;">
             <c:if test="${empty sessionScope.member}">
-                <a href="${pageContext.request.contextPath}/member/login">로그인</a>
+                <a href="${pageContext.request.contextPath}/member/login">Login</a>
                     &nbsp;|&nbsp;
-                <a href="${pageContext.request.contextPath}/member/member">회원가입</a>
+                <a href="${pageContext.request.contextPath}/member/member">Sign Up</a>
                 
             </c:if>
             <c:if test="${not empty sessionScope.member}">
                 <span style="color:blue;">${sessionScope.member.userName}</span>님
                 &nbsp;|&nbsp;
-                <a href="${pageContext.request.contextPath}/">로그아웃</a>
+                <a href="${pageContext.request.contextPath}/">Log out</a>
                 &nbsp;|&nbsp;
                 <a href="${pageContext.request.contextPath}/">정보수정</a>
                 
-                <c:if test="${sessionScope.member.userId=='admin'}">
+                	<c:if test="${sessionScope.member.userId=='admin'}">
                     &nbsp;|&nbsp;
                     <a href="${pageContext.request.contextPath}/admin">관리자</a>
                 </c:if>
@@ -101,22 +101,5 @@
            <li><a href="#">판매자 서비스</a></li>
         </ul>
         </li>
-        
-
-        <c:if test="${not empty sessionScope.member}">
-        <li>
-            <a href="#">마이페이지</a>
-            <ul>
-                <li><a href="#" style="margin-left:230px; " onmouseover="this.style.marginLeft='230px';">정보확인</a></li>
-                <li><a href="#">쪽지</a></li>
-                <li><a href="#">일정관리</a></li>
-                <li><a href="#">친구관리</a></li>
-                <li><a href="#">사진첩</a></li>
-            </ul>
-        </li>
-        </c:if>
-         
-        <li style="float: right;"><a href="#"><span style="font-size: 17px; font-weight: 700;">▦</span></a></li>
-
     </ul>      
 </div>
