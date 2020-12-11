@@ -66,7 +66,7 @@
         <li>
             <a href="#">Sell</a>
             <ul>
-                <li><a href="#">재료 판매</a></li>
+                <li><a href="${pageContext.request.contextPath}/ms/list">재료 판매</a></li>
                 <li><a href="#">예약 판매</a></li>
                 <li><a href="#">완제품 판매</a></li>
             </ul>
@@ -88,7 +88,7 @@
            <li><a href="#">지역모임</a></li>
            <li><a href="#">DIY Tip</a></li>
            <li><a href="#">묻고 답하기</a></li>
-           <li><a href="#">공지사항</a></li>
+           <li><a href="${pageContext.request.contextPath}/notice/list">공지사항</a></li>
         </ul>
         </li>
         
@@ -101,5 +101,7 @@
            <li><a href="#">판매자 서비스</a></li>
         </ul>
         </li>
-    </ul>      
+    </ul>        
 </div>
+
+
