@@ -259,6 +259,7 @@ ul.nav li:hover > ul li a:hover {
 	.header-toogleBtn{
 		display: block;
 		margin-right: 30px;
+		order:-1;
 	}
 	
 	.menu{
