@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
+﻿<%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -33,11 +33,11 @@
             <c:if test="${not empty sessionScope.member}">
                 <span style="color:blue;">${sessionScope.member.userName}</span>님
                 &nbsp;|&nbsp;
-                <a href="${pageContext.request.contextPath}/">Log out</a>
+                <a href="${pageContext.request.contextPath}/">로그아웃</a>
                 &nbsp;|&nbsp;
                 <a href="${pageContext.request.contextPath}/">정보수정</a>
                 
-                	<c:if test="${sessionScope.member.userId=='admin'}">
+                <c:if test="${sessionScope.member.userId=='admin'}">
                     &nbsp;|&nbsp;
                     <a href="${pageContext.request.contextPath}/admin">관리자</a>
                 </c:if>
@@ -55,10 +55,9 @@
         <li>
             <a href="#">소개</a>
             <ul>
-                <li><a href="${pageContext.request.contextPath}/company/info">회사소개</a></li>
+                <li><a href="${pageContext.request.contextPath}/company/company">회사소개</a></li>
                 <li><a href="#">이용안내</a></li>
-                <li><a href="#">사업분야</a></li>
-                <li><a href="#">규약 및 제약사항</a></li>
+                <li><a href="${pageContext.request.contextPath}/company/ethics">윤리규정</a></li>
                 <li><a href="#">찾아 오시는길</a></li>
             </ul>
         </li>
@@ -66,7 +65,7 @@
         <li>
             <a href="#">Sell</a>
             <ul>
-                <li><a href="${pageContext.request.contextPath}/ms/list">재료 판매</a></li>
+                <li><a href="#">재료 판매</a></li>
                 <li><a href="#">예약 판매</a></li>
                 <li><a href="#">완제품 판매</a></li>
             </ul>
@@ -88,7 +87,7 @@
            <li><a href="#">지역모임</a></li>
            <li><a href="#">DIY Tip</a></li>
            <li><a href="#">묻고 답하기</a></li>
-           <li><a href="${pageContext.request.contextPath}/notice/list">공지사항</a></li>
+           <li><a href="#">공지사항</a></li>
         </ul>
         </li>
         
@@ -100,8 +99,6 @@
            <li><a href="#">실시간 채팅</a></li>
            <li><a href="#">판매자 서비스</a></li>
         </ul>
-        </li>
-    </ul>        
+        </li>  
+       </ul>
 </div>
-
-

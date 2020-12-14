@@ -98,7 +98,10 @@
 	 	price=#{price}, categoryNum=#{categoryNum}, division=#{division},
 	 	WHERE productNum=#{productNum}
 	 </update>
-
+	
+	
+	
+	
 </mapper>
 
 

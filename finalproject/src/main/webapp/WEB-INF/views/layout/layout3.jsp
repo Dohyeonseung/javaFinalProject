@@ -12,6 +12,7 @@
 <title><tiles:insertAttribute name="title"/></title>
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/layout.css" type="text/css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main.css" type="text/css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/jquery/css/smoothness/jquery-ui.min.css" type="text/css">
 
