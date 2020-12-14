@@ -4,36 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <script type="text/javascript">
-/*
-  $(function(){
-  	  $("body").on("change", "input[name=upload]", function(){
-  		  if(! $(this).val()) return false;	
-  		
-  		  var b=false;
-  		  $("input[name=upload]").each(function(){
-  			  if(! $(this).val()) {
-  				  b=true;
-  			  	  return;
-  			  }
-  		  });
-  		  if(b) return false;
 
-  		  var $tr, $td, $input;
-  		
-  	      $tr=$("<tr align='left' height='40' style='border-bottom: 1px solid #cccccc;'>");
-  	      $td=$("<td>", {width:"100", bgcolor:"#eeeeee", style:"text-align: center;", html:"첨&nbsp;&nbsp;&nbsp;&nbsp;부"});
-  	      $tr.append($td);
-  	      $td=$("<td style='padding-left:10px;'>");
-  	      $input=$("<input>", {type:"file", name:"upload", class:"boxTF", style:"width: 95%; height: 25px;"});
-  	      $td.append($input);
-  	      $tr.append($td);
-  	    
-  	      $("#tb").append($tr);
-  	  });
-  });
-*/
-
-// clone을 사용하는 경우
 $(function(){
 	$("form input[name=upload]").change(function(){
 		if(! $(this).val()) return;
@@ -55,14 +26,6 @@ $(function(){
 	});
 });
 
-  <c:if test="${mode=='update'}">
-  function deleteFile(fileNum) {
-		var url="${pageContext.request.contextPath}/notice/deleteFile";
-		$.post(url, {fileNum:fileNum}, function(data){
-			$("#f"+fileNum).remove();
-		}, "json");
-  }
-</c:if>
 </script>
 
 <script type="text/javascript">
@@ -125,26 +88,7 @@ $(function(){
 			        <textarea name="content" rows="12" class="boxTA" style="width: 95%;">${dto.content}</textarea>
 			      </td>
 			  </tr>
-			  
-			  <tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
-			      <td width="100" bgcolor="#eeeeee" style="text-align: center;">첨&nbsp;&nbsp;&nbsp;&nbsp;부</td>
-			      <td style="padding-left:10px;"> 
-			          <input type="file" name="upload" class="boxTF" size="53" style="width: 95%; height: 25px;">
-			       </td>
-			  </tr>
               </tbody>
-              
-				<c:if test="${mode=='update'}">
-				   <c:forEach var="vo" items="${listFile}">
-						  <tr id="f${vo.fileNum}" height="40" style="border-bottom: 1px solid #cccccc;"> 
-						      <td width="100" bgcolor="#eeeeee" style="text-align: center;">첨부된파일</td>
-						      <td style="padding-left:10px;"> 
-								<a href="javascript:deleteFile('${vo.fileNum}');"><i class="far fa-trash-alt"></i></a> 
-								${vo.originalFilename}
-						      </td>
-						  </tr>
-				   </c:forEach>
-				</c:if>
 			</table>
 			
 			<table style="width: 100%; margin: 0px auto; border-spacing: 0px;">
@@ -154,7 +98,7 @@ $(function(){
 			        <button type="reset" class="btn">다시입력</button>
 			        <button type="button" class="btn" onclick="javascript:location.href='${pageContext.request.contextPath}/notice/list';">${mode=='update'?'수정취소':'등록취소'}</button>
 			         <c:if test="${mode=='update'}">
-			         	 <input type="hidden" name="num" value="${dto.num}">
+			         	 <input type="hidden" name="listNum" value="${dto.listNum}">
 			        	 <input type="hidden" name="page" value="${page}">
 			        </c:if>
 			      </td>

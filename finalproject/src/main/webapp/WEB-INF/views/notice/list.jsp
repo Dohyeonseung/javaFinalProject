@@ -48,25 +48,16 @@
 		      <th width="100" style="color: #787878;">작성자</th>
 		      <th width="100" style="color: #787878;">작성일</th>
 		      <th width="80" style="color: #787878;">조회수</th>
-		      <th width="50" style="color: #787878;">첨부</th>
 		  </tr>
 		 
 		<c:forEach var="dto" items="${list}">
 		  <tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
 		      <td align="left" style="padding-left: 30px; padding: 15px 20px 14px;">
-		           <a href="${articleUrl}&num=${dto.num}">${dto.subject}</a>
-		           <c:if test="${dto.gap < 1}">
-		               <img src='${pageContext.request.contextPath}/resources/images/new.gif'>
-		           </c:if>
+		           <a href="${articleUrl}&listNum=${dto.listNum}">${dto.subject}</a>
 		      </td>
 		      <td>${dto.userName}</td>
 		      <td>${dto.created}</td>
 		      <td>${dto.hitCount}</td>
-		      <td>
-                   <c:if test="${dto.fileCount != 0}">
-                        <a href="${pageContext.request.contextPath}/notice/zipdownload?num=${dto.num}"><i class="far fa-file"></i></a>
-                   </c:if>		      
-		      </td>
 		  </tr>
 		  </c:forEach>
 		</table>
@@ -84,19 +75,7 @@
 		      <td align="left" width="100">
 		          <button type="button" class="btn" onclick="javascript:location.href='${pageContext.request.contextPath}/notice/list';">새로고침</button>
 		      </td>
-		      <td align="center">
-		          <form name="searchForm" action="${pageContext.request.contextPath}/notice/list" method="post">
-		              <select name="condition" class="selectField">
-		                  <option value="all" ${condition=="all"?"selected='selected'":""}>모두</option>
-		                  <option value="subject" ${condition=="subject"?"selected='selected'":""}>제목</option>
-		                  <option value="content" ${condition=="content"?"selected='selected'":""}>내용</option>
-		                  <option value="userName" ${condition=="userName"?"selected='selected'":""}>작성자</option>
-		                  <option value="created" ${condition=="created"?"selected='selected'":""}>등록일</option>
-		            </select>
-		            <input type="text" name="keyword" value="${keyword}" class="boxTF">
-		            <button type="button" class="btn" onclick="searchList()">검색</button>
-		        </form>
-		      </td>
+
 		      <td align="right" width="100">
 		        <c:if test="${sessionScope.member.userId=='admin'}">
 		          <button type="button" class="btn" onclick="javascript:location.href='${pageContext.request.contextPath}/notice/created';">글올리기</button>

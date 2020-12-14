@@ -3,33 +3,70 @@ package com.sp.app.notice;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.sp.app.common.dao.CommonDAO;
 
 @Service("notice.noticeService")
 public class NoticeServiceImpl implements NoticeService {
-
+	@Autowired
+	private CommonDAO dao;
+	
 	@Override
 	public void insertNotice(Notice dto, String pathname) throws Exception {
-		// TODO Auto-generated method stub
+		try {
+			int seq=dao.selectOne("notice.seq");
+			dto.setListNum(seq);
+
+			dao.insertData("notice.insertNotice", dto);
+			
+					insertFile(dto);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 		
 	}
 
 	@Override
 	public int dataCount(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		
+		try {
+			result=dao.selectOne("notice.dataCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
 	public List<Notice> listNotice(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+List<Notice> list=null;
+		
+		try {
+			list=dao.selectList("notice.listNotice", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
 	}
 
 	@Override
 	public List<Notice> listNoticeTop() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Notice> list=null;
+		
+		try {
+			list=dao.selectList("notice.listNoticeTop");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
 	}
 
 	@Override
