@@ -14,56 +14,19 @@ body {
 	margin: 0px;
 }
 
-.location {
-	border-top: 1px solid #ccc;
+#categori {
+	width: 100%;
+	height: auto;
+    margin: 0;
 	border-bottom: 1px solid #ccc;
-	/*
-	height: 30px;
-	padding: 5px;
-    */
-	position: relative;
-    max-width: 100%;
-   	width: 1903px;
-    height: 60px;
-    margin: 0 auto;
 }
 
-.inner_location {
-	/*
-	margin-left: 371.5px;
-	margin-right: 371.5px;
-	position: relative;
-	height: 60px;
-	*/
-	caret-color: rgb(102, 102, 102);
-    color: rgb(102, 102, 102);
-    column-rule-color: rgb(102, 102, 102);
-    float: left;
-    height: 24px;
-    inline-size: 263.609px;
-    margin-block-end: 0px;
-    margin-block-start: 19px;
-    overflow-wrap: break-word;
-    padding-inline-start: 0px;
-    perspective-origin: 131.797px 12px;
-    text-align: center;
-    text-decoration: none solid rgb(102, 102, 102);
-    transform-origin: 131.805px 12px;
-    width: 1160px;
-    word-break: keep-all;
-    border: 0px none rgb(102, 102, 102);
-    font: 16px / 24px "NotoSans Light", "Malgun Gothic", "맑은 고딕", "Apple SD Gothic Neo", 돋움, dotum, sans-serif;
-    list-style: outside none none;
-    margin: 19px 0px 0px;
-    outline: rgb(102, 102, 102) none 0px;
-    padding: 0px;
-}
-
-#loca_box {
-	font-family: "맑은 고딕";
-	font-size: 18px;
-	width: 30px;
-	padding: 5px;
+#categori_box {
+	width: 1280px;
+	height: 45px;
+	margin: auto;
+	font-size: 16px;
+	font-family: "맑은 고딕", sans-serif;
 }
 
 #main_con {
@@ -74,7 +37,7 @@ body {
 }
 
 #content_corp {
-	width: 1160px;
+	width: 1280px;
 	height: 4680px;
 	margin-left: 20%;
 	margin-right: 15%;
@@ -138,16 +101,34 @@ body {
 	border-bottom-right-radius: 20px;
 }
 
+a {
+	text-decoration: none;
+	color: #101010;
+}
+
+a:hover {
+	text-decoration: underline;
+	color: #101010;
+	font-weight: border:
+}
+
+a:active {
+	text-decoration: underline;
+	color: #101010;
+	font-weight: border:
+}
+
+
 </style>
 
-	<div class="location">
-		<div class="inner_location">
-		<span id="loca_box">홈 > DIY > DIY소개 > <strong>DIY문화</strong></span>
-		</div>
+<div id="categori">
+	<div id="categori_box">
+            <a href="${pageContext.request.contextPath}">홈</a> > <a href="${pageContext.request.contextPath}/help/main">회사소개</a> > <a href="${pageContext.request.contextPath}/help/myHistory">DIY</a>
 	</div>
+</div>
 	<div id="main_con">
 		<div id="content_corp">
-			<h4 id="title_corp">Do It YourSelf</h4>
+			<h2 id="title_corp">Do It YourSelf</h2>
 			<p id="text_corp">
 				나의 생각이 그대로 반영된 물건이 없나요? <br> 나의 관점, 생각하는 기능, 지향하는 목표까지 DIY는 <br>
 				우리가 원하는 방향을 나아가는데 있어서 가장 좋은 습관이자 문화 입니다. <br> 내가 생각하는 나만의 생활공간.

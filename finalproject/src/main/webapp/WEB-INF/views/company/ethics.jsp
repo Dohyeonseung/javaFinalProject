@@ -18,6 +18,23 @@ body {
 	color: #666;
 }
 
+a {
+	text-decoration: none;
+	color: #101010;
+}
+
+a:hover {
+	text-decoration: underline;
+	color: #101010;
+	font-weight: border:
+}
+
+a:active {
+	text-decoration: underline;
+	color: #101010;
+	font-weight: border:
+}
+
 p {
     display: block;
     margin-block-start: 1em;
@@ -51,48 +68,20 @@ li {
     border-bottom: 1px solid #e6e6e6;
 }
 
-#location {
-	border-top: 1px solid #ccc;
+#categori {
+	width: 100%;
+	height: auto;
+    margin: 0;
 	border-bottom: 1px solid #ccc;
-	/*
-	height: 30px;
-	padding: 5px;
-    */
-	position: relative;
-    max-width: 100%;
-   	width: 1903px;
-    height: 60px;
-    margin: 0 auto;
 }
 
-#inner_location {
-	/*
-	margin-left: 371.5px;
-	margin-right: 371.5px;
-	position: relative;
-	height: 60px;
-	*/
-    float: left;
-    height: 24px;
-    inline-size: 263.609px;
-    margin-block-end: 0px;
-    margin-block-start: 19px;
-    overflow-wrap: break-word;
-    padding-inline-start: 0px;
-    perspective-origin: 131.797px 12px;
-    text-align: center;
-    text-decoration: none solid rgb(102, 102, 102);
-    transform-origin: 131.805px 12px;
-    width: 1160px;
-    word-break: keep-all;
-    border: 0px none rgb(102, 102, 102);
-    font: 16px / 24px "NotoSans Light", "Malgun Gothic", "맑은 고딕", "Apple SD Gothic Neo", 돋움, dotum, sans-serif;
-    list-style: outse none none;
-    margin: 19px 0px 0px;
-    outline: rgb(102, 102, 102) none 0px;
-    padding: 0px;
+#categori_box {
+	width: 1280px;
+	height: 45px;
+	margin: auto;
+	font-size: 16px;
+	font-family: "맑은 고딕", sans-serif;
 }
-
 
 #ethics_containor {
     block-size: 9088px;
@@ -265,11 +254,11 @@ li {
 }
 </style>
 
-	<div id="location">
-		<div id="inner_location">
-			<span id="loca_box">홈 > DIY > DIY소개 > <strong>윤리규정</strong></span>
-		</div>
+<div id="categori">
+	<div id="categori_box">
+            <a href="${pageContext.request.contextPath}">홈</a> > <a href="${pageContext.request.contextPath}/help/main">회사소개</a> > <a href="${pageContext.request.contextPath}/help/myHistory">윤리규정</a>
 	</div>
+</div>
 	
 <div id="ethics_containor">
 	<div class="ethics_main">

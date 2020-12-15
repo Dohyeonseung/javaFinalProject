@@ -4,8 +4,8 @@ public class ConsumerFAQ {
 	private int faqNum;
 	private String userId;
 	private String userName;
-	private String subject;
-	private String content;
+	private String f_subject;
+	private String f_content;
 	private String created;
 	
 	public int getFaqNum() {
@@ -26,17 +26,17 @@ public class ConsumerFAQ {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	public String getSubject() {
-		return subject;
+	public String getF_subject() {
+		return f_subject;
 	}
-	public void setSubject(String subject) {
-		this.subject = subject;
+	public void setF_subject(String f_subject) {
+		this.f_subject = f_subject;
 	}
-	public String getContent() {
-		return content;
+	public String getF_content() {
+		return f_content;
 	}
-	public void setContent(String content) {
-		this.content = content;
+	public void setF_content(String f_content) {
+		this.f_content = f_content;
 	}
 	public String getCreated() {
 		return created;

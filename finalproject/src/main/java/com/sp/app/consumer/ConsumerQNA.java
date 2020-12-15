@@ -1,5 +1,9 @@
 package com.sp.app.consumer;
 
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
+
 public class ConsumerQNA {
 	// 질문
 	private int qnaNum;
@@ -18,6 +22,8 @@ public class ConsumerQNA {
 	private String fileNum;
 	private String saveFileName;
 	private String originalFileName;
+	
+	private List<MultipartFile> upload;
 	
 	public int getQnaNum() {
 		return qnaNum;
@@ -90,6 +96,12 @@ public class ConsumerQNA {
 	}
 	public void setOriginalFileName(String originalFileName) {
 		this.originalFileName = originalFileName;
+	}
+	public List<MultipartFile> getUpload() {
+		return upload;
+	}
+	public void setUpload(List<MultipartFile> upload) {
+		this.upload = upload;
 	}
 	
 	
