@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="buy">
+
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM product p
+		JOIN seller s ON p.userId = s.userId
+	</select>
+
+	<select id="listProduct" parameterType="map" resultType="com.sp.app.buy.Product">
+		SELECT productNum, userId, productName, price, content,
+			TO_CHAR(created_date, 'YYYY-MM-DD') created_date, imageFileName, categoryNum
+		FROM product p
+		ORDER BY productNum DESC
+		OFFSET ${offset} ROWS FETCH FIRST#{rows} ROWS ONLY
+	</select>
+	
+	<select id="readProduct" parameterType="Integer" resultType="com.sp.app.buy.Product">
+		SELECT productNum, p.userId, productName, price, content, reserves,
+			TO_CHAR(created_date, 'YYYY-MM-DD') created_date, imageFileName, categoryNum
+		FROM product p
+		JOIN seller s ON p.userId=s.userId
+		WHERE productNum=#{productNum}
+	</select>
+	
+	
+</mapper>
