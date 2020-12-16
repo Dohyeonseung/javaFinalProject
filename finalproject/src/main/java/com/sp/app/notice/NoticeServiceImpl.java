@@ -21,8 +21,6 @@ public class NoticeServiceImpl implements NoticeService {
 
 			dao.insertData("notice.insertNotice", dto);
 			
-					insertFile(dto);
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
@@ -45,7 +43,7 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	public List<Notice> listNotice(Map<String, Object> map) {
-List<Notice> list=null;
+		List<Notice> list=null;
 		
 		try {
 			list=dao.selectList("notice.listNotice", map);
@@ -70,63 +68,76 @@ List<Notice> list=null;
 	}
 
 	@Override
-	public void updateHitCount(int num) throws Exception {
-		// TODO Auto-generated method stub
+	public void updateHitCount(int listNum) throws Exception {
+		try {
+			dao.updateData("notice.updateHitCount", listNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 		
 	}
 
 	@Override
-	public Notice readNotice(int num) {
-		// TODO Auto-generated method stub
-		return null;
+	public Notice readNotice(int listNum) {
+		Notice dto=null;
+
+		try {
+			dto=dao.selectOne("notice.readNotice", listNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
 	}
 
 	@Override
 	public Notice preReadNotice(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		Notice dto=null;
+
+		try {
+			dto=dao.selectOne("notice.preReadNotice", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
 	}
 
 	@Override
 	public Notice nextReadNotice(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		Notice dto=null;
+
+		try {
+			dto=dao.selectOne("notice.nextReadNotice", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
 	}
 
 	@Override
 	public void updateNotice(Notice dto, String pathname) throws Exception {
-		// TODO Auto-generated method stub
+		try {
+			dao.updateData("notice.updateNotice", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 		
 	}
 
 	@Override
-	public void deleteNotice(int num, String pathname) throws Exception {
-		// TODO Auto-generated method stub
+	public void deleteNotice(int listNum, String pathname) throws Exception {
+		try {
+			dao.deleteData("notice.deleteNotice", listNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 		
 	}
 
-	@Override
-	public void insertFile(Notice dto) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public List<Notice> listFile(int num) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Notice readFile(int fileNum) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void deleteFile(Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
 	
 }

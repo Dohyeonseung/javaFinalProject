@@ -1,12 +1,19 @@
 package com.sp.app.notice;
 
 public class Notice {
-	private int listNum;
+	private int listNum, num;
 	private String userId;
 	private String userName;
 	private String subject;
 	private String content;
 	private String created;
+	
+	public int getNum() {
+		return num;
+	}
+	public void setNum(int num) {
+		this.num = num;
+	}
 	private int hitCount;
 	private int notice;
 

@@ -56,20 +56,15 @@ public class NoticeController {
 
         List<Notice> list = service.listNotice(map);
         
-        int listNum, n = 0;
+        int num, n = 0;
         for(Notice dto : list) {
-            listNum = dataCount - (offset + n);
-            dto.setListNum(listNum);
+            num = dataCount - (offset  + n);
+            dto.setNum(num);
+            n++;
         }
         String cp=req.getContextPath();
-        String query = "";
         String listUrl = cp+"/notice/list";
         String articleUrl = cp+"/notice/article?page=" + current_page;
-
-        if(query.length()!=0) {
-        	listUrl = cp+"/notice/list?" + query;
-        	articleUrl = cp+"/notice/article?page=" + current_page + "&"+ query;
-        }
         
         String paging = myUtil.paging(current_page, total_page, listUrl);
 		
@@ -121,5 +116,109 @@ public class NoticeController {
 		}
 		
 		return "redirect:/notice/list";
+	}
+	
+	@RequestMapping(value="article")
+	public String article(
+			@RequestParam int listNum,
+			@RequestParam String page,
+			Model model) throws Exception {
+		
+		String query="page="+page;
+		
+		service.updateHitCount(listNum);
+
+		Notice dto = service.readNotice(listNum);
+		if(dto==null) {
+			return "redirect:/notice/list?"+query;
+		}
+		
+        dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
+         
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("listNum", listNum);
+
+		Notice preReadDto = service.preReadNotice(map);
+		Notice nextReadDto = service.nextReadNotice(map);
+				
+		model.addAttribute("dto", dto);
+		model.addAttribute("preReadDto", preReadDto);
+		model.addAttribute("nextReadDto", nextReadDto);
+		model.addAttribute("page", page);
+		model.addAttribute("query", query);
+		
+		return ".notice.article";
+	}
+	
+	@RequestMapping(value = "update", method = RequestMethod.GET)
+	public String updateForm(
+			@RequestParam int listNum,
+			@RequestParam String page,
+			HttpSession session,
+			Model model
+			) throws Exception {
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		
+		if(! info.getUserId().equals("admin")) {
+			return "redirect:/notice/list?page="+page;
+		}
+		
+		Notice dto = service.readNotice(listNum);
+		if(dto==null) {
+			return "redirect:/notice/list?page="+page;
+		}
+			
+		model.addAttribute("mode", "update");
+		model.addAttribute("page", page);
+		model.addAttribute("dto", dto);
+		
+		return ".notice.created";
+	}
+	
+	@RequestMapping(value="update", method=RequestMethod.POST)
+	public String updateSubmit(
+			Notice dto,
+			@RequestParam String page,
+			HttpSession session) throws Exception {
+
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		if(! info.getUserId().equals("admin")) {
+			return "redirect:/notice/list?page="+page;
+		}
+		
+		try {
+			String root = session.getServletContext().getRealPath("/");
+			String pathname = root + "notice";		
+			
+			dto.setUserId(info.getUserId());
+			service.updateNotice(dto, pathname);
+		} catch (Exception e) {
+		}
+		
+		return "redirect:/notice/list?page="+page;
+	}
+	
+	@RequestMapping(value = "delete")
+	public String delete(
+			@RequestParam int listNum,
+			@RequestParam String page,
+			HttpSession session
+			) throws Exception {
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		
+		String query="page="+page;
+		
+		if(! info.getUserId().equals("admin")) {
+			return "redirect:/notice/list?"+query;
+		}
+		
+		try {
+			String root = session.getServletContext().getRealPath("/");
+			String pathname = root + "notice";
+			service.deleteNotice(listNum, pathname);
+		} catch (Exception e) {
+		}
+		
+		return "redirect:/notice/list?"+query;
 	}
 }

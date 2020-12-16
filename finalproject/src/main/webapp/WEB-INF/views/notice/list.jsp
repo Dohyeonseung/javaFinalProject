@@ -49,6 +49,16 @@
 		      <th width="100" style="color: #787878;">작성일</th>
 		      <th width="80" style="color: #787878;">조회수</th>
 		  </tr>
+		<c:forEach var="dto" items="${noticeList}">
+  			<tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
+      			<td align="left" style="padding-left: 10px;"><span style="display: inline-block; padding:1px 3px; background: #ED4C00;color: #FFFFFF">공지</span>
+           			<a href="${articleUrl}&listNum=${dto.listNum}">${dto.subject}</a>
+     			 </td>
+      			<td>${dto.userName}</td>
+      			<td>${dto.created}</td>
+      			<td>${dto.hitCount}</td>
+  			</tr>
+		</c:forEach> 
 		 
 		<c:forEach var="dto" items="${list}">
 		  <tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 

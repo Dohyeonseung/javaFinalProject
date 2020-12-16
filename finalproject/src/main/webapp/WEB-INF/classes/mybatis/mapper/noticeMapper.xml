@@ -37,6 +37,43 @@
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	 </select>
 	 
-
+	<select id="readNotice" parameterType="Integer" resultType="com.sp.app.notice.Notice">
+		SELECT listNum, n.userId, userName, subject, content, created, hitCount, notice
+		FROM notice n
+		JOIN member1 m ON n.userId=m.userId 
+		WHERE listNum = #{listNum}
+	</select>
+	
+	<select id="preReadNotice" parameterType="map" resultType="com.sp.app.notice.Notice">
+		SELECT listNum, subject
+		FROM notice n
+		JOIN member1 m ON n.userId=m.userId
+		WHERE (listNum &gt; #{listNum})
+		ORDER BY listNum ASC
+		FETCH FIRST 1 ROWS ONLY
+    </select>
+    
+    <select id="nextReadNotice" parameterType="map" resultType="com.sp.app.notice.Notice">
+		SELECT listNum, subject
+		FROM notice n
+		JOIN member1 m ON n.userId=m.userId
+		WHERE (listNum &lt; #{listNum})
+		ORDER BY listNum DESC
+		FETCH FIRST 1 ROWS ONLY
+    </select>
+	
+	<update id="updateNotice" parameterType="com.sp.app.notice.Notice">
+		UPDATE notice SET subject=#{subject},
+				content=#{content}, notice=#{notice}
+		WHERE listNum=#{listNum}
+	</update>
+	
+	<delete id="deleteNotice" parameterType="Integer">
+		DELETE FROM notice WHERE listNum=#{listNum}
+	</delete>
+	
+	<update id="updateHitCount" parameterType="Integer">
+		UPDATE notice SET hitCount=hitCount+1 WHERE listNum = #{listNum}
+	</update>
 </mapper>
 

@@ -6,7 +6,7 @@
 <script type="text/javascript">
 function deleteBoard() {
 	<c:if test="${sessionScope.member.userId=='admin'}">
-	  var q = "num=${dto.num}&${query}";
+	  var q = "listNum=${dto.listNum}&${query}";
 	  var url = "${pageContext.request.contextPath}/notice/delete?" + q;
 
 	  if(confirm("위 자료를 삭제 하시 겠습니까 ? "))
@@ -19,7 +19,7 @@ function deleteBoard() {
 
 	function updateBoard() {
 	<c:if test="${sessionScope.member.userId=='admin'}">
-	  var q = "num=${dto.num}&page=${page}";
+	  var q = "listNum=${dto.listNum}&page=${page}";
 	  var url = "${pageContext.request.contextPath}/notice/update?" + q;
 
 	  location.href=url;
@@ -59,20 +59,11 @@ function deleteBoard() {
 			    </td>
 			</tr>
 			
-			<c:forEach var="vo" items="${listFile}">
-				<tr height="35" style="border-bottom: 1px solid #cccccc;">
-				    <td colspan="2" align="left" style="padding-left: 5px;">
-				      <a href="${pageContext.request.contextPath}/notice/download?fileNum=${vo.fileNum}">${vo.originalFilename}</a>
-			          (<fmt:formatNumber value="${vo.fileSize/1024}" pattern="0.00"/> KByte)
-				    </td>
-				</tr>
-			</c:forEach>
-			
 			<tr height="35" style="border-bottom: 1px solid #cccccc;">
 			    <td colspan="2" align="left" style="padding-left: 5px;">
 			       이전글 :
 			         <c:if test="${not empty preReadDto}">
-			              <a href="${pageContext.request.contextPath}/notice/article?${query}&num=${preReadDto.num}">${preReadDto.subject}</a>
+			              <a href="${pageContext.request.contextPath}/notice/article?${query}&listNum=${preReadDto.listNum}">${preReadDto.subject}</a>
 			        </c:if>
 			    </td>
 			</tr>
@@ -80,9 +71,9 @@ function deleteBoard() {
 			<tr height="35" style="border-bottom: 1px solid #cccccc;">
 			    <td colspan="2" align="left" style="padding-left: 5px;">
 			       다음글 :
-			         <c:if test="${not empty nextReadDto}">
-			              <a href="${pageContext.request.contextPath}/notice/article?${query}&num=${nextReadDto.num}">${nextReadDto.subject}</a>
-			        </c:if>
+			
+			              <a href="${pageContext.request.contextPath}/notice/article?${query}&listNum=${nextReadDto.listNum}">${nextReadDto.subject}</a>
+			        
 			    </td>
 			</tr>
 			</table>
