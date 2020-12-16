@@ -65,7 +65,7 @@
         <li>
             <a href="#">Sell</a>
             <ul>
-                <li><a href="#">재료 판매</a></li>
+                <li><a href="${pageContext.request.contextPath}/ms/list">재료 판매</a></li>
                 <li><a href="#">예약 판매</a></li>
                 <li><a href="#">완제품 판매</a></li>
             </ul>
@@ -75,7 +75,7 @@
         <li>
             <a href="#">Buy</a>
             <ul>
-                <li><a href="#">재료구매</a></li>
+                <li><a href=""${pageContext.request.contextPath}/buy/material">재료구매</a></li>
                 <li><a href="#">예약 구매</a></li>
                 <li><a href="#">완제품구매</a></li>
             </ul>

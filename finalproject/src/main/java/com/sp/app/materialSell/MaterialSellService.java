@@ -12,4 +12,9 @@ public interface MaterialSellService {
 	public MaterialSell nextReadMaterialSell(Map<String, Object> map);
 	public void updateMaterialSell(MaterialSell dto, String pathname) throws Exception;
 	public void deleteMaterialSell(int productNum,String pathname, String userId) throws Exception;
+
+	public void insertCategory(MaterialSell dto) throws Exception;
+	public void updateCategory(MaterialSell dto) throws Exception;
+	public void deleteCategory(int categoryNum) throws Exception;
+	public List<MaterialSell> listCategory(Map<String, Object> map);
 }

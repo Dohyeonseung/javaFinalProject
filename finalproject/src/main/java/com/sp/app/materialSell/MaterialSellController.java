@@ -3,6 +3,7 @@ package com.sp.app.materialSell;
 import java.io.File;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -108,14 +109,25 @@ public class MaterialSellController {
 	      return ".ms.list";
 	   }
 	
-	@GetMapping("created") //겟으로 받아올경우
-	   public String createdForm(Model model) throws Exception {
-	      
-	
-	      model.addAttribute("mode", "created");//모드값은 크리에티드
-	      
-	      return ".ms.created";//bbs 크리에티드로 넘겨줘라
-	   }
+	@RequestMapping(value="created", method=RequestMethod.GET)
+	public String createdForm(
+			Model model
+			) throws Exception {
+
+		Map<String, Object> map = new HashMap<>();
+		map.put("mode", "enabled");
+		List<MaterialSell> listCategory=service.listCategory(map);
+		
+		// map.put("mode", "all");
+		// List<Faq> listAllCategory=service.listCategory(map);
+		
+		model.addAttribute("pageNo", "1");
+		model.addAttribute("mode", "created");
+		model.addAttribute("listCategory", listCategory);
+		// model.addAttribute("listAllCategory", listAllCategory);
+
+		return ".ms.created";
+	}
 	   
 	   @PostMapping("created") //포스트 방식 크리에티드
 	   public String createdSubmit(MaterialSell dto, 
@@ -176,7 +188,6 @@ public class MaterialSellController {
 		   
 		   return ".ms.article";
 	   }
-	
 	   
 	   @GetMapping("update")
 	public String updateForm(
@@ -236,7 +247,7 @@ public class MaterialSellController {
 		      }
 		      
 		      String root=session.getServletContext().getRealPath("/");
-			  String pathname=root+"uploads"+File.separator+"photo";
+			  String pathname=root+"uploads"+File.separator+"ms";
 		      
 		      SessionInfo info = (SessionInfo)session.getAttribute("member");
 		      try {

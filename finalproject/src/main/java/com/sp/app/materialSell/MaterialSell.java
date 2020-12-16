@@ -12,10 +12,12 @@ public class MaterialSell {
 	private String content;
 	private String created_date;
 	private String imageFilename;
-	private int categoryNum;
 	private int division;
 	
 	private MultipartFile upload;
+	
+	private int categoryNum;
+	private String categoryName;
 	
 	public int getProductNum() {
 		return productNum;
@@ -89,5 +91,11 @@ public class MaterialSell {
 	}
 	public void setUpload(MultipartFile upload) {
 		this.upload = upload;
+	}
+	public String getCategoryName() {
+		return categoryName;
+	}
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
 	}
 }

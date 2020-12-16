@@ -3,10 +3,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ms">
 	<insert id="insertMaterialSell" parameterType="com.sp.app.materialSell.MaterialSell">
-		INSERT INTO product(productNum, userId, productName, price, stock, 
-		content, reserves, imageFilename, categoryNum, division, created_date) VALUES(
-		product_seq.NEXTVAL, #{userId}, #{productName}, #{price}, #{stock},
-		#{content}, #{reserves}, #{imageFilename, jdbcType=VARCHAR}, #{categoryNum}, #{division}, SYSDATE)
+		INSERT INTO product(productNum,  productName, price, stock, 
+		content, reserves, imageFilename, categoryNum, userId, division, created_date) VALUES(
+		product_seq.NEXTVAL, #{productName}, #{price}, #{stock},
+		#{content}, #{reserves, jdbcType=VARCHAR}, #{imageFilename, jdbcType=VARCHAR}, #{categoryNum},#{userId}, #{division}, SYSDATE)
 	</insert>
 	
 	<sql id="where-list">
@@ -41,17 +41,17 @@
 	 </select>
 	 
 	 <select id="listMaterialSell" parameterType="map" resultType="com.sp.app.materialSell.MaterialSell">
-	 	SELECT productNum, productName, p.userId, price, 
-	     imageFileName, categoryNum, division,
+	 	SELECT productNum, productName, price, stock, p.userId,
+	     imageFileName, c.categoryNum, c.categoryName, division,
 	 	 TO_CHAR(p.created_date,'YYYY-MM-DD') created_date
 	 	FROM product p
-	 	JOIN member1 m ON p.userId=m.userId
+	 	JOIN category c ON p.categoryNum=c.categoryNum
 	  	<where>
 	  		<if test="keyword!=null and keyword!=''">
 	  			<include refid="where-list"/>
 	  		</if>
 	  	</where>
-	 	ORDER BY productNum DESC
+	 	ORDER BY productNum 
 	 	OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	 </select>
 	 
@@ -60,10 +60,11 @@
 	   resultType="com.sp.app.materialSell.MaterialSell">
 	   
 	   SELECT productNum, productName, p.userId, m.userName,
-	   price, imageFileName, categoryNum, division,
+	   price, imageFileName, categoryNum, division, p.categoryNum
 	   TO_CHAR(p.created_date,'YYYY-MM-DD') created_date
 	   FROM product p
 	 	JOIN member1 m ON p.userId=m.userId
+	 	JOIN category c ON p.categoryNum=c.categoryNum
 	 	WHERE productNum=#{productNum}
 	 </select>
 	 
@@ -98,8 +99,25 @@
 	 	price=#{price}, categoryNum=#{categoryNum}, division=#{division},
 	 	WHERE productNum=#{productNum}
 	 </update>
+	 
+	<!-- 카테고리 -->
+	<insert id="insertCategory" parameterType="com.sp.app.materialSell.MaterialSell">
+		INSERT INTO qnaCategory(categoryNum, categoryName)
+			VALUES (qnaCategory_seq.NEXTVAL, #{category}) 
+	</insert>
 	
+	<update id="updateCategory" parameterType="com.sp.app.materialSell.MaterialSell">
+		UPDATE qnaCategory SET categoryName=#{categoryName}
+		WHERE categoryNum=#{categoryNum}
+	</update>
 	
+	<select id="listCategory" resultType="com.sp.app.materialSell.MaterialSell">
+		SELECT categoryNum, categoryName FROM category
+	</select>
+	
+	<delete id="deleteCategory" parameterType="Integer">
+		DELETE FROM category WHERE categoryNum=#{categoryNum}
+	</delete>
 	
 	
 </mapper>
