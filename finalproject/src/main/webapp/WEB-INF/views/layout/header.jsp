@@ -75,7 +75,7 @@
         <li>
             <a href="#">Buy</a>
             <ul>
-                <li><a href=""${pageContext.request.contextPath}/buy/material">재료구매</a></li>
+                <li><a href="${pageContext.request.contextPath}/buy/material">재료구매</a></li>
                 <li><a href="#">예약 구매</a></li>
                 <li><a href="#">완제품구매</a></li>
             </ul>
