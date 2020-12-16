@@ -3,9 +3,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <style type="text/css">
+div, body {
+	margin: 0;
+}
+
 #mContainor {
 	width: 100%;
-	height: 100%;
+	height: auto;
 	overflow: hidden;
 }
 
@@ -15,9 +19,6 @@
 	margin: auto;
 }
 
-#title_box{
-
-}
 
 .helpTable {
 	width: 100%;
@@ -58,26 +59,76 @@ a:hover {
 #agree_button {
 	float: right;
 }
+
+
+.btn_style {
+	width: 150px;
+	height: 50px;
+	border-radius: 0;
+	border-top: 0;
+	border-bottom: 0;
+	border-left: 0;
+	border-right: 0;
+	font-family: "맑은 고딕", sans-serif;
+	font-weight: bold;
+	transition: all 0.9s, color 0.3s;
+}
+
+.btn_style:hover {
+    box-shadow: 0 120px 0 0 rgba(0, 0, 0, 0.25) inset, 
+                0 -120px 0 0 rgba(0, 0, 0, 0.25) inset;
+}
 </style>
-<form>
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+<script type="text/javascript">
+function sendQNA() {
+    var f = document.consumerQnaForm;
+
+	var str = f.q_subject.value;
+    if(!str) {
+        alert("제목을 입력하세요. ");
+        f.subject.focus();
+        return;
+    }
+
+	str = f.q_content.value;
+    if(!str) {
+        alert("내용을 입력하세요. ");
+        f.content.focus();
+        return;
+    }
+
+	f.action="${pageContext.request.contextPath}/consumer/qna/created";
+
+    f.submit();
+}
+</script>
+<form name="consumerQnaForm" method="post" enctype="multipart/form-data">
 <div id="mContainor">
 	<div id="subContainor">
 	    <div id="title_box">
-			<h1>고객문의</h1>
+			<h1><i class="fas fa-edit"></i> 고객문의</h1>
 			<span style="float: right;">*필수입력 사항</span>
 	    </div>
 	    <table class="helpTable">
 	    	<tr style="border-bottom: 1px solid #cccccc; border-top: 1px solid #101010;">
 	    		<td class="category_id">이메일주소*</td>
 	    		<td>
-	    			<input class="short_input" type="text">
+	    			<input class="short_input" type="text" name="email" value="${dto.email}">
+	    		</td>
+	    	</tr>
+	    	
+	    	<tr style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
+	    		<td class="category_id">휴대폰 번호</td>
+	    		<td>
+	    			<input class="short_input" type="text" name="tel" value="${dto.tel}">
 	    		</td>
 	    	</tr>
 	    	
 	    	<tr style="border-top: 1px solid #cccccc; border-bottom: 1px solid #101010;">
-	    		<td class="category_id">휴대폰 번호</td>
+	    		<th class="category_id">고객명</th>
 	    		<td>
-	    			<input class="short_input" type="text">
+					<span>${sessionScope.member.userName}</span>
 	    		</td>
 	    	</tr>
 	    	
@@ -97,21 +148,21 @@ a:hover {
 	    	<tr style="border-bottom: 1px solid #cccccc;">
 	    		<td class="category_id">문의 제목*</td>
 	    		<td>
-	    			<input class="short_input" type="text">
+	    			<input class="short_input" type="text" name="q_subject" value="${dto.q_subject}">
 	    		</td>
 	    	</tr>
 	    	
 	    	<tr style="border-bottom: 1px solid #cccccc;">
 	    		<td class="category_id">문의 내용*</td>
 	    		<td valign="top" style="padding:18px 0 18px 0;">
-	    			<textarea class="hp_content" style="width: 760px; height: 300px; overflow: auto; resize: none;"></textarea>
+	    			<textarea class="hp_content" style="width: 760px; height: 300px; overflow: auto; resize: none;" name="q_content" id="q_content"></textarea>
 	    		</td>
 	    	</tr>
 			
 			<tr style="border-bottom: 1px solid #101010;">
 	    		<td class="category_id">파일 첨부</td>
 	    		<td valign="top" style="padding:18px 0 0 0;">
-	    			<input type="file">
+	    			<input type="file" name="upload" multiple="multiple">
 	    			<p>첨부파일은 최대 5개, 10MB까지 등록 가능하며<br>파일 형식은 jpg, gif, psd, png, tif, zip, ms office, 아래한글(hwp), pdf 만 가능합니다.</p>
 	    		</td>
 	    	</tr>
@@ -154,8 +205,8 @@ a:hover {
             </span>
 	    </div>
 		<div id="agree_button">
-            	<button type="button">문의 접수</button>
-            	<button type="button">문의 취소</button>
+            	<button class="btn_style" type="button" onclick="sendQNA()">문의 접수</button>
+            	<button class="btn_style" type="button">문의 취소</button>
         </div>
 	</div>
 </div>

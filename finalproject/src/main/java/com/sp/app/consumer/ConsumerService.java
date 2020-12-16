@@ -4,5 +4,8 @@ public interface ConsumerService {
 	// 질문 등록
 	public void insertQna(ConsumerQNA dto, String pathname) throws Exception;
 	// 답변 등록
-	public void insertAnswer(ConsumerQNA dto, String pathname) throws Exception; 
+	public void insertAnswer(ConsumerQNA dto, String pathname) throws Exception;
+	
+	// 파일 등록
+	public void insertFile(ConsumerQNA dto) throws Exception;
 }
