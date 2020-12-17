@@ -58,7 +58,7 @@ public class MaterialSellServiceImpl implements MaterialSellService {
 		MaterialSell dto =null;
 		
 		try {
-			dto=dao.selectOne("ms.readMaterialSell");
+			dto=dao.selectOne("ms.readMaterialSell",productNum);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -69,7 +69,7 @@ public class MaterialSellServiceImpl implements MaterialSellService {
 	public MaterialSell preReadMaterialSell(Map<String, Object> map) {
 		MaterialSell dto =null;
 		try {
-			dto=dao.selectOne("ms.preReadBoard", map);
+			dto=dao.selectOne("ms.preReadMaterialSell", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

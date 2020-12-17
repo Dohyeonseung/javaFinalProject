@@ -5,7 +5,7 @@
 
 <script type="text/javascript">
 function deleteMaterialSell(productNum) {
-		var q = "productNum="+productNum+"&${query}";
+		var q = "productNum="+productNum+"&page=${page}";
 		var url = "${pageContext.request.contextPath}/ms/delete?" + q;
 
 		if(confirm("위 자료를 삭제 하시 겠습니까 ? ")) {
@@ -20,24 +20,26 @@ function deleteMaterialSell(productNum) {
 		<button type="button" class="btn" style="float: right;" onclick="javascript:location.href='${pageContext.request.contextPath}/ms/created';">게시물 추가</button>
 	</div>
 		
-		<table border="1" frame=void style="border-color:#e5e5e5; width: 100%; border-spacing: 1px; border-collapse: collapse; " >
+		<table border="1" style="border-color:#e5e5e5; width: 100%; border-spacing: 0px; border-collapse: collapse; " >
 			<tr align="center" bgcolor="dcdcdc" height="35" > 
-				<th width="60" style="color: #1e1e1e;">번호 ${dto.userId }</th>
+				<th width="40" style="color: #1e1e1e;">번호 </th>
 				<th width="100" style="color:#1e1e1e;">게시일</th>
 				<th style="color:#1e1e1e;">분류/제목/가격</th>
 				<th width="40" style="color: #1e1e1e;">재고</th>
-				<th width="70" style="color: #1e1e1e;">게시/삭제</th>
+				<th width="100" style="color:#1e1e1e;">구매자현황</th>
+				<th width="70" style="color: #1e1e1e;">수정/삭제</th>
 			</tr>
 		 <c:forEach var="dto" items="${list}">
 			<tr align="center" bgcolor="#ffffff" height="50"> 
-				<td >${dto.productNum} ${dto.userId }</td>
+				<td >${dto.productNum}</td>
 			    <td height="100" >${dto.created_date}</td>
 			    <td align="center" height="50" >
-			    		<img src="${pageContext.request.contextPath}/uploads/ms/${dto.imageFilename}" width="70"
-			                   height="70" border="0" style="margin-right: 100px;" onclick="javascript:article('${dto.productNum}');">
-						<a href="${articleUrl}&num=${dto.productNum}" style="text-decoration: none;">${dto.categoryName} / ${dto.productName} / ${dto.price}/  </a>
+			    		
+						<a href="${articleUrl}&productNum=${dto.productNum}" style="text-decoration: none;"> <img src="${pageContext.request.contextPath}/uploads/ms/${dto.imageFilename}" width="70"
+			                   height="70" border="0" style="margin-right: 70px;" onclick="javascript:article('${dto.productNum}');">${dto.categoryName} / ${dto.productName} / ${dto.price}원 </a>
 				</td>
 				<td height="50">${dto.stock}</td>
+				<td height="50"><button type="button" class="btn" onclick="javascript:location.href='#'">구매자 현황</button></td>
 				<td height="50">
 					<button type="button" class="btn" onclick="javascript:location.href='${pageContext.request.contextPath}/ms/created';">수정</button>
 			          <button type="button" class="btn" onclick="deleteMaterialSell('${dto.productNum}');">삭제</button>

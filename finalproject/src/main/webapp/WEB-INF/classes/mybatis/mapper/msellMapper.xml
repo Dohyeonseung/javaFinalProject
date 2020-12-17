@@ -59,8 +59,8 @@
 	 <select id="readMaterialSell" parameterType="Integer"
 	   resultType="com.sp.app.materialSell.MaterialSell">
 	   
-	   SELECT productNum, productName, p.userId, m.userName,
-	   price, imageFileName, categoryNum, division, p.categoryNum
+	   SELECT productNum, productName, p.userId, m.userName, stock,
+	   price, imageFileName, c.categoryNum, division, p.categoryNum,
 	   TO_CHAR(p.created_date,'YYYY-MM-DD') created_date
 	   FROM product p
 	 	JOIN member1 m ON p.userId=m.userId
@@ -92,6 +92,10 @@
 		      ORDER BY productNum DESC
 		      FETCH FIRST 1 ROWS ONLY
 	 </select>
+	 
+	 <delete id="deleteMaterialSell" parameterType="Integer">
+		DELETE FROM product WHERE productNum = #{productNum}
+	</delete>
 	 
 	 
 	 <update id="updateMaterialSell" parameterType="com.sp.app.materialSell.MaterialSell">

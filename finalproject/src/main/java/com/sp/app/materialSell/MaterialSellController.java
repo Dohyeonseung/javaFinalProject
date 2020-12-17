@@ -3,7 +3,6 @@ package com.sp.app.materialSell;
 import java.io.File;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,7 +76,7 @@ public class MaterialSellController {
 		   int listNum, n=0;
 		   for(MaterialSell dto:list) {
 			   listNum=dataCount-(offset+n);
-			   dto.setProductNum(listNum);
+			   dto.setListNum(listNum);
 			   n++;
 		   }
 		   
@@ -234,7 +233,7 @@ public class MaterialSellController {
 	   @RequestMapping(value="delete", method=RequestMethod.GET)
 	   public String delete(
 			   @RequestParam int productNum, 
-			   @RequestParam String page, 
+			   @RequestParam (defaultValue="1") String page, 
 			   @RequestParam(defaultValue="all") String condition,
 			   @RequestParam(defaultValue = "") String keyword, 
 			   HttpSession session

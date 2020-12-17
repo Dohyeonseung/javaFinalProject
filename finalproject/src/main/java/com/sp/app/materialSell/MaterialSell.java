@@ -3,9 +3,9 @@ package com.sp.app.materialSell;
 import org.springframework.web.multipart.MultipartFile;
 
 public class MaterialSell {
-	private int productNum;
+	private int productNum, listNum;
 	private String productName;
-	private String userId;
+	private String userId, userName;
 	private String price;
 	private String stock;
 	private String reserves;
@@ -97,5 +97,17 @@ public class MaterialSell {
 	}
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
+	}
+	public int getListNum() {
+		return listNum;
+	}
+	public void setListNum(int listNum) {
+		this.listNum = listNum;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 }
