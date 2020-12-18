@@ -86,7 +86,7 @@
           <ul>
            <li><a href="#">지역모임</a></li>
            <li><a href="#">DIY Tip</a></li>
-           <li><a href="#">묻고 답하기</a></li>
+           <li><a href="${pageContext.request.contextPath}/qna/list">묻고 답하기</a></li>
            <li><a href="${pageContext.request.contextPath}/notice/list">공지사항</a></li>
         </ul>
         </li>
