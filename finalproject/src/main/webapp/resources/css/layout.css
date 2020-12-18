@@ -157,7 +157,11 @@ ul.nav {
 
 ul.nav li { 
   display: flex;
+  margin: 0 30px 0 0;
+  padding: 0;
+  
 }
+
 
 ul.nav li a {
   float: left;
@@ -165,7 +169,9 @@ ul.nav li a {
   color: #555;
   text-decoration: none;
   margin: 0;
-  padding: 0 30px;
+  padding: 0 14px;
+  text-align:center;
+  width: 95px;
 }
 
 ul.nav .current a, ul.nav li:hover > a {
@@ -173,12 +179,16 @@ ul.nav .current a, ul.nav li:hover > a {
   font-weight : 900;
   text-decoration: none;
   background: var(--background-color);
-  border-bottom: 1px solid #666;
+  
 }
 
 ul.nav ul {
   display: none;
+  width: 160px;
+  text-align: left;
+  position: absolute;
 }
+
 
 ul.nav li:hover > ul {
   position: absolute;
@@ -190,6 +200,8 @@ ul.nav li:hover > ul {
   border: 1px solid var(--background-color);
   z-index: 101;
   box-sizing: border-box;
+  opacity: 0.5;
+ 
 }
 
 ul.nav li:hover > ul li a {
@@ -200,6 +212,9 @@ ul.nav li:hover > ul li a {
   padding: 0 20px 0 20px;
   background: white;
   z-index: 100;
+  border-width:0 1px 0 1px;
+  border-color:#e5e5e5;
+  border-style:solid;
 }
 
 

@@ -3,19 +3,21 @@ package com.sp.app.materialSell;
 import org.springframework.web.multipart.MultipartFile;
 
 public class MaterialSell {
-	private int productNum;
+	private int productNum, listNum;
 	private String productName;
-	private String userId;
+	private String userId, userName;
 	private String price;
 	private String stock;
 	private String reserves;
 	private String content;
 	private String created_date;
 	private String imageFilename;
-	private int categoryNum;
 	private int division;
 	
 	private MultipartFile upload;
+	
+	private int categoryNum;
+	private String categoryName;
 	
 	public int getProductNum() {
 		return productNum;
@@ -89,5 +91,23 @@ public class MaterialSell {
 	}
 	public void setUpload(MultipartFile upload) {
 		this.upload = upload;
+	}
+	public String getCategoryName() {
+		return categoryName;
+	}
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+	public int getListNum() {
+		return listNum;
+	}
+	public void setListNum(int listNum) {
+		this.listNum = listNum;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 }

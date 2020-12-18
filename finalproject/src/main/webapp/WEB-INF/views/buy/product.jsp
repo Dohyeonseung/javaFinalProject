@@ -29,10 +29,9 @@ $(function(){
 
 <style type="text/css">
 
-#materialSell_AT {
+#wrap {
 	width: 100%;
 	display: flex;
-	align-content: space-around;
 }
 
 ul li {
@@ -42,6 +41,11 @@ ul li {
 img {
 	width: 100%;
 	height: 100%;
+}
+
+.simple_infowrap {
+	width: 1200px;
+	margin: auto;
 }
 
 .thumbnail {
@@ -81,7 +85,7 @@ ul.center {
 }
 
 .iteminfo {
-	width: 500px;
+	width: 50%;
 	height: 650px;
 	position: relative;
 	float: left;
@@ -91,20 +95,73 @@ ul.center {
 	border-bottom: 1px solid #404040;
 	padding-bottom: 10px;
 	min-height: 40px;
+}
+
+.itemname{
 	font-size: 28px;
 	font-weight: 500;
-	text-align: center;
 }
-.iteminfo_content table{
-	width: 100%;
-	height: 100%;
-	border-collapse: 0;
+
+.itemprice{
+	font-size: 34px;
+	font-weight: bold;
+	color: tomato;
 }
-.iteminfo_content table td{
-	height: 60px;
-	text-align: center;
-	font-size: 20px;
+
+.iteminfo_body {
+	border-bottom: 1px solid #d9d9d9;
 }
+
+.info_title {
+	width: 30%;
+	float: left;
+	padding-bottom: 10px;
+}
+
+.info_content {
+	width: 70%;
+	float: left;
+	padding-bottom: 10px;
+}
+
+.cart_purchase {
+	display: flex;
+	justify-content: space-around;
+	height: 50px;
+	width: 50%;
+	float: left;
+	margin: auto;
+}
+
+.add {
+	width: 180px;
+	height: 50px;
+	background: #e5e5e5;
+	border: 1px solid #e4e4e4;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.purchase {
+	width: 180px;
+	height: 50px;
+	background: #FAE500;
+	border: 1px solid #e4e4e4;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.cart {
+	width: 180px;
+	height: 50px;
+	background: #1e1e1e;
+	color: white;
+	border: 1px solid #e4e4e4;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+
 </style>
 </head>
 <body>
@@ -116,10 +173,11 @@ ul.center {
 	
 
 	
-<div id="materialSell_AT">
+<div id="wrap">
+	<div class="simple_infowrap">
 		<div class="thumbnail">
 			<div class="thumbnail_main">
-				<img alt="" src="${pageContext.request.contextPath}/uploads/ms/${dto.imageFilename}">
+				<img alt="" src="${pageContext.request.contextPath}/resources/bxslider/css/images/퉷.jpg">
 			</div>
 			<div class="thumbnail_others">
 				<ul class="center">
@@ -137,42 +195,33 @@ ul.center {
 		</div>
 		<div class="iteminfo">
 			<div class="iteminfo_head"> 
-				<span>${dto.productName}</span>
+				<span class="itemname">${dto.productName}</span>
 			</div>
-			<div class="iteminfo_content">
-				<table border="1">
-					<tr>
-						<td>구분</td>
-						
-						<td colspan="2">
-							<select name="categoryNum" class="selectField">
-								<c:forEach var="vo" items="${dto.}">
-									<option value="${vo.categoryNum}"
-										${dto.categoryNum==vo.categoryNum?"selected='selected'":""}>${vo.categoryName}</option>
-								</c:forEach>
-						</select>
-						</td>
-					</tr>
-					
-					
-					<tr>
-						<td>재고</td>
-						<td colspan="2">${dto.stock}</td>
-					</tr>
-					
-					<tr>
-						<td>게시일자</td>
-						<td colspan="2">${dto.created_date}</td>
-					</tr>
-					
-					<tr>
-						<td>판매가</td>
-						<td colspan="2" style="width: 65%;">${dto.price}원</td>
-					</tr>
-				</table>
-			
+			<div class="iteminfo_body">
+			<div class="info_title" style="line-height: 45px;">
+				<span style="margin: auto;">판매가</span>
+			</div>
+			<div class="info_content">
+				<span class="itemprice"> ${dto.price}</span><span style="font-size: 34px">원</span>
+			</div>
+				<div class="info_title">적립금</div>
+			</div>
+			<div class="info_content">
+			<span style="color: #4d94ff;">
+				${dto.reserves}
+			</span>
+			</div>
+			<div class="info_title">판매자</div>
+			<div class="info_content">
+				${dto.userId}
 			</div>
 		</div>
+		<div class="cart_purchase">
+			<button type="button" class="add">장바구니</button>
+			<button type="button" class="cart">찜하기</button>
+			<button type="button" class="purchase">구매하기</button>
+		</div>
+	</div>
 </div>
 </body>
 </html>

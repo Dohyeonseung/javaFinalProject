@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.sp.app.common.FileManager;
 import com.sp.app.common.dao.CommonDAO;
 
+
+
 @Service("ms.materialSellService")
 public class MaterialSellServiceImpl implements MaterialSellService {
 	@Autowired
@@ -56,7 +58,7 @@ public class MaterialSellServiceImpl implements MaterialSellService {
 		MaterialSell dto =null;
 		
 		try {
-			dto=dao.selectOne("ms.readMaterialSell");
+			dto=dao.selectOne("ms.readMaterialSell",productNum);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -67,7 +69,7 @@ public class MaterialSellServiceImpl implements MaterialSellService {
 	public MaterialSell preReadMaterialSell(Map<String, Object> map) {
 		MaterialSell dto =null;
 		try {
-			dto=dao.selectOne("ms.preReadBoard", map);
+			dto=dao.selectOne("ms.preReadMaterialSell", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -112,10 +114,47 @@ public class MaterialSellServiceImpl implements MaterialSellService {
 				return;
 			}
 			
-			dao.deleteData("ms.deleteBoard", productNum);
+			dao.deleteData("ms.deleteMaterialSell", productNum);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	@Override
+	public void insertCategory(MaterialSell dto) throws Exception {
+		try {
+			dao.insertData("ms.insertCategory", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	@Override
+	public void updateCategory(MaterialSell dto) throws Exception {
+		try {
+			dao.updateData("ms.updateCategory", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	@Override
+	public void deleteCategory(int categoryNum) throws Exception {
+		try {
+			dao.deleteData("ms.deleteCategory", categoryNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	public List<MaterialSell> listCategory(Map<String, Object> map) {
+		List<MaterialSell> listCategory = null;
+		try {
+			listCategory = dao.selectList("ms.listCategory", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return listCategory;
 	}
 	
 	

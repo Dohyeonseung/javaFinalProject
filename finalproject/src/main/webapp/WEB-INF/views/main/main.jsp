@@ -32,8 +32,6 @@
 			<li><img src="${pageContext.request.contextPath}/resources/img/slider1.jpg" alt="이미지1"></li>
 			<li><img src="${pageContext.request.contextPath}/resources/img/slider2.JPG" alt="이미지2"></li>
 			<li><img src="${pageContext.request.contextPath}/resources/img/slider3.jpg" alt="이미지3"></li>
-			<li><img src="images/image4.png" alt="image04" /></li>
-			<li><img src="images/image5.png" alt="image05" /></li>
 		</ul>
 	</div><!-- sp-content -->
 
