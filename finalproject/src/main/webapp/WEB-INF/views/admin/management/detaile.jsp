@@ -34,7 +34,6 @@
     <td align="left" colspan="3" style="padding-left: 5px;">
 		  ${dto.enabled==1?"활성":"잠금"}
 		  <c:if test="${dto.enabled==0 && not empty memberState}">, ${memberState.memo}</c:if>
-		  &nbsp;<span class="btn" onclick="memberStateDetaileView();" style="cursor: pointer;">자세히</span>
     </td>
 </tr>
 </table>
@@ -70,25 +69,3 @@
 <input type="hidden" name="registerId" value="${sessionScope.member.userId}">
 </form>
 
-<div id="memberStateDetaile" style="display: none;">
-<table style="margin: 10px auto 5px; width: 100%; border-spacing: 1px; background: #cccccc">
-  <tr height="30" align="center" bgcolor="#ffffff">
- 	 <td>내용</td>
-  	 <td width="130">변경아이디</td>
-  	 <td width="200">등록일</td>
-  </tr>
-  <c:forEach var="vo" items="${listState}">
-  	<tr height="30" align="center" bgcolor="#ffffff">
-  	   <td align="left" style="padding-left: 5px;">${vo.memo} (${vo.stateCode})</td>
-  	   <td>${vo.registerId}</td>
-  	   <td>${vo.registration_date}</td>
-  	</tr>
-  </c:forEach>
-  
-  <c:if test="${listState.size()==0}">
-  	<tr height="30" align="center" bgcolor="#ffffff">
-  		<td colspan="3">등록된 정보가 없습니다.</td>
-	</tr>  
-  </c:if>
-</table>  
-</div>

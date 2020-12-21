@@ -80,7 +80,8 @@ a:hover {
 		
 		<table style="width: 100%; margin: 0px auto; border-spacing: 0px; border-collapse: collapse;">
 		  <tr align="center" bgcolor="#eeeeee" height="35" style="border-top: 2px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
-		      <th width="50" style="color: #787878;">물류코드</th>
+		      <th width="50" style="color: #787878;">상품번호</th>
+		      <th width="50" style="color: #787878;">상품코드</th>
 		      <th width="100" style="color: #787878;">상품명</th>
 		      <th width="50" style="color: #787878;">가격</th>
 		      <th width="50" style="color: #787878;">수량</th>
@@ -90,6 +91,7 @@ a:hover {
 		  </tr>
 		 
 		  <tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
+		      <td width="50">1</td>
 		      <td width="50">DIY34578</td>
 		      <td width="100">초보자도 따라만드는 DIY 책상키트</td>
 		      <td width="50">137,600원</td>

@@ -50,6 +50,10 @@ a:hover {
 	font-family: "맑은 고딕", "나눔 고딕", sans-serif;
 }
 
+ul {
+	padding-inline-start: 0;
+}
+
 ul.nav {
   width:100%;
   margin: 0;
@@ -87,7 +91,7 @@ ul.nav li:hover > ul {
   left: 416px;
   width: auto;
   height: 40px;
-  margin: 40px 0 0 0px;
+  margin: 40px 0 0 0;
   background: #e9e9e9;
   border: 1px solid #e9e9e9;
   z-index: 101;

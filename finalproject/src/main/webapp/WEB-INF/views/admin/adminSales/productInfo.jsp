@@ -72,19 +72,60 @@ div, body {
 </style>
 
 <script type="text/javascript">
-$(function(){
-	$("#stateChange_btn").click(function(){
-		$("#reason_dialog").dialog({
-			  modal: true,
-			  height: 600,
-			  width: 750,
-			  title: '사유 입력',
-			  close: function(event, ui) {
-			  }
-		});
+function ajaxFun(url, method, dataType, query, fn) {
+	$.ajax({
+		type:method,
+		url:url,
+		data:query,
+		dataType:dataType,
+		success:function(data){
+			fn(data);
+		},
+		beforeSend : function(jqXHR) {
+			jqXHR.setRequestHeader("AJAX", true);
+		},
+		error : function(jqXHR) {
+			if (jqXHR.status == 403) {
+				location.href="${pageContext.request.contextPath}/admin/adminSales/detaile";
+				return false;
+			}
+			console.log(jqXHR.responseText);
+		}
 	});
-	// $('#category-dialog').dialog("close"); // 창종료
-});
+}
+
+function detailedProduct(userId) {
+	var dlg = $("#info_dialog").dialog({
+		  autoOpen: false,
+		  modal: true,
+		  buttons: {
+		       " 수정 " : function() {
+		    	   updateOk(); 
+		       },
+		       " 삭제 " : function() {
+		    	   deleteOk(userId);
+			   },
+		       " 닫기 " : function() {
+		    	   $(this).dialog("close");
+		       }
+		  },
+		  height: 520,
+		  width: 800,
+		  title: "회원상세정보",
+		  close: function(event, ui) {
+		  }
+	});
+
+	var url = "${pageContext.request.contextPath}/admin/adminSales/detaile";
+	var query = "userId="+userId;
+	
+	var fn = function(data){
+		$('#info_dialog').html(data);
+		dlg.dialog("open");
+	};
+	ajaxFun(url, "post", "html", query, fn);
+}
+
 </script>
 
 <div id="mainContainer">
@@ -196,13 +237,15 @@ $(function(){
 	    	<div class="btn_box">
 	    		<form action="">
 	    			<button type="button" class="btn_style" id="returnList_btn" style="margin-right: 860px;" onclick="location.href='${pageContext.request.contextPath}/admin/adminSales/productlist'">리스트</button>
-	    			<button type="button" class="btn_style" id="stateChange_btn">상태변경</button>
+	    			<button type="button" class="btn_style" id="stateChange_btn" onclick="detailedProduct('${dto.userId}');">상태변경</button>
 	    			<button type="button" class="btn_style" id="productOrder_btn">상품발주</button>
 	    			<button type="button" class="btn_style" id="productDelete_btn">상품삭제</button>
 	    		</form>
 	    	</div>
 	    	
-	    	<div id="reason_dialog"></div>
 		</div>
 	</div>
+</div>
+<div id="info_dialog" style="display: none;">
+
 </div>

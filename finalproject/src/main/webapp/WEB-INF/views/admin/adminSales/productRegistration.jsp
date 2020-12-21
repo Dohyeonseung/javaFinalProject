@@ -140,7 +140,7 @@ function sendQNA() {
 	    	</tr>
 	    	
 	    	<tr style="border-bottom: 1px solid #cccccc;">
-	    		<td class="category_id">물류코드</td>
+	    		<td class="category_id">상품코드</td>
 	    		<td>
 	    			<input class="short_input" type="text" name="f_subject" value="${dto.q_subject}">
 	    			<button type="button" class="btn_created_code">코드생성</button>

@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-@Controller("admin.authorityController")
+@Controller("admin.authority.authorityController")
 @RequestMapping("/admin/authority/*")
 public class authorityController {
 

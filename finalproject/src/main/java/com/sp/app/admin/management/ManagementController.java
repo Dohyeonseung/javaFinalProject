@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
-@Controller("admin.managementController")
+@Controller("admin.management.managementController")
 @RequestMapping("/admin/management/*")
 public class ManagementController {
 	

@@ -94,7 +94,7 @@ function ajaxFun(url, method, dataType, query, fn) {
 }
 
 function detailedMember(userId) {
-	var dlg = $("#stateChange_btn").dialog({
+	var dlg = $("#member_dialog").dialog({
 		  autoOpen: false,
 		  modal: true,
 		  buttons: {
@@ -221,12 +221,15 @@ function detailedMember(userId) {
 	    	<div class="btn_box">
 	    		<form action="">
 	    			<button type="button" class="btn_style" id="returnList_btn" style="margin-right: 965px;" onclick="location.href='${pageContext.request.contextPath}/admin/management/list'">리스트</button>
-	    			<button type="button" class="btn_style" id="stateChange_btn">상태변경</button>
+	    			<button type="button" class="btn_style" id="stateChange_btn" onclick="detailedMember('${dto.userId}');">상태변경</button>
 	    			<button type="button" class="btn_style" id="memberDelete_btn">회원삭제</button>
 	    		</form>
 	    	</div>
 	    	
-	    	<div id="member_dialog"></div>
 		</div>
 	</div>
+</div>
+
+<div id="member_dialog" style="display: none;">
+	    	
 </div>
