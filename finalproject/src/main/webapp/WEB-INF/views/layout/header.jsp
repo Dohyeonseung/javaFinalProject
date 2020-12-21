@@ -39,7 +39,7 @@
                 
                 <c:if test="${sessionScope.member.userId=='admin'}">
                     &nbsp;|&nbsp;
-                    <a href="${pageContext.request.contextPath}/admin">관리자</a>
+                    <a href="${pageContext.request.contextPath}/admin/home">관리자</a>
                 </c:if>
             </c:if>
         </div>
