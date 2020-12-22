@@ -20,8 +20,8 @@ function deleteMaterialSell(productNum) {
 		<button type="button" class="btn" style="float: right;" onclick="javascript:location.href='${pageContext.request.contextPath}/ms/created';">게시물 추가</button>
 	</div>
 		
-		<table border="1" style="border-color:#e5e5e5; width: 100%; border-spacing: 0px; border-collapse: collapse; " >
-			<tr align="center" bgcolor="dcdcdc" height="35" > 
+		<table border="1" style="border-color:#e5e5e5; width: 100%; border-spacing: 0px; border-collapse: collapse; border-radius:50%; " >
+			<tr align="center" bgcolor="white" height="35" > 
 				<th width="40" style="color: #1e1e1e;">번호 </th>
 				<th width="100" style="color:#1e1e1e;">게시일</th>
 				<th style="color:#1e1e1e;">분류/제목/가격</th>
