@@ -25,7 +25,7 @@
 <tr height="37" style="background: #ffffff;">
     <td align="right" style="padding-right: 9px;"><label style="font-weight: 900;">회원가입일</label></td>
     <td align="left" style="padding-left: 5px;"><span>${dto.created_date}</span></td>
-    <td align="right" style="padding-right: 9px;"><label style="font-weight: 900;">최근로그인</label></td>
+    <td align="right" style="padding-right: 9px;"><label style="font-weight: 900;">최종로그인</label></td>
     <td align="left" style="padding-left: 5px;"><span>${dto.last_login}</span></td>
 </tr>
 

@@ -100,6 +100,10 @@ public class MemberController {
 			) {
 		
 		Member dto=service.loginMember(userId);
+		try {
+			service.updateLastLogin(userId);
+		} catch (Exception e) {
+		}
 		if(dto==null ||  !  userPwd.equals(dto.getUserPwd())) {
 			model.addAttribute("message", "아이디 또는 패스워드가 일치하지 않습니다.");
 			return ".member.login";

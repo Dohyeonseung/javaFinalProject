@@ -33,9 +33,9 @@
             <c:if test="${not empty sessionScope.member}">
                 <span style="color:blue;">${sessionScope.member.userName}</span>님
                 &nbsp;|&nbsp;
-                <a href="${pageContext.request.contextPath}/">로그아웃</a>
+                <a href="${pageContext.request.contextPath}/member/logout">로그아웃</a>
                 &nbsp;|&nbsp;
-                <a href="${pageContext.request.contextPath}/">정보수정</a>
+                <a href="${pageContext.request.contextPath}/member/update">정보수정</a>
                 
                 <c:if test="${sessionScope.member.userId=='admin'}">
                     &nbsp;|&nbsp;
@@ -94,7 +94,7 @@
         <li>
             <a href="#">고객센터</a>
            <ul>
-         <li><a href="#">1:1문의(Q&A)</a></li>
+         <li><a href="#">1:1문의(Q&amp;A)</a></li>
            <li><a href="#">자주하는 질문</a></li>
            <li><a href="#">실시간 채팅</a></li>
            <li><a href="#">판매자 서비스</a></li>

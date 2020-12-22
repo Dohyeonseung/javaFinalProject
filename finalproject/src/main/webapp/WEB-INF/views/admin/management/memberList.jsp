@@ -51,6 +51,30 @@ div, body {
     
 }
 </style>
+<script type="text/javascript">
+function ajaxFun(url, method, dataType, query, fn) {
+	$.ajax({
+		type:method,
+		url:url,
+		data:query,
+		dataType:dataType,
+		success:function(data){
+			fn(data);
+		},
+		beforeSend : function(jqXHR) {
+			jqXHR.setRequestHeader("AJAX", true);
+		},
+		error : function(jqXHR) {
+			if (jqXHR.status == 403) {
+				location.href="${pageContext.request.contextPath}/member/login";
+				return false;
+			}
+			console.log(jqXHR.responseText);
+		}
+	});
+}
+
+</script>
 <div id="mainContainer">
 	<div id="contentContainer">
 		<div id="table_box">
@@ -81,20 +105,21 @@ div, body {
 		      <th width="50" style="color: #787878;">상태</th>
 		      <th width="10" style="color: #787878;"></th>
 		  </tr>
-		 
+		 <c:forEach var="dto" items="${list}">
 		  <tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
-		      <td width="30">1</td>
+		      <td width="30">${dto.listNum}</td>
 		      <td width="50">
-		           admin77
+		           ${dto.userId}
 		      </td>
-		      <td width="50">관리자</td>
-		      <td width="100">admin@diyLife.com</td>
-		      <td width="50">2020-12-25</td>
-		      <td width="50">활성화</td>
+		      <td width="50">${dto.userName}</td>
+		      <td width="100">${dto.email}</td>
+		      <td width="50">${dto.created_date}</td>
+		      <td width="50">${dto.enabled==1?"활성화":"비활성화"}</td>
 		      <td width="10">
-		      <a href="${pageContext.request.contextPath}/admin/management/info" style="float: center; color: #1e1e1e;"><i class="fas fa-cog"></i></a>
+		      <a href="${pageContext.request.contextPath}/admin/management/info?userId=${dto.userId}" style="float: center; color: #1e1e1e;"><i class="fas fa-cog"></i></a>
 		      </td>
 		  </tr>
+		 </c:forEach>
 
 		</table>
 		 
@@ -115,11 +140,13 @@ div, body {
 		          <form name="searchForm" action="${pageContext.request.contextPath}/bbs/list" method="post">
 		              <select name="condition" class="selectField" style="width: 100px; height: 30px;">
 		                  <option value="all" ${condition=="all"?"selected='selected'":""}>모두</option>
-		                  <option value="userId" ${condition=="subject"?"selected='selected'":""}>아이디</option>
-		                  <option value="userName" ${condition=="content"?"selected='selected'":""}>이름</option>
-		                  <option value="signUpdate" ${condition=="userName"?"selected='selected'":""}>가입일</option>
-		                  <option value="state" ${condition=="created"?"selected='selected'":""}>상태</option>
+		                  <option value="userId" ${condition=="userId"?"selected='selected'":""}>아이디</option>
+		                  <option value="userName" ${condition=="userName"?"selected='selected'":""}>이름</option>
+		                  <option value="signUpdate" ${condition=="created_date"?"selected='selected'":""}>가입일</option>
+		                  <option value="state" ${condition=="enabled"?"selected='selected'":""}>상태</option>
 		            </select>
+		            <input type="hidden" name="enabled" value="${enabled}">
+		            <input type="hidden" name="page" value="1">
 		            <input type="text" name="keyword" value="${keyword}" class="boxTF" style="width: 300px; height: 24px;">
 		            <button type="button" class="btn_style" style="vertical-align: bottom;" onclick="">검색</button>
 		        </form>

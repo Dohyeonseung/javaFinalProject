@@ -93,6 +93,7 @@ function ajaxFun(url, method, dataType, query, fn) {
 	});
 }
 
+// 상태변경
 function detailedMember(userId) {
 	var dlg = $("#member_dialog").dialog({
 		  autoOpen: false,
@@ -124,6 +125,59 @@ function detailedMember(userId) {
 	};
 	ajaxFun(url, "post", "html", query, fn);
 }
+
+function updateOk() {
+	var f = document.deteailedMemberForm;
+	
+	if(! f.stateCode.value) {
+		f.stateCode.focus();
+		return;
+	}
+	if(! $.trim(f.memo.value)) {
+		f.memo.focus();
+		return;
+	}
+	
+	var url = "${pageContext.request.contextPath}/admin/management/updateMemberState";
+	var query=$("#deteailedMemberForm").serialize();
+
+	var fn = function(data){
+		$("form input[name=page]").val("${page}");
+	};
+	ajaxFun(url, "post", "html", query, fn);
+		
+	$('#member_dialog').dialog("close");
+	
+}
+
+function deleteOk(userId) {
+	if(confirm("선택한 계정을 삭제 하시겠습니까 ?")) {
+			
+	}
+	
+	$('#member_dialog').dialog("close");
+}
+
+// 상태변동기록
+
+
+function selectStateChange() {
+	var f = document.deteailedMemberForm;
+	
+	var s = f.stateCode.value;
+	var txt = f.stateCode.options[f.stateCode.selectedIndex].text;
+	
+	f.memo.value = "";	
+	if(! s) {
+		return;
+	}
+
+	if(s!="0" && s!="6") {
+		f.memo.value = txt;
+	}
+	
+	f.memo.focus();
+}
 </script>
 
 <div id="mainContainer">
@@ -137,92 +191,97 @@ function detailedMember(userId) {
 	    	<tr style="border-bottom: 1px solid #cccccc; border-top: 1px solid #101010;">
 	    		<th class="category_name">아이디</th>
 	    		<td class="info_value">
-	    			<span>admin77</span>
+	    			<span>${dto.userId}</span>
 	    		</td>
 	    	</tr>
 	    	
 	    	<tr style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
 				<th class="category_name">이름</th>
 	    		<td class="info_value">
-					<span>관리자</span>
+					<span>${dto.userName}</span>
 	    		</td>
 	    	</tr>
 	    	
 	    	<tr style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
 	    		<th class="category_name">가입일자</th>
 	    		<td class="info_value">
-					<span>2020-12-16</span>
+					<span>${dto.created_date}</span>
 	    		</td>
 	    	</tr>
 	    	
 	    	<tr style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
 	    		<th class="category_name">회원분류</th>
 	    		<td class="info_value">
-					<span>판매자</span>
+					<span>${dto.memberCategory==1?"일반회원":"판매자"}</span>
 	    		</td>
 	    	</tr>
 	    	
 	    	<tr style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
 	    		<th class="category_name">이메일</th>
 	    		<td class="info_value">
-					<span>admin77@diyLife.com</span>
+					<span>${dto.email}</span>
 	    		</td>
 	    	</tr>
 	    	
 	    	<tr style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
 	    		<th class="category_name">전화번호</th>
 	    		<td class="info_value">
-					<span>010-7777-7777</span>
+					<span>${dto.tel}</span>
 	    		</td>
 	    	</tr>
 	    	
 	    	<tr style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
 	    		<th class="category_name">주소</th>
 	    		<td class="info_value">
-					<span>경기 성남시 분당구 불정로 6</span>
+					<span>${dto.addr1}${dto.addr2}</span>
 	    		</td>
 	    	</tr>
 	    	
 	    	<tr style="border-top: 1px solid #cccccc; border-bottom: 1px solid #101010;">
 	    		<th class="category_name">계정상태</th>
 	    		<td class="info_value">
-					<span>활성화</span>
+					<span>${dto.enabled==1?"활성화":"비활성화"}</span>
 	    		</td>
 	    	</tr>
 	    	</table>
 	    	
-	    	<div class="table_box">
+	    	<div class="table_box" id="memberStateDetaile">
 	    		<div class="info_title">
 					<h2><i class="fas fa-sync-alt"></i> 계정상태 변동내역
-						<span style="font-size: 12px; float: right; padding-top: 16px;">최대 15건까지 표시됩니다.</span>
+						<span style="font-size: 12px; float: right; padding-top: 16px;">최대 10건까지 표시됩니다.</span>
 					</h2>
 				</div>
 				
 				<table style="width: 100%; margin: 0px auto; border-spacing: 0px; border-collapse: collapse;">
 					  <tr align="center" bgcolor="#eeeeee" height="35" style="border-top: 2px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
 					      <th width="30" style="color: #787878;">변동날짜</th>
+					      <th width="30" style="color: #787878;">아이디</th>
+					      <th width="30" style="color: #787878;">관리자명</th>
 					      <th width="100" style="color: #787878;">사&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;유</th>
-					      <th width="30" style="color: #787878;">상태</th>
-					      <th width="30" style="color: #787878;">정지날짜</th>
-					      <th width="30" style="color: #787878;">해제날짜</th>
 					  </tr>
 					 
+					 <c:forEach var="vo" items="${listState}">
 					  <tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
-					      <td width="30">2020-12-18</td>
-					      <td width="100" style="text-align: left"><a style="color: #1e1e1e;">커뮤니티 게시판 부정 이용</a></td>
-					      <td width="30">7일 정지</td>
-					      <td width="30">2020-12-18</td>
-					      <td width="30">2020-12-25</td>
+					      <td width="30">${vo.registration_date}</td>
+					      <td width="30">${vo.userId}</td>
+					      <td width="30">${vo.registerId}</td>
+					      <td width="100" style="text-align: center"><a style="color: #1e1e1e;">${vo.memo}</a></td>
 					  </tr>
-
+					 </c:forEach>
+					 
+					 <c:if test="${listState.size()==0}">
+					  	<tr height="30" align="center" bgcolor="#ffffff">
+					  		<td colspan="4">등록된 정보가 없습니다.</td>
+						</tr>  
+					 </c:if>
+					 
 				</table>
 	    	</div>
 	    	
 	    	<div class="btn_box">
 	    		<form action="">
-	    			<button type="button" class="btn_style" id="returnList_btn" style="margin-right: 965px;" onclick="location.href='${pageContext.request.contextPath}/admin/management/list'">리스트</button>
+	    			<button type="button" class="btn_style" id="returnList_btn" style="margin-right: 1070px;" onclick="location.href='${pageContext.request.contextPath}/admin/management/list'">리스트</button>
 	    			<button type="button" class="btn_style" id="stateChange_btn" onclick="detailedMember('${dto.userId}');">상태변경</button>
-	    			<button type="button" class="btn_style" id="memberDelete_btn">회원삭제</button>
 	    		</form>
 	    	</div>
 	    	
