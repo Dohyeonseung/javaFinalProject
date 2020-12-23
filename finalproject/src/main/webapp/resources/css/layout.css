@@ -184,7 +184,7 @@ ul.nav .current a, ul.nav li:hover > a {
 
 ul.nav ul {
   display: none;
-  width: 160px;
+  width: 20px;
   text-align: left;
   position: absolute;
 }
@@ -223,7 +223,7 @@ ul.nav li:hover > ul li a {
 ul.nav li:hover > ul li a:hover {
   color: #333;
   text-decoration: none;
-  
+
 }
 
 @media screen and (max-width: 786px){

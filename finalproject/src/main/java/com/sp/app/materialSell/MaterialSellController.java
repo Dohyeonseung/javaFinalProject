@@ -185,6 +185,8 @@ public class MaterialSellController {
 		   model.addAttribute("page", page);
 		   model.addAttribute("query", query);
 		   
+		   model.addAttribute("menuItem", "main");
+		   
 		   return ".ms.article";
 	   }
 	   
