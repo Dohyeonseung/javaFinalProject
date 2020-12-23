@@ -74,6 +74,13 @@ function ajaxFun(url, method, dataType, query, fn) {
 	});
 }
 
+function searchList() {
+	var f=document.searchForm;
+	f.enabled.value=$("#selectEnabled").val();
+	f.action="${pageContext.request.contextPath}/admin/management/list";
+	f.submit();
+}
+
 </script>
 <div id="mainContainer">
 	<div id="contentContainer">
@@ -87,11 +94,13 @@ function ajaxFun(url, method, dataType, query, fn) {
 		      <td align="left" width="50%">
 		          ${dataCount}개(${page}/${total_page} 페이지)
 		      </td>
-		      <!-- 
 		      <td align="right">
-		          &nbsp;
-		      </td>
-		       -->
+			          <select id="selectEnabled" class="selectField" onchange="searchList();">
+			          		<option value="" ${enabled=="" ? "selected='selected'":""}>::계정상태::</option>
+			          		<option value="0" ${enabled=="0" ? "selected='selected'":""}>잠금 계정</option>
+			          		<option value="1" ${enabled=="1" ? "selected='selected'":""}>활성 계정</option>
+			          </select>
+			   </td>
 		   </tr>
 		</table>
 		
@@ -143,12 +152,11 @@ function ajaxFun(url, method, dataType, query, fn) {
 		                  <option value="userId" ${condition=="userId"?"selected='selected'":""}>아이디</option>
 		                  <option value="userName" ${condition=="userName"?"selected='selected'":""}>이름</option>
 		                  <option value="signUpdate" ${condition=="created_date"?"selected='selected'":""}>가입일</option>
-		                  <option value="state" ${condition=="enabled"?"selected='selected'":""}>상태</option>
 		            </select>
+		            <input type="text" name="keyword" value="${keyword}" class="boxTF" style="width: 300px; height: 24px;">
 		            <input type="hidden" name="enabled" value="${enabled}">
 		            <input type="hidden" name="page" value="1">
-		            <input type="text" name="keyword" value="${keyword}" class="boxTF" style="width: 300px; height: 24px;">
-		            <button type="button" class="btn_style" style="vertical-align: bottom;" onclick="">검색</button>
+		            <button type="button" class="btn_style" style="vertical-align: bottom;" onclick="searchList();">검색</button>
 		        </form>
 		      </td>
 		   </tr>

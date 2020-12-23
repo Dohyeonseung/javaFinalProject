@@ -8,6 +8,12 @@
 			<when test="condition=='userId'">
 				INSTR(m1.userId, #{keyword}) &gt;= 1
 			</when>
+			<when test="condition=='userName'">
+				INSTR(userName, #{keyword}) &gt;=1
+			</when>
+			<when test="condition=='signUpdate'">
+				( TO_CHAR(m1.created_date, 'YYYYMMDD') = #{keyword} OR TO_CHAR(m1.created_date, 'YYYY-MM-DD') = #{keyword} )
+			</when>
 			<otherwise>
 				INSTR(${condition}, #{keyword}) &gt;= 1
 			</otherwise>
@@ -90,17 +96,12 @@
 	</select>
 	
 	<!-- 회원삭제 -->
-	<delete id="deleteMember1" parameterType="String">
-    	DELETE FROM member1
-    	<if test="userId == 'admin'">
-    	WHERE userId = ${userId}
-    	</if>
+	<delete id="deleteMember2" parameterType="String">
+    		DELETE FROM member2 WHERE userId=#{userId}
     </delete>
     
-    <delete id="deleteMember2" parameterType="String">
-    	<if test="userId == 'admin'">
-    	DELETE FROM member2 WHERE userId=#{userId}
-		</if>
+    <delete id="deleteMember1" parameterType="String">
+    		DELETE FROM member1 WHERE userId=#{userId}
     </delete>
 
 </mapper>

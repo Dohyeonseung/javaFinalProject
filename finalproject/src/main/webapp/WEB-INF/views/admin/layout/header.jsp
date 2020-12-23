@@ -137,11 +137,11 @@ $(function(){
 <div id="mainContainer">
 	<div id="title_menu">
 		<h3>
-			<a href="#" style="border-right: 2px solid #FFFDF9; padding: 0 10px 0 20px;"><i class="fas fa-cog" style="color: #FFFDF9"></i> DIY Admin</a>
-			<a href="#" style="padding: 0 0 0 10px;">관리</a>
+			<a href="${pageContext.request.contextPath}/admin/home" style="border-right: 2px solid #FFFDF9; padding: 0 10px 0 20px;"><i class="fas fa-cog" style="color: #FFFDF9"></i> DIY Admin</a>
+			<span style="padding: 0 0 0 10px;">관리</span>
 			<span style="float: right; padding: 0 25px 0 0;">어서오세요 <strong style="color: #1e1e1e;">${sessionScope.member.userName}</strong>님
-			<a href="#" style="padding: 0 25px 0 50px;">로그아웃</a>
-			<a href="#" style="padding: 0 25px 0 25px;">DIY홈</a>
+			<a href="${pageContext.request.contextPath}/admin/logout" style="padding: 0 25px 0 50px;">로그아웃</a>
+			<a href="${pageContext.request.contextPath}" style="padding: 0 25px 0 25px;">DIY홈</a>
 			</span>
 		</h3>
 	</div>
@@ -153,7 +153,7 @@ $(function(){
 			<li> <a href="${pageContext.request.contextPath}/admin/bbsManagement/deck" style="padding: 0 20px 0 20px;">게시판관리</a> </li>
 			<li> <a href="${pageContext.request.contextPath}/admin/adminSales/saleshome">판매관리</a>
 				<ul>
-					<li> <a href="${pageContext.request.contextPath}/admin/adminSales/productlist">재고관리</a> </li>
+					<li> <a href="${pageContext.request.contextPath}/admin/adminSales/productlist">상품관리</a> </li>
 					<li> <a href="${pageContext.request.contextPath}/admin/adminSales/chart">판매통계</a> </li>
 				</ul>
 			</li>

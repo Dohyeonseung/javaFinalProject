@@ -76,7 +76,7 @@ li {
 }
 
 #categori_box {
-	width: 1280px;
+	width: 1480px;
 	height: 45px;
 	margin: auto;
 	font-size: 16px;
@@ -117,7 +117,7 @@ li {
     text-decoration: none solid rgb(102, 102, 102);
     top: 0px;
     transform-origin: 580px 4544px;
-    width: 1160px;
+    width: 1280px;
     word-break: keep-all;
     border: 0px none rgb(102, 102, 102);
     font: 16px / 24px "NotoSans Light", "Malgun Gothic", "맑은 고딕", "Apple SD Gothic Neo", 돋움, dotum, sans-serif;
@@ -131,8 +131,9 @@ li {
 }
 
 .ethics_area {
-	float: right;
-	width: 860px;
+	padding-left: 200px;
+	float: center;
+	width: 1280px;
 }
 
 #content_1st{

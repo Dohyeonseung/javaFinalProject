@@ -64,7 +64,7 @@ a:hover {
 	<div id="contentContainer">
 		<div id="table_box">
 		<div class="member_title">
-				<h2><i class="fas fa-user-cog"></i> 물류관리</h2>
+				<h2><i class="fas fa-boxes"></i> 물류리스트</h2>
 		</div>
 		
 		<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">

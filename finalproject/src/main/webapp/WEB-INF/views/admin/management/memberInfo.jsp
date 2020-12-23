@@ -142,7 +142,7 @@ function updateOk() {
 	var query=$("#deteailedMemberForm").serialize();
 
 	var fn = function(data){
-		$("form input[name=page]").val("${page}");
+		location.href="${pageContext.request.contextPath}/admin/management/info?userId=${dto.userId}";
 	};
 	ajaxFun(url, "post", "html", query, fn);
 		
@@ -152,10 +152,17 @@ function updateOk() {
 
 function deleteOk(userId) {
 	if(confirm("선택한 계정을 삭제 하시겠습니까 ?")) {
-			
+		var url = "${pageContext.request.contextPath}/admin/management/deleteMember";
+		var query = "userId="+userId;
+		
+		var fn = function(data) {
+			location.href="${pageContext.request.contextPath}/admin/management/list";
+		};
+		ajaxFun(url, "post", "html", query, fn);
+	} else {
+		$('#member_dialog').dialog("close");
 	}
 	
-	$('#member_dialog').dialog("close");
 }
 
 // 상태변동기록

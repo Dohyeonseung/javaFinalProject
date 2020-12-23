@@ -173,5 +173,22 @@ public class ManagementController {
 		model.put("state", state);
 		return model;
 	}
+	
+	@RequestMapping(value="deleteMember", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> deleteMember(Member dto) throws Exception {
+		
+		String state = "true";
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("userId", dto.getUserId());
+			service.deleteMember(map);
+		} catch (Exception e) {
+			state = "false";
+		}
+		Map<String, Object> model = new HashMap<String, Object>();
+		model.put("state", state);
+		return model;
+	}
 }
 
