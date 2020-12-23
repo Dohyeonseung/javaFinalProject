@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="qna">
+	<select id="seq" resultType="Integer">
+		SELECT qna_seq.NEXTVAL FROM dual
+	</select>
+	
+	<insert id="insertQna" parameterType="com.sp.app.qna.Qna">
+		INSERT INTO qna(boardNum, userId, subject, content, groupNum, 
+						depth, orderNo, parent, created)
+				VALUES (#{boardNum}, #{userId}, #{subject}, #{content},
+						#{groupNum}, #{depth}, #{orderNo}, #{parent}, SYSDATE) 
+	</insert>
+	
+	<sql id="where-list">
+		<if test="condition=='all' ">
+			( INSTR(subject, #{keyword}) &gt; 0
+				OR DBMS_LOB.INSTR(content, #{keyword}) &gt; 0 )
+		</if>
+		<if test="condition=='subject' ">
+			INSTR(subject, #{keyword}) &gt; 0
+		</if>
+		<if test="condition=='content' ">
+			DBMS_LOB.INSTR(content, #{keyword}) &gt; 0
+		</if>
+		<if test="condition=='userName' ">
+			userName=#{keyword}
+		</if>
+	</sql>
+	
+	<select id="listQna" parameterType="map" resultType="com.sp.app.qna.Qna">
+		SELECT boardNum, m.userName, q.userId, subject, created, groupNum, orderNo, depth
+		FROM qna q
+		JOIN member1 m ON q.userId=m.userId
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+		</where>
+		ORDER BY groupNum DESC, orderNo ASC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) 
+		FROM qna q
+		JOIN member1 m ON q.userId=m.userId
+		<where>
+			<if test="keyword!=null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+		</where>
+	</select>
+	
+	<select id="readQna" parameterType="Integer" resultType="com.sp.app.qna.Qna">
+		SELECT boardNum, q.userId, userName, subject, content, groupNum, 
+				depth, orderNo, parent, created
+		FROM qna q
+		JOIN  member1 m ON q.userId = m.userId
+		WHERE boardNum = #{boardNum}                       
+	</select>
+	
+	<update id="updateQna" parameterType="com.sp.app.qna.Qna">
+		UPDATE qna SET subject=#{subject}, content=#{content}
+		WHERE boardNum = #{boardNum} AND userId = #{userId}
+	</update>
+	
+	<delete id="deleteQna" parameterType="map">
+		DELETE FROM qna WHERE boardNum IN
+			( SELECT boardNum FROM qna START WITH boardNum = #{boardNum}
+				CONNECT BY PRIOR boardNum = parent )
+	</delete>
+	
+	<update id="updateOrderNo" parameterType="map">
+		UPDATE qna SET orderNo=orderNo+1
+		WHERE groupNum=#{groupNum} AND orderNo &gt; #{orderNo}
+	</update>
+	
+	<select id="listArticleQna" parameterType="Integer" resultType="com.sp.app.qna.Qna">
+		SELECT ROWNUM listNum, tb.* FROM (
+			SELECT boardNum, userName, q.userId, subject, 
+					TO_CHAR(created, 'YYYY-MM-DD') created, groupNum, orderNo, depth
+			FROM qna q
+			JOIN member1 m ON q.userId=m.userId
+			WHERE groupNum=#{groupNum}
+			ORDER BY orderNo ASC
+		) tb
+	</select>
+
+</mapper>
