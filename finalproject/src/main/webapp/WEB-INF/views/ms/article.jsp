@@ -24,6 +24,10 @@ ul li {
 	list-style: none;
 }
 
+.slider li img {
+	height: 600px;
+}
+
 img {
  max-width: 100%; 
  height: auto; 
@@ -105,7 +109,8 @@ img {
 }
 </style>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/tabs.css" type="text/css">
-
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/slider/css/jquery.bxslider.min.css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/slider/js/jquery.bxslider.min.js"></script>
 <script type="text/javascript">
 $(function(){
 	var menu = "${menuItem}"; 
@@ -187,16 +192,24 @@ function listPage(page) {
 
 </script>
 
-<body>
 
 	
 <div id="msellBody">
 	
 <div id="materialSell_AT">
 		<div class="thumbnail">
+		<!--
 			<div class="thumbnail_main">
 				<img alt="" src="${pageContext.request.contextPath}/uploads/ms/${dto.imageFilename}">
 			</div>
+			  -->
+			<div class="thumbnail_main">
+        		<ul class="slider">
+        				<li><a href="#"><img src="${pageContext.request.contextPath}/resources/img/slider1.jpg"></a></li>
+        				<li><a href="#"><img src="${pageContext.request.contextPath}/resources/img/slider2.JPG"></a></li>
+        				<li><a href="#"><img src="${pageContext.request.contextPath}/resources/img/slider3.jpg"></a></li>
+        		</ul>
+        	</div>
 		</div>
 		
 		<div class="reviewLink"><a href="#">★★★★ 리뷰96건</a></div>
@@ -228,5 +241,18 @@ function listPage(page) {
 </div>
 
 </div>
-</body>
-</html>
+
+<script type="text/javascript">
+$(function(){
+	$('.slider').bxSlider({
+		auto: false,  // 자동 애니메이션 시작
+		speed: 500, // 애니메이션 속도
+		pause: 5000,  // 애니메이션 유지시간(단위:ms) 
+		mode: 'horizontal', // 기본값. 슬라이드 모드 : 'fade', 'horizontal', 'vertical'
+		autoControls: false,  // 시작 및 중지 버튼
+		pager: false, // 동그라미(불릿) 버튼 노출 여부
+		captions: true,  // 이미지 위에 텍스트 표시
+		touchEnabled: true // <a href="주소"> 에서 설정한 주소로 이동 가능하도록 
+	});
+});
+</script>
