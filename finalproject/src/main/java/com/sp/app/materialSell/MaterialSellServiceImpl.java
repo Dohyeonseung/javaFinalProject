@@ -65,27 +65,7 @@ public class MaterialSellServiceImpl implements MaterialSellService {
 		
 		return dto;
 	}
-	@Override
-	public MaterialSell preReadMaterialSell(Map<String, Object> map) {
-		MaterialSell dto =null;
-		try {
-			dto=dao.selectOne("ms.preReadMaterialSell", map);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return dto;
-	}
-	@Override
-	public MaterialSell nextReadMaterialSell(Map<String, Object> map) {
-		MaterialSell dto=null;
-		try {
-			dto=dao.selectOne("ms.nextReadMaterialSell",map);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	
-		return dto;
-	}
+
 	@Override
 	public void updateMaterialSell(MaterialSell dto, String pathname) throws Exception {
 		

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sp.app.common.MyUtil;
 
+
 @Controller("selltab.infor.informationController")
 @RequestMapping("/selltab/information/*")
 public class InformationController {
@@ -66,7 +67,36 @@ public class InformationController {
 			@RequestParam(value="pageNo", defaultValue="1") int current_page,
 			@RequestParam int productNum,
 			Model model) throws Exception{
-
+		
+		int rows=5;
+		int total_page =0;
+		int dataCount=0;
+		
+		Map<String, Object> map =new HashMap<>();
+		map.put("productNum", productNum);
+		
+		dataCount = service.dataCountReview(map);
+		if(dataCount !=0)
+			total_page = myUtil.pageCount(rows, dataCount);
+		
+		if(total_page < current_page) 
+            current_page = total_page;
+		
+		int offset = (current_page-1) * rows;
+		if(offset < 0) offset = 0;
+        map.put("offset", offset);
+        map.put("rows", rows);
+        
+        List<Review> list =service.listReview(map);
+        
+        String paging = myUtil.pagingMethod(current_page, total_page, "listPage");
+        
+		model.addAttribute("list", list);
+		model.addAttribute("pageNo", current_page);
+		model.addAttribute("dataCount", dataCount);
+		model.addAttribute("total_page", total_page);
+		model.addAttribute("paging", paging);
+		
 		return "ms/tab/review";
 	}
 

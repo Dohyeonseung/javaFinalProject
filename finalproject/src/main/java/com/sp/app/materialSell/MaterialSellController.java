@@ -176,12 +176,9 @@ public class MaterialSellController {
 		   map.put("condition", condition);
 		   map.put("keyword", keyword);
 		   
-		   MaterialSell preReadDto=service.preReadMaterialSell(map);
-		   MaterialSell nextReadDto=service.nextReadMaterialSell(map);
+		 
 		   
 		   model.addAttribute("dto", dto);
-		   model.addAttribute("preReadDto", preReadDto);
-		   model.addAttribute("nextReadDto", nextReadDto);
 		   model.addAttribute("page", page);
 		   model.addAttribute("query", query);
 		   

@@ -1,17 +1,18 @@
 @charset "UTF-8";
 
 ul.tabs {
-	margin: 0;
-	padding: 0;
-	float: left;
+	width:100%;
 	list-style: none;
 	height: 35px;
 	border-bottom: 1px solid #dddddd;
 	width: 100%;
+	display: flex;
+	justify-content: space-around;
+	 border-radius: 5px;
 }
 ul.tabs li {
 	float: left;
-	margin: 0;
+	width:100%;
 	cursor: pointer;
 	padding: 0px 21px ;
 	height: 35px;
@@ -19,12 +20,12 @@ ul.tabs li {
 	overflow: hidden;
 	position: relative;
 	background: #ffffff;
+	text-align: center;
 }
 ul.tabs li:hover {
 	background: #e7e7e7;
 }	
 ul.tabs li.active{
 	font-weight: 700;
-	border: 1px solid #dddddd;
 	border-bottom-color:  transparent;
 }

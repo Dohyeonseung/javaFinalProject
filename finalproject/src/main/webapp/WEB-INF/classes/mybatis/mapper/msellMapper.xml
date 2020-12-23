@@ -68,30 +68,7 @@
 	 	WHERE productNum=#{productNum}
 	 </select>
 	 
-	 <select id="preReadMaterialSell" parameterType="map" resultType="com.sp.app.materialSell.MaterialSell">
-	 	SELECT productNum, productName FROM product
-	 	<where>
-		         <if test="keyword!=null and keyword!=''">
-		            <include refid="where-list"></include>
-		         </if>
-		         AND (productNum &gt; #{productNum})
-		      </where>
-		      ORDER BY productNum ASC
-		      FETCH FIRST 1 ROWS ONLY
-	 </select>
-	 
-	 
-	  <select id="naxtReadMaterialSell" parameterType="map" resultType="com.sp.app.materialSell.MaterialSell">
-	 	SELECT productNum, productName FROM product
-	 	<where>
-		         <if test="keyword!=null and keyword!=''">
-		            <include refid="where-list"/>
-		         </if>
-		         AND (productNum &lt; #{productNum})
-		      </where>
-		      ORDER BY productNum DESC
-		      FETCH FIRST 1 ROWS ONLY
-	 </select>
+	
 	 
 	 <delete id="deleteMaterialSell" parameterType="Integer">
 		DELETE FROM product WHERE productNum = #{productNum}

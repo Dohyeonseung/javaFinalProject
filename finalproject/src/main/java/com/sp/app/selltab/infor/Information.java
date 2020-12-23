@@ -5,6 +5,7 @@ public class Information {
 	private String userId;
 	private String userName;
 	private String state;
+	private String orderId;
 	
 	public String getUserId() {
 		return userId;
@@ -35,6 +36,12 @@ public class Information {
 	}
 	public void setProductNum(int productNum) {
 		this.productNum = productNum;
+	}
+	public String getOrderId() {
+		return orderId;
+	}
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
 	}
 
 }

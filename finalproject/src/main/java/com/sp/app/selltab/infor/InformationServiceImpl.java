@@ -37,4 +37,31 @@ public class InformationServiceImpl implements InformationService {
 		return list;
 	}
 
+	
+	@Override
+	public int dataCountReview(Map<String, Object> map) {
+		int result =0;
+		
+		try {
+			result=dao.selectOne("infor.dataCountReview");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public List<Review> listReview(Map<String, Object> map) {
+		List<Review> list =null;
+		
+		try {
+			list=dao.selectList("infor.listReview", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	
+
 }
