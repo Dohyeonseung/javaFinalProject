@@ -27,7 +27,7 @@
    	 <div class=qnasecond>
   	 	${dto.content}
    	 </div>
-</div>
+	</div>
    </c:forEach>
 
 
