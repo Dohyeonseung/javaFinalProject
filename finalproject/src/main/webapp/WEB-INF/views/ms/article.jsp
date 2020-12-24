@@ -111,6 +111,7 @@ img {
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/tabs.css" type="text/css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/slider/css/jquery.bxslider.min.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/slider/js/jquery.bxslider.min.js"></script>
+
 <script type="text/javascript">
 $(function(){
 	var menu = "${menuItem}"; 

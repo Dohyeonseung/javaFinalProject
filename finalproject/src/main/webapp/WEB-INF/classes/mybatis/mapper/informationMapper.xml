@@ -36,5 +36,19 @@
 		ORDER BY listNum DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	</select>
+	
+	<select id="listQna" parameterType="map" resultType="com.sp.app.selltab.infor.Qna">
+		SELECT q.productNum, num, q.userId, m.userName, q.content, q.created, state, 
+		NVL(answerCount, 0) answerCount
+		FROM sellqna q
+		JOIN member1 m ON q.userId = m.userId
+		LEFT OUTER JOIN (
+			SELECT answer, COUNT(*) answerCount
+			FROM sellqna WHERE answer!=0 GROUP BY answer
+		) a ON q.productNum = a.answer
+		WHERE productNum=#{productNum} AND q.answer=0
+		ORDER BY q.productNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
 
 </mapper>

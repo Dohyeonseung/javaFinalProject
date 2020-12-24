@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<script type="text/javascript" src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script type="text/javascript">
 $(function() {
    $('#menuBox').hover(function() {
@@ -68,7 +67,7 @@ $(function() {
             <li><a href="#">고객센터</a></li>
       </ul>
       
-      <div class="subMenu" style="z-index: 9999; ">
+      <div class="subMenu" style="z-index: 9999; display: none;" >
             <table class="menuTable" style="height: 200px;">
                <tr>
                   <td><a href="${pageContext.request.contextPath}/company/company">회사소개</a></td>

@@ -23,7 +23,7 @@
  	</c:forEach>
 	<tr height='40'>
 		<td colspan='2' align='center'>
-			${dataCount==0?"등록된 게시물이 없습니다.":paging}
+			${dataCount==0?"":paging}
 		</td>
 	</tr>    
 	</tbody>
