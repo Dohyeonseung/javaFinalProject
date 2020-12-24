@@ -12,7 +12,7 @@ a {
 	text-decoration: none;
 }
 
-a:hover {
+.productList_a:hover {
 	text-decoration: none;
 	color: #4374D9;
 }
@@ -79,27 +79,27 @@ a:hover {
 		</table>
 		
 		<table style="width: 100%; margin: 0px auto; border-spacing: 0px; border-collapse: collapse;">
-		  <tr align="center" bgcolor="#eeeeee" height="35" style="border-top: 2px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
-		      <th width="50" style="color: #787878;">상품번호</th>
-		      <th width="50" style="color: #787878;">상품코드</th>
-		      <th width="100" style="color: #787878;">상품명</th>
-		      <th width="50" style="color: #787878;">가격</th>
-		      <th width="50" style="color: #787878;">수량</th>
-		      <th width="50" style="color: #787878;">최근입고날짜</th>
-		      <th width="30" style="color: #787878;">상태</th>
-		      <th width="20" style="color: #787878;"></th>
+		  <tr align="center" bgcolor="#FFFFFF" height="35" style="border-top: 2px solid #1e1e1e; border-bottom: 1px solid #1e1e1e;"> 
+		      <th width="50" style="color: #1e1e1e;">등록번호</th>
+		      <th width="50" style="color: #1e1e1e;">식별코드</th>
+		      <th width="50" style="color: #1e1e1e;">판매등록일</th>
+		      <th width="100" style="color: #1e1e1e;">상품명</th>
+		      <th width="50" style="color: #1e1e1e;">가격</th>
+		      <th width="50" style="color: #1e1e1e;">수량</th>
+		      <th width="30" style="color: #1e1e1e;">상태</th>
+		      <th width="20" style="color: #1e1e1e;"></th>
 		  </tr>
 		 
 		  <tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
 		      <td width="50">1</td>
 		      <td width="50">DIY34578</td>
+		      <td width="50">2020-12-48</td>
 		      <td width="100">초보자도 따라만드는 DIY 책상키트</td>
 		      <td width="50">137,600원</td>
 		      <td width="50">42</td>
-		      <td width="50">2020-12-48</td>
 		      <td width="50">판매중</td>
 		      <td width="30">
-		      <a href="${pageContext.request.contextPath}/admin/adminSales/productinfo" style="float: center"><i class="fas fa-cog" style="color: #1e1e1e;"></i></a>
+		      <a href="${pageContext.request.contextPath}/admin/adminSales/productinfo" style="float: center" class="productList_a"><i class="fas fa-cog" style="color: #1e1e1e;"></i></a>
 		      </td>
 		  </tr>
 

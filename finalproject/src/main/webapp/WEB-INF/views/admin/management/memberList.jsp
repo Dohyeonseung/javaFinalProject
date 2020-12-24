@@ -105,14 +105,14 @@ function searchList() {
 		</table>
 		
 		<table style="width: 100%; margin: 0px auto; border-spacing: 0px; border-collapse: collapse;">
-		  <tr align="center" bgcolor="#eeeeee" height="35" style="border-top: 2px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
-		      <th width="30" style="color: #787878;">번호</th>
-		      <th width="50" style="color: #787878;">아이디</th>
-		      <th width="50" style="color: #787878;">이름</th>
-		      <th width="100" style="color: #787878;">사용자이메일</th>
-		      <th width="50" style="color: #787878;">가입일</th>
-		      <th width="50" style="color: #787878;">상태</th>
-		      <th width="10" style="color: #787878;"></th>
+		  <tr align="center" bgcolor="FFFFFF" height="35" style="border-top: 2px solid #1e1e1e; border-bottom: 1px solid #1e1e1e;"> 
+		      <th width="30" style="color: #1e1e1e;">번호</th>
+		      <th width="50" style="color: #1e1e1e;">아이디</th>
+		      <th width="50" style="color: #1e1e1e;">이름</th>
+		      <th width="100" style="color: #1e1e1e;">사용자이메일</th>
+		      <th width="50" style="color: #1e1e1e;">가입일</th>
+		      <th width="50" style="color: #1e1e1e;">상태</th>
+		      <th width="10" style="color: #1e1e1e;"></th>
 		  </tr>
 		 <c:forEach var="dto" items="${list}">
 		  <tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 

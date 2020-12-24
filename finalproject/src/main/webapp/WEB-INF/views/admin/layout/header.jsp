@@ -153,6 +153,7 @@ $(function(){
 			<li> <a href="${pageContext.request.contextPath}/admin/bbsManagement/deck" style="padding: 0 20px 0 20px;">게시판관리</a> </li>
 			<li> <a href="${pageContext.request.contextPath}/admin/adminSales/saleshome">판매관리</a>
 				<ul>
+					<li> <a href="${pageContext.request.contextPath}/admin/adminSales/orderlist">주문조회</a> </li>
 					<li> <a href="${pageContext.request.contextPath}/admin/adminSales/productlist">상품관리</a> </li>
 					<li> <a href="${pageContext.request.contextPath}/admin/adminSales/chart">판매통계</a> </li>
 				</ul>

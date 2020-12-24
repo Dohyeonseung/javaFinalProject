@@ -22,7 +22,12 @@ public class SalesController {
 	
 	@RequestMapping(value="productlist", method=RequestMethod.GET)
 	public String productList() {
-		return ".admin.adminSales.salesList";
+		return ".admin.adminSales.productList";
+	}
+	
+	@RequestMapping(value="orderlist", method=RequestMethod.GET)
+	public String orderList() {
+		return ".admin.adminSales.orderList";
 	}
 	
 	@RequestMapping(value="enrollment", method=RequestMethod.GET)
