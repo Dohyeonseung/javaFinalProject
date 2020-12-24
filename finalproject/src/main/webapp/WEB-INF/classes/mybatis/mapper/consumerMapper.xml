@@ -7,14 +7,66 @@
 	<select id="qna_seq" resultType="Integer">
 		SELECT qna_seq.NEXTVAL FROM dual
 	</select>
+	
+	<select id="faq_seq" resultType="Integer">
+		SELECT faq_seq.NEXTVAL FROM dual
+	</select>
 
 	<!-- 질문 등록 -->
 	<insert id="insertQna" parameterType="com.sp.app.consumer.ConsumerQNA">
 	 	INSERT INTO consumerQna(qnaNum, userId, subject, content, created) VALUES (#{qnaNum}, #{userId}, #{q_subject}, #{q_content}, SYSDATE)
 	</insert>
 	
+	<!-- 자주하는 질문 등록 -->
+	<insert id="insertFaq" parameterType="com.sp.app.consumer.ConsumerFAQ">
+	 	INSERT INTO consumerFaq(num, userId, subject, content, created, questionType, views) VALUES (#{faqNum}, #{userId}, #{f_subject}, #{f_content}, SYSDATE, #{questionType}, 0)
+	</insert>
+	
 	<!-- 파일 등록 -->
 	<insert id="insertFile" parameterType="com.sp.app.consumer.ConsumerQNA">
 		INSERT INTO qnaMultiFile(fileNum, qnaNum, saveFileName, originalFileName) VALUES (qnaMultiFile_seq.NEXTVAL, #{qnaNum}, #{saveFileName}, #{originalFileName})
 	</insert>
+	
+	<!-- 조회수 증가 -->
+	<update id="updateReview" parameterType="Integer">
+		UPDATE consumerfaq SET views=views+1 WHERE num = #{num}
+	</update>
+	
+	<!-- FAQ 리스트 갯수 -->
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM consumerFaq f
+		JOIN member1 m1 ON f.userId = m1.userId
+		<where>
+			questionType = #{questionType}
+			<if test="keyword!=null and keyword!=''">
+				AND INSTR(subject, #{keyword}) &gt; 0
+			</if>
+		</where>
+	</select>
+	
+	<!-- 자주보는 질문 Best10 리스트 출력 -->
+	<select id="populList" parameterType="map" resultType="com.sp.app.consumer.ConsumerFAQ">
+		SELECT num faqnum, subject f_subject, questionType
+		FROM consumerFaq
+		<where>
+			questionType = #{questionType}
+		</where>
+		ORDER BY views DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<!-- 자주하는 질문 리스트 -->
+	<select id="faqList" parameterType="map" resultType="com.sp.app.consumer.ConsumerFAQ">
+		SELECT num faqnum, userId, subject f_subject, content f_content, created, questionType
+		FROM consumerFaq
+		<where>
+			questionType = #{questionType}
+			<if test="keyword!=null and keyword!=''">
+				AND INSTR(subject, #{keyword}) &gt; 0
+			</if>
+		</where>
+		ORDER BY num DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
 </mapper>

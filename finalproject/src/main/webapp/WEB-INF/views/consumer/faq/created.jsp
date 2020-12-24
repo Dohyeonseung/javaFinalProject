@@ -10,7 +10,7 @@ div, body {
 }
 
 #mContainor {
-	width: 100%;
+	width: auto;
 	height: auto;
 	overflow: hidden;
 }
@@ -84,21 +84,21 @@ a:hover {
 </style>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/se/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">
-function sendQNA() {
-    var f = document.consumerQnaForm;
+function send() {
+    var f = document.faqForm;
 
 	var str = f.f_subject.value;
     if(!str) {
         alert("제목을 입력하세요. ");
         f.f_subject.focus();
-        return;
+        return false;
     }
-
+    oEditors.getById["f_content"].exec("UPDATE_CONTENTS_FIELD", []);
 	str = f.f_content.value;
     if(!str) {
         alert("내용을 입력하세요. ");
         f.f_content.focus();
-        return;
+        return false;
     }
 
 	f.action="${pageContext.request.contextPath}/consumer/faq/created";
@@ -106,50 +106,57 @@ function sendQNA() {
     f.submit();
 }
 </script>
-
-<form name="consumerQnaForm" method="post" enctype="multipart/form-data">
 <div id="mContainor">
 	<div id="subContainor">
-	    <div id="title_box">
-			<h1><i class="fas fa-edit"></i> FAQ 등록</h1>
-	    </div>
-	    <table class="helpTable">
-	    	<tr style="border-bottom: 1px solid #cccccc; border-top: 1px solid #101010;">
-	    		<td class="category_id">카테고리</td>
-	    		<td>
-					<select style="width: 769px; height: 30px; border-radius: 5px;">
-						<option>==선택하세요==</option>
-						<option>DIY</option>
-						<option>계정문의</option>
-						<option>판매신청</option>
-						<option>기타</option>
-					</select>
-	    		</td>
-	    	</tr>
-	    	
-	    	<tr style="border-bottom: 1px solid #cccccc;">
-	    		<td class="category_id">FAQ 제목</td>
-	    		<td>
-	    			<input class="short_input" type="text" name="f_subject" value="${dto.q_subject}">
-	    		</td>
-	    	</tr>
-	    	
-	    	<tr style="border-bottom: 1px solid #101010;">
-	    		<td class="category_id">답변 내용</td>
-	    		<td valign="top" style="padding:18px 0 18px 0;">
-	    			<textarea class="hp_content" style="width: 760px; height: 300px; overflow: auto; resize: none;" name="f_content" id="f_content"></textarea>
-	    		</td>
-	    	</tr>
+		<div id="title_box">
+			<h1>
+				<i class="fas fa-edit"></i>&nbsp;FAQ 등록
+			</h1>
+		</div>
+		<form name="faqForm" method="post">
+			<table class="helpTable">
+				<tr style="border-bottom: 1px solid #cccccc; border-top: 1px solid #101010;">
+					<td class="category_id">
+						카테고리
+					</td>
+					<td>
+						<select name="questionType" style="width: 769px; height: 30px; border-radius: 5px;">
+							<option value="1">DIY</option>
+							<option value="2">계정문의</option>
+							<option value="3">판매신청</option>
+							<option value="4">기타</option>
+						</select>
+					</td>
+				</tr>
+				
+				<tr style="border-bottom: 1px solid #cccccc;">
+					<td class="category_id">
+						FAQ 제목
+					</td>
+					<td>
+						<input name="f_subject" class="short_input" type="text">
+					</td>
+				</tr>
+				
+				<tr style="border-bottom: 1px solid #cccccc;">
+					<td class="category_id">
+						답변 내용
+					</td>
+					<td valign="top" style="padding: 18px 0 18px 0;">
+						<textarea name="f_content" id="f_content" class="hp_content" style="width: 760px; height: 300px; overflow: auto; resize: none;"></textarea>
+					</td>
+				</tr>
+			</table>
 			
-	    </table>
-	    
-		<div id="agree_button">
-            	<button class="btn_style" type="button" onclick="sendQNA()">FAQ 등록</button>
-            	<button class="btn_style" type="button">등록 취소</button>
-        </div>
+			<div id="agree_button">
+				<button class="btn_style" type="button" onclick="send();">FAQ 등록</button>
+				<button class="btn_style" type="button" onclick="${pageContext.request.contextPath}/consumer/list">등록 취소</button>
+			</div>
+		</form>
 	</div>
 </div>
-</form>
+
+
 <script type="text/javascript">
 var oEditors = [];
 nhn.husky.EZCreator.createInIFrame({

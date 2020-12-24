@@ -64,7 +64,7 @@ $(function() {
             <li><a href="#">Sell</a></li>
             <li><a href="#">Buy</a></li>
             <li><a href="#">커뮤니티</a> </li>
-            <li><a href="#">고객센터</a></li>
+            <li><a href="${pageContext.request.contextPath}/consumer/main">고객센터</a></li>
       </ul>
       
       <div class="subMenu" style="z-index: 9999; display: none;" >
@@ -74,21 +74,21 @@ $(function() {
                   <td><a href="${pageContext.request.contextPath}/ms/list">재료 판매</a></td>
                   <td><a href="${pageContext.request.contextPath}/buy/material">재료구매</a></td>
                   <td><a href="#">지역모임</a></td>
-                  <td><a href="#">1:1문의(Q&A)</a></td>
+                  <td><a href="${pageContext.request.contextPath}/consumer/myHistory">1:1문의(Q&A)</a></td>
                </tr>
                <tr>
                   <td><a href="#">이용안내</a></td>
                   <td><a href="#">예약 판매</a></td>
                   <td><a href="#">예약 구매</a></td>
                   <td><a href="#">DIY Tip</a></td>
-                  <td><a href="#">자주하는 질문</a></td>
+                  <td><a href="${pageContext.request.contextPath}/consumer/list">자주하는 질문</a></td>
                </tr>
                <tr>
                   <td><a href="${pageContext.request.contextPath}/company/ethics">윤리규정</a></td>
                   <td><a href="#">완제품 판매</a></td>
                   <td><a href="#">완제품구매</a></td>
                   <td><a href="${pageContext.request.contextPath}/qna/list">묻고 답하기</a></td>
-                  <td><a href="#">실시간 채팅</a></td>
+                  <td><a href="#"></a></td>
                   
                </tr>
                <tr>
@@ -96,7 +96,7 @@ $(function() {
                   <td></td>
                   <td></td>
                   <td><a href="${pageContext.request.contextPath}/notice/list">공지사항</a></td>
-                  <td><a href="#">판매자 서비스</a></td>
+                  <td><a href="#"></a></td>
                </tr>
             </table>
       </div>
