@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sp.app.common.FileManager;
 import com.sp.app.common.MyUtil;
+import com.sp.app.member.SessionInfo;
 
 @Controller("buy.buyController")
 @RequestMapping("/buy/")
@@ -115,7 +117,130 @@ public class BuyController {
 		
 		model.addAttribute("dto", dto);
 		
+		model.addAttribute("mode", "created");
 		return ".buy.product";
 	}
 
+/*
+	@RequestMapping(value = "purchase", method = RequestMethod.GET)
+	public String productForm(Model model) throws Exception {
+		
+		return ".buy.purchase";
+	}
+	
+	@RequestMapping(value = "", method = RequestMethod.POST)
+	public String insertOrderinfo(
+			Orderinfo dto,
+			HttpSession session
+			) throws Exception{
+		
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		
+		try {
+			dto.setMemberIdx(info.getMemberIdx());
+			service.insertOrderinfo(dto);
+		} catch (Exception e) {
+		}
+		
+		return "redirect:/buy/material";
+	}
+*/
+	
+
+	
+	@RequestMapping(value = "addcart", method = RequestMethod.POST)
+	public String cartSubmit(
+			Cart dto,
+			HttpSession session
+			) throws Exception {
+		
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		
+		try {
+			dto.setUserId(info.getUserId());
+			service.insertCart(dto);
+		} catch (Exception e) {
+		}
+		
+		return ".buy.order.cart";
+	}
+	
+	@RequestMapping(value = "cart", method = RequestMethod.GET)
+	public String Cart(
+			HttpServletRequest req,
+			Model model,
+			HttpSession session
+			) throws Exception {
+		
+		SessionInfo info=(SessionInfo) session.getAttribute("member");
+		
+		String userId=info.getUserId();
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		List<Cart> list=service.listCart(map);
+		
+		for(Cart dto:list) {
+			dto.setcId(dto.getcId());
+		}
+		
+		String cp=req.getContextPath();
+		String query="";
+		String articleUrl=cp+"/buy/cart?userId="+userId;
+		if(query.length()!=0) {
+			articleUrl+="&"+query;
+		}
+
+		model.addAttribute("cart", list);
+		model.addAttribute("articleUrl", articleUrl);
+		
+		
+		return ".buy.order.cart";
+	}
+	
+	@RequestMapping(value = "orderForm")
+	public String orderForm(
+			@RequestParam int productNum,
+			@RequestParam(defaultValue = "") String keyword,
+			Model model
+			) throws Exception {
+		
+		keyword = URLDecoder.decode(keyword, "utf-8");
+		
+		String query="";
+		if(keyword.length()!=0) {
+			query+="&keyword="+URLEncoder.encode(keyword, "UTF-8");
+		}
+		
+		Product dto = service.readProduct(productNum);
+		if (dto == null)
+			return "redirect:/buy/product?"+query;
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("productNum", productNum);
+		
+		// dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
+		
+		model.addAttribute("dto", dto);
+		
+		return ".buy.order.order";
+	}
+	
+	@RequestMapping(value = "orderSubmit", method = RequestMethod.POST)
+	public String orderSubmit(
+			Orderinfo dto,
+			HttpSession session
+			) throws Exception {
+		
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		
+		try {
+			dto.setMemberIdx(info.getMemberIdx());
+			service.insertOrderinfo(dto);
+		} catch (Exception e) {
+		}
+		
+		return ".buy.material";
+	}
+	
 }

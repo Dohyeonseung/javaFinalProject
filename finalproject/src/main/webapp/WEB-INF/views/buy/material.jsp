@@ -2,11 +2,6 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/bxslider/js/jquery.min.js"></script>
 
@@ -65,9 +60,6 @@ function article(productNum) {
 }
 </script>
 
-</head>
-<body>
-	
 <div id="wrap">
 	<div class="ingredient">
 		<ul>
@@ -120,5 +112,3 @@ function article(productNum) {
 	
 	
 </div>
-</body>
-</html>

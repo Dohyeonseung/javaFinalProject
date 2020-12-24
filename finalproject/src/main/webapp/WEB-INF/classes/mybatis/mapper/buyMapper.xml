@@ -3,20 +3,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="buy">
 
+	<!-- 페이징 처리용 -->
 	<select id="dataCount" parameterType="map" resultType="Integer">
 		SELECT NVL(COUNT(*), 0)
 		FROM product p
 		JOIN seller s ON p.userId = s.userId
 	</select>
 
+	<!-- 상품 리스트 읽기 -->
 	<select id="listProduct" parameterType="map" resultType="com.sp.app.buy.Product">
 		SELECT productNum, userId, productName, price, content,
 			TO_CHAR(created_date, 'YYYY-MM-DD') created_date, imageFileName, categoryNum
-		FROM product p
+		FROM product
 		ORDER BY productNum DESC
 		OFFSET ${offset} ROWS FETCH FIRST#{rows} ROWS ONLY
 	</select>
 	
+	<!-- 상품 상세설명 확인 -->
 	<select id="readProduct" parameterType="Integer" resultType="com.sp.app.buy.Product">
 		SELECT productNum, p.userId, productName, price, content, reserves,
 			TO_CHAR(created_date, 'YYYY-MM-DD') created_date, imageFileName, categoryNum
@@ -25,5 +28,45 @@
 		WHERE productNum=#{productNum}
 	</select>
 	
+	<insert id="insertCart" parameterType="com.sp.app.buy.Cart">
+		INSERT INTO cart(cId, userId, productNum, count,
+			cName, cPrice, seller, get_date, reserves) VALUES
+			(cart_seq.NEXTVAL, #{userId}, #{productNum}, #{count}, #{cName}, #{cPrice}, #{seller}, SYSDATE, #{reserves})
+	</insert>
+	
+	<select id="listCart" parameterType="map" resultType="com.sp.app.buy.Cart">
+		SELECT cId, userId, c.productNum, count, cName, cPrice, seller, get_date, reserves
+		FROM cart c
+		<!--
+		JOIN product p ON c.prodcutNum=p.productNum
+		WHERE c.prodcutNum=#{productNum}
+		-->
+		ORDER BY get_date DESC
+	</select>
+	
+	<!-- 주문 항목 기입 -->
+	<insert id="insertOrder_detail" parameterType="com.sp.app.buy.Orderinfo">
+		INSERT INTO order_detail(orderId_detail, count,
+				productName, price, productNum, orderId) VALUES
+				(order_detail_seq.NEXTVAL, #{count}, #{productName},
+					#{price}, #{productNum}, #{orderId}
+				)
+	</insert>
+	
+	<!-- 주문 -->
+	<insert id="insertOrderinfo" parameterType="com.sp.app.buy.Orderinfo">
+		INSERT INTO orderinfo(orderId, memberIdx, total_price, order_state,
+		 		order_date, Addr1, Addr2, reserves) VALUES
+		 		(orderinfo_seq.NEXTVAL, #{memberIdx}, #{total_price}, #{order_state},
+		 		SYSDATE, #{Addr1, jdbcType=VARCHAR}, #{Addr2, jdbcType=VARCHAR}, #{reserves})
+	</insert>
+	
+	
+	<!-- 주문 내역 수정 -->
+	<update id="updateOrder" parameterType="com.sp.app.buy.Orderinfo">
+		UPDATE order SET total_price=#{total_price}, order_date=#{order_date},
+				Addr1=#{Addr1}, Addr2=#{Addr2}, reserves=#{reserves}
+		WHERE orderId = #{orderId}
+	</update>
 	
 </mapper>

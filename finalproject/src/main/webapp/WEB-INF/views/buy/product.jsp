@@ -2,12 +2,6 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/bxslider/css/jquery.bxslider.min.css">
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/bxslider/js/jquery.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/bxslider/js/jquery.bxslider.min.js"></script>
@@ -22,6 +16,28 @@ $(function(){
 		slideWidth: 2000
 	});
 });
+
+function cartSubmit() {
+	var f=document.orderCheck;
+
+	f.action="${pageContext.request.contextPath}/buy/addcart";
+
+	f.submit();
+}
+
+function check() {
+    var f = document.productForm;
+
+	f.action="${pageContext.request.contextPath}/buy/${mode}";
+
+    return true;
+}
+
+function orderForm(productNum) {
+	var url="orderForm?productNum="+productNum;
+	location.href=url;
+}
+
 </script>
 
 
@@ -116,12 +132,14 @@ ul.center {
 	width: 30%;
 	float: left;
 	padding-bottom: 10px;
+	height: 29px;
 }
 
 .info_content {
 	width: 70%;
 	float: left;
 	padding-bottom: 10px;
+	height: 29px;
 }
 
 .cart_purchase {
@@ -163,65 +181,66 @@ ul.center {
 
 
 </style>
-</head>
-<body>
-
-
-
-
-	
-	
-
 	
 <div id="wrap">
-	<div class="simple_infowrap">
-		<div class="thumbnail">
-			<div class="thumbnail_main">
-				<img alt="" src="${pageContext.request.contextPath}/resources/bxslider/css/images/퉷.jpg">
+		<div class="simple_infowrap">
+				<form name="orderCheck" method="post">
+			<div class="thumbnail">
+				<div class="thumbnail_main">
+					<img alt="" src="${pageContext.request.contextPath}/uploads/ms/${dto.imageFilename}">
+				</div>
+				<div class="thumbnail_others">
+					<ul class="center">
+						<li>
+							<img alt="" src="${dto.content}">
+						</li>
+						<li>
+							<img alt="" src="${dto.content}">
+						</li>
+						<li>
+							<img alt="" src="${dto.content}">
+						</li>
+					</ul>
+				</div>
 			</div>
-			<div class="thumbnail_others">
-				<ul class="center">
-					<li>
-						<img alt="" src="${pageContext.request.contextPath}/resources/bxslider/css/images/퉷.jpg">
-					</li>
-					<li>
-						<img alt="" src="${pageContext.request.contextPath}/resources/bxslider/css/images/퉷.jpg">
-					</li>
-					<li>
-						<img alt="" src="${pageContext.request.contextPath}/resources/bxslider/css/images/퉷.jpg">
-					</li>
-				</ul>
+			<div class="iteminfo">
+				<div class="iteminfo_head"> 
+					<span class="itemname">${dto.productName}</span>
+				</div>
+				<div class="iteminfo_body">
+					<div class="info_title" style="line-height: 45px;">
+						<span style="margin: auto;">판매가</span>
+					</div>
+					<div class="info_content">
+						<span class="itemprice"> ${dto.price}</span><span style="font-size: 34px">원</span>
+					</div>
+					<div class="info_title">적립금</div>
+				<div class="info_content" style="height: 29px;">
+					<span style="color: #4d94ff;">	
+						${dto.reserves}
+					</span>
+				</div>
+				<div class="info_title">판매자</div>
+					<div class="info_content">
+						${dto.userId}
+					</div>
+			<div class="info_title">수량</div>
+					<div class="info_content">
+						<input type="number" id="count" name="count">
+					</div>
+				</div>
+			</div>
+			<div class="cart_purchase">
+				<button type="button" class="cart" onclick="cartSubmit()">장바구니</button>
+				<button type="button" class="cart" onclick="javascript:location.href='${pageContext.request.contextPath}';">찜하기</button>
+
+				<input type="hidden" name="productNum" value="${dto.productNum}">
+				<input type="hidden" name="cName" value="${dto.productName}">
+				<input type="hidden" name="seller" value="${dto.userId}">
+				<input type="hidden" name="cPrice" value="${dto.price}">
+				<button type="button" class="purchase" onclick="javascript:orderForm('${dto.productNum}');">구매하기</button>
+			</div>
+				</form>
 			</div>
 		</div>
-		<div class="iteminfo">
-			<div class="iteminfo_head"> 
-				<span class="itemname">${dto.productName}</span>
-			</div>
-			<div class="iteminfo_body">
-			<div class="info_title" style="line-height: 45px;">
-				<span style="margin: auto;">판매가</span>
-			</div>
-			<div class="info_content">
-				<span class="itemprice"> ${dto.price}</span><span style="font-size: 34px">원</span>
-			</div>
-				<div class="info_title">적립금</div>
-			</div>
-			<div class="info_content">
-			<span style="color: #4d94ff;">
-				${dto.reserves}
-			</span>
-			</div>
-			<div class="info_title">판매자</div>
-			<div class="info_content">
-				${dto.userId}
-			</div>
-		</div>
-		<div class="cart_purchase">
-			<button type="button" class="add">장바구니</button>
-			<button type="button" class="cart">찜하기</button>
-			<button type="button" class="purchase">구매하기</button>
-		</div>
-	</div>
-</div>
 </body>
-</html>
