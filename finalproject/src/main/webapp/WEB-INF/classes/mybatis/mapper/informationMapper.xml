@@ -37,17 +37,18 @@
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	</select>
 	
+	<select id="dataCountQna" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) FROM sellqna q
+		JOIN member1 m ON r.userId = m.userId
+	 	WHERE q.productNum = #{productNum}
+	</select>
+	
 	<select id="listQna" parameterType="map" resultType="com.sp.app.selltab.infor.Qna">
-		SELECT q.productNum, num, q.userId, m.userName, q.content, q.created, state, 
-		NVL(answerCount, 0) answerCount
+		SELECT num, q.userId, m.userName, content, q.created, state
 		FROM sellqna q
 		JOIN member1 m ON q.userId = m.userId
-		LEFT OUTER JOIN (
-			SELECT answer, COUNT(*) answerCount
-			FROM sellqna WHERE answer!=0 GROUP BY answer
-		) a ON q.productNum = a.answer
-		WHERE productNum=#{productNum} AND q.answer=0
-		ORDER BY q.productNum DESC
+		WHERE productNum=#{productNum}
+		ORDER BY num DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	</select>
 

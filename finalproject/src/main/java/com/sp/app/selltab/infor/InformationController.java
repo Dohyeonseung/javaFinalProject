@@ -76,7 +76,7 @@ public class InformationController {
 		Map<String, Object> map =new HashMap<>();
 		map.put("productNum", productNum);
 		
-		dataCount = service.dataCountReview(map);
+		dataCount = service.QnaCount(map);
 		if(dataCount !=0)
 			total_page = myUtil.pageCount(rows, dataCount);
 		
@@ -135,7 +135,7 @@ public class InformationController {
 		// 포워딩할 jsp로 넘길 데이터
 		model.addAttribute("listQna", listQna);
 		model.addAttribute("pageNo", current_page);
-		model.addAttribute("replyCount", dataCount);
+		model.addAttribute("dataCount", dataCount);
 		model.addAttribute("total_page", total_page);
 		model.addAttribute("paging", paging);
 		return "ms/tab/qna";
