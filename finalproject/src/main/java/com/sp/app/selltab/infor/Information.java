@@ -6,6 +6,7 @@ public class Information {
 	private String userName;
 	private String state;
 	private String orderId;
+	private int count;
 	
 	public String getUserId() {
 		return userId;
@@ -42,6 +43,12 @@ public class Information {
 	}
 	public void setOrderId(String orderId) {
 		this.orderId = orderId;
+	}
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
 	}
 
 }

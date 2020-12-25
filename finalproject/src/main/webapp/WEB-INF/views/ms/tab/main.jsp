@@ -44,11 +44,11 @@
 	  </tr>
 	  <tr>
 	    <td style="color:#bbb; font-weight: bold;" >구매자</td>
-	    <td>${dto.orderId}/${dto.orderId}</td>
+	    <td>${dto.userId}/${dto.userName}</td>
 	  </tr>
 	   <tr>
 	    <td style="color:#bbb; font-weight: bold;" >주문수량</td>
-	    <td>{dto.count<span style="font-weight: bold;">(${dto.orderId})</span></td>
+	    <td>${dto.count}개<span style="font-weight: bold;">(${dto.orderId}원)</span></td>
 	  </tr>
 	 
 	</table>

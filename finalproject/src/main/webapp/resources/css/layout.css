@@ -145,15 +145,14 @@
 .menu_bar{
 	display: flex;
 	list-style: none;
-	width: 100%;
+	width: 1400px;
 	height: 70px;
 	justify-content: space-around;
 }
 .menu_bar li{
 	line-height: 70px;
 	font-size: 18px;
-	font-weight: bold;
-	width: 
+	font-weight: bold; 
 }
 
 
@@ -170,7 +169,7 @@
 	height: 200px;
 	width: 100%;
 	background:white;
-	margin-top: 3px;
+	margin-top: 1px;
 }
 
 .subMenu .menuTable{
@@ -183,7 +182,6 @@
 	border-collapse: collapse;
     border-spacing: 0px;
     background: white;
-    
 }
 
 .subMenu .menuTable a{

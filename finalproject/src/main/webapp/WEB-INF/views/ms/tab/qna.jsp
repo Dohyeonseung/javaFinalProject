@@ -7,12 +7,17 @@
 .qnaBox{
 	width: 100%;
 	display: flex;
-	justify-content: space-around;
-	border - 
+	justify-content: space-around; 
 }
-.qnafirst{
-	
+.qnasecond{
+	display: flex;  
+	align-items: center; 
+	justify-content: center;"
 }
+.third{
+	cursor: pointer;
+}
+
 </style>
 
 
@@ -24,8 +29,11 @@
   	 	<span style=color:#e5e5e5;>${dto.created}</span> <br>
   	 	<span style="font-size: 18px;"><i class="fas fa-user" style="color: #ffeb00;"></i> ${dto.userId}</span>
    	 </div>
-   	 <div class=qnasecond>
+   	 <div class=qnasecond >
   	 	${dto.content}
+   	 </div>
+   	 <div class=third style="align-items: flex-end;">
+  	 	<i class="fas fa-chevron-down"></i>
    	 </div>
 	</div>
    </c:forEach>
