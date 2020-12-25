@@ -47,7 +47,12 @@ $(function() {
                    <a href="${pageContext.request.contextPath}/member/logout">로그아웃</a>
                    &nbsp;|&nbsp;
                    <a href="${pageContext.request.contextPath}/">정보수정</a>
-                   
+                   <c:if test="${not empty sessionScope.member and sessionScope.member.userId!='admin'}">
+                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   <a href=""><i class="fas fa-user" style="font-size: 32px; "></i></a>
+                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   <a href=""><i class="fas fa-shopping-cart" style="font-size: 32px;"></i></a>
+                   </c:if>
                    <c:if test="${sessionScope.member.userId=='admin'}">
                        &nbsp;|&nbsp;
                        <a href="${pageContext.request.contextPath}/admin/home">관리자</a>
