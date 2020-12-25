@@ -153,6 +153,7 @@
 	line-height: 70px;
 	font-size: 18px;
 	font-weight: bold;
+	width: 
 }
 
 
@@ -168,15 +169,17 @@
 .subMenu{
 	height: 200px;
 	width: 100%;
+	background:white;
+	margin-top: 3px;
 }
 
 .subMenu .menuTable{
 	margin: 3px auto;
-	width: 100%;
-	height: 50px;
+	width: 1200px;
+	height: 90px;
 	text-align: center;
 	padding: 20px 0px 20px 0px;
-	font-size: 14px;
+	font-size: 15px;
 	border-collapse: collapse;
     border-spacing: 0px;
     background: white;

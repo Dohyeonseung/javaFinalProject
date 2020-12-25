@@ -7,55 +7,13 @@ public class Tip {
     private String userName, userId;
     private String subject, content;
     private String created;
-    
-    private int categoryNum;
+    private String saveFilename;
+	private int categoryNum;
     private String category;
     private int hitCount;
-	
-	public int getHitCount() {
-		return hitCount;
-	}
-	public void setHitCount(int hitCount) {
-		this.hitCount = hitCount;
-	}
-	public String getSaveFilename() {
-		return saveFilename;
-	}
-	public void setSaveFilename(String saveFilename) {
-		this.saveFilename = saveFilename;
-	}
-	public String getOriginalFilename() {
-		return originalFilename;
-	}
-	public void setOriginalFilename(String originalFilename) {
-		this.originalFilename = originalFilename;
-	}
-	public MultipartFile getUpload() {
-		return upload;
-	}
-	public void setUpload(MultipartFile upload) {
-		this.upload = upload;
-	}
-	public int getReplyCount() {
-		return replyCount;
-	}
-	public void setReplyCount(int replyCount) {
-		this.replyCount = replyCount;
-	}
-	public int getBoardLikeCount() {
-		return boardLikeCount;
-	}
-	public void setBoardLikeCount(int boardLikeCount) {
-		this.boardLikeCount = boardLikeCount;
-	}
-	private String saveFilename;
-	private String originalFilename;
-	private MultipartFile upload; // <input type='file' name='upload' ..
-
-	private int replyCount;
-	private int boardLikeCount;
+    private MultipartFile upload;
     
-	public int getNum() {
+    public int getNum() {
 		return num;
 	}
 	public void setNum(int num) {
@@ -97,6 +55,13 @@ public class Tip {
 	public void setCreated(String created) {
 		this.created = created;
 	}
+	
+	public MultipartFile getUpload() {
+		return upload;
+	}
+	public void setUpload(MultipartFile upload) {
+		this.upload = upload;
+	}
 	public int getCategoryNum() {
 		return categoryNum;
 	}
@@ -109,5 +74,19 @@ public class Tip {
 	public void setCategory(String category) {
 		this.category = category;
 	}
+	public int getHitCount() {
+		return hitCount;
+	}
+	public void setHitCount(int hitCount) {
+		this.hitCount = hitCount;
+	}
+	public String getSaveFilename() {
+		return saveFilename;
+	}
+	public void setSaveFilename(String saveFilename) {
+		this.saveFilename = saveFilename;
+	}
 
+	
+	
 }
