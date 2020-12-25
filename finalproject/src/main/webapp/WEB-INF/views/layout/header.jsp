@@ -44,7 +44,7 @@ $(function() {
                <c:if test="${not empty sessionScope.member}">
                    <span style="color:blue;">${sessionScope.member.userName}</span>님
                    &nbsp;|&nbsp;
-                   <a href="${pageContext.request.contextPath}/">로그아웃</a>
+                   <a href="${pageContext.request.contextPath}/member/logout">로그아웃</a>
                    &nbsp;|&nbsp;
                    <a href="${pageContext.request.contextPath}/">정보수정</a>
                    
