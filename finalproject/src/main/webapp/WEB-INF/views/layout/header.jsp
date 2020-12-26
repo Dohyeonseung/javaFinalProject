@@ -73,7 +73,7 @@ $(function() {
       </ul>
       
       <div class="subMenu" style="z-index: 9999; display: none;" >
-            <table class="menuTable" style="height: 200px;">
+            <table class="menuTable" style="height: 180px;">
                <tr>
                   <td><a href="${pageContext.request.contextPath}/company/company">회사소개</a></td>
                   <td><a href="${pageContext.request.contextPath}/ms/list">재료 판매</a></td>
@@ -90,7 +90,7 @@ $(function() {
                </tr>
                <tr>
                   <td><a href="${pageContext.request.contextPath}/company/ethics">윤리규정</a></td>
-                  <td><a href="#">완제품 판매</a></td>
+                  <td><a href="${pageContext.request.contextPath}/cp/list">완제품 판매</a></td>
                   <td><a href="#">완제품구매</a></td>
                   <td><a href="${pageContext.request.contextPath}/qna/list">묻고 답하기</a></td>
                   <td><a href="#"></a></td>
