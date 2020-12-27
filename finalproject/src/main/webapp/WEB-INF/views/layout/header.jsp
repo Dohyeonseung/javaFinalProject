@@ -51,7 +51,7 @@ $(function() {
                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                    <a href=""><i class="fas fa-user" style="font-size: 32px; "></i></a>
                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                   <a href=""><i class="fas fa-shopping-cart" style="font-size: 32px;"></i></a>
+                   <a href="${pageContext.request.contextPath}/buy/cart"><i class="fas fa-shopping-cart" style="font-size: 32px;"></i></a>
                    </c:if>
                    <c:if test="${sessionScope.member.userId=='admin'}">
                        &nbsp;|&nbsp;
