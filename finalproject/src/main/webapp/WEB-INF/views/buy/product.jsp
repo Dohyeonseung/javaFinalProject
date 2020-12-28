@@ -7,18 +7,8 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/bxslider/js/jquery.bxslider.min.js"></script>
 
 <script type="text/javascript">
-$(function(){
-	$('.slider').bxSlider({
-		auto: true,
-		autoControls: true,
-		stopAutoOnClick: true,
-		pager: true,
-		slideWidth: 2000
-	});
-});
-
 function cartSubmit() {
-	var f=document.orderCheck;
+	var f=document.orderForm;
 
 	f.action="${pageContext.request.contextPath}/buy/addcart";
 
@@ -33,7 +23,7 @@ function check() {
     return true;
 }
 
-function orderForm(productNum) {
+function orderSubmit(productNum) {
 	var url="orderForm?productNum="+productNum;
 	location.href=url;
 }
@@ -184,7 +174,7 @@ ul.center {
 	
 <div id="wrap">
 		<div class="simple_infowrap">
-				<form name="orderCheck" method="post">
+				<form name="orderForm" method="post">
 			<div class="thumbnail">
 				<div class="thumbnail_main">
 					<img alt="" src="${pageContext.request.contextPath}/uploads/ms/${dto.imageFilename}">
@@ -222,7 +212,7 @@ ul.center {
 				</div>
 				<div class="info_title">판매자</div>
 					<div class="info_content">
-						${dto.userId}
+						${dto.userName}
 					</div>
 			<div class="info_title">수량</div>
 					<div class="info_content">
@@ -236,9 +226,9 @@ ul.center {
 
 				<input type="hidden" name="productNum" value="${dto.productNum}">
 				<input type="hidden" name="cName" value="${dto.productName}">
-				<input type="hidden" name="seller" value="${dto.userId}">
+				<input type="hidden" name="seller" value="${dto.userName}">
 				<input type="hidden" name="cPrice" value="${dto.price}">
-				<button type="button" class="purchase" onclick="javascript:orderForm('${dto.productNum}');">구매하기</button>
+				<button type="button" class="purchase" onclick="javascript:orderSubmit('${dto.productNum}');">구매하기</button>
 			</div>
 				</form>
 			</div>

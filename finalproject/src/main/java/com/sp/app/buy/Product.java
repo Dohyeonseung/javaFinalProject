@@ -11,6 +11,13 @@ public class Product {
 	private String imageFilename;
 	private int categoryNum;
 	private String userId;
+	private String userName;
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 	private int division;
 	
 	public int getProductNum() {

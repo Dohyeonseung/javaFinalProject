@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.mongodb.DuplicateKeyException;
 import com.sp.app.common.FileManager;
 import com.sp.app.common.MyUtil;
 import com.sp.app.member.SessionInfo;
@@ -151,6 +152,7 @@ public class BuyController {
 	@RequestMapping(value = "addcart", method = RequestMethod.POST)
 	public String cartSubmit(
 			Cart dto,
+			Model model,
 			HttpSession session
 			) throws Exception {
 		
@@ -159,10 +161,14 @@ public class BuyController {
 		try {
 			dto.setUserId(info.getUserId());
 			service.insertCart(dto);
-		} catch (Exception e) {
+		} catch (DuplicateKeyException e) {
+			model.addAttribute("msg", "이미 있습니다.");
+			return "buy/product";
+		} 
+		catch (Exception e) {
 		}
 		
-		return ".buy.order.cart";
+		return "redirect:/buy/cart";
 	}
 	
 	@RequestMapping(value = "cart", method = RequestMethod.GET)
@@ -177,7 +183,7 @@ public class BuyController {
 		String userId=info.getUserId();
 		
 		Map<String, Object> map = new HashMap<>();
-		
+		map.put("userId", userId);
 		List<Cart> list=service.listCart(map);
 		
 		for(Cart dto:list) {
@@ -196,6 +202,31 @@ public class BuyController {
 		
 		
 		return ".buy.order.cart";
+	}
+	
+	@RequestMapping(value = "deleteCart")
+	public String deleteCart(
+			@RequestParam int cId
+			) throws Exception {
+		
+		try {
+			service.deleteCart(cId);
+		} catch (Exception e) {
+		}
+		
+		return "redirect:/buy/cart";
+	}
+	
+	@RequestMapping(value = "deleteCartlist")
+	public String deleteCartlist(
+			@RequestParam List<Integer> cIds
+			) throws Exception {
+		try {
+			service.deleteCart(cIds);
+		} catch (Exception e) {
+		}
+		
+		return "redirect:/buy/cart";
 	}
 	
 	@RequestMapping(value = "orderForm")
@@ -242,5 +273,7 @@ public class BuyController {
 		
 		return ".buy.material";
 	}
+	
+
 	
 }
