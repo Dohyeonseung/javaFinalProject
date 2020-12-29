@@ -139,51 +139,60 @@ function detailedProduct(userId) {
 	    	<tr style="border-bottom: 1px solid #cccccc; border-top: 1px solid #101010;">
 	    		<th class="category_name">상품명</th>
 	    		<td class="info_value">
-	    			<span>직접 만드는 DIY 책상 제작 키트</span>
+	    			<span>${dto.productName}</span>
 	    		</td>
 	    	</tr>
 	    	
 	    	<tr style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
 				<th class="category_name">상품코드</th>
 	    		<td class="info_value">
-					<span>DIY201221</span>
+					<span>${dto.productCode}</span>
+					<input type="hidden" name="productCode" value="${productCode}">
+	    		</td>
+	    	</tr>
+	    	
+	    	<tr style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
+				<th class="category_name">상품분류</th>
+	    		<td class="info_value">
+					<span>${dto.categoryName}</span>
 	    		</td>
 	    	</tr>
 	    	
 	    	<tr style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
 				<th class="category_name">판매가격</th>
 	    		<td class="info_value">
-					<span>124,000원</span>
+					<span>${dto.productPrice}</span>
 	    		</td>
 	    	</tr>
 	    	
 	    	<tr style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-	    		<th class="category_name">최초입고일자</th>
+	    		<th class="category_name">상품등록일</th>
 	    		<td class="info_value">
-					<span>2020-08-15</span>
-	    		</td>
-	    	</tr>
-	    	
-	    	<tr style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-	    		<th class="category_name">최근발주일자</th>
-	    		<td class="info_value">
-					<span>2020-11-08</span>
+					<span>${dto.registrationDate}</span>
 	    		</td>
 	    	</tr>
 	    	
 	    	<tr style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
 	    		<th class="category_name">상태분류</th>
 	    		<td class="info_value">
-					<span>판매중</span>
+					<span>${dto.productState == 0?'판매':'미판매'}</span>
 	    		</td>
 	    	</tr>
 	    	
-	    	<tr style="border-top: 1px solid #cccccc; border-bottom: 1px solid #101010;">
+	    	<tr style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
 	    		<th class="category_name">재고개수</th>
 	    		<td class="info_value">
-					<span>42개</span>
+					<span>${dto.productCount}</span>
 	    		</td>
 	    	</tr>
+	    		
+	    	<tr style="border-top: 1px solid #cccccc; border-bottom: 1px solid #1e1e1e;">
+	    		<th class="category_name">상세정보</th>
+	    		<td class="info_value">
+					<span>${dto.productInfo}</span>
+	    		</td>
+	    	</tr>
+	    	
 	    	</table>
 	    	
 	    	<div class="table_box">

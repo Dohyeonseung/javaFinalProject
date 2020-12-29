@@ -146,7 +146,7 @@ function searchList() {
 		          <button type="button" class="btn_style" onclick="location.href='${pageContext.request.contextPath}/admin/management/list'">새로고침</button>
 		      </td>
 		      <td align="center" style="padding-right: 20px;">
-		          <form name="searchForm" action="${pageContext.request.contextPath}/bbs/list" method="post">
+		          <form name="searchForm" action="${pageContext.request.contextPath}/admin/management/list" method="post">
 		              <select name="condition" class="selectField" style="width: 100px; height: 30px;">
 		                  <option value="all" ${condition=="all"?"selected='selected'":""}>모두</option>
 		                  <option value="userId" ${condition=="userId"?"selected='selected'":""}>아이디</option>

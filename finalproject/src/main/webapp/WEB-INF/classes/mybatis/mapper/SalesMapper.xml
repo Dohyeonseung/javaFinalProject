@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sales">
+	<!-- 상품등록 -->
+	<insert id="insertProduct" parameterType="com.sp.app.admin.sales.Sales">
+		INSERT INTO CorpProduct(productCode, productName, productInfo, productPrice, registrationDate, categoryNum, memberIdx)
+			VALUES (#{productCode}, #{productName}, #{productInfo}, #{productPrice}, SYSDATE, #{categoryNum}, #{memberIdx})
+	</insert>
+	
+	<sql id="search-list">
+		<choose>
+			<when test="condition == 'all'">
+				( INSTR(productName, #{keyword}) &gt; 0
+					OR INSTR(productInfo, #{keyword}) &gt; 0 )
+			</when>
+			<when test="condition == 'productCode'">
+				 INSTR(productCode, #{keyword})  &gt; 0
+			</when>
+			<when test="condition == 'productName'">
+				 INSTR(productName, #{keyword})  &gt; 0
+			</when>
+			<when test="condition == 'registrationDate'">
+				 INSTR(TO_CHAR(registrationDate, 'YYYY-MM-DD'), #{keyword}) &gt; 0
+			</when>
+			<otherwise>
+				INSTR(${condition}, #{keyword}) &gt; 0
+			</otherwise>
+		</choose>
+	</sql>
+	
+	<!-- 상품개수  -->
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM CorpProduct p
+		JOIN member m ON m.memberIdx = p.memberIdx
+		<where>
+			<if test="categoryNum != 0">
+				p.categoryNum = #{categoryNum}
+			</if>
+			<if test="keyword != null and keyword != '' ">
+				AND <include refid="search-list"/>
+			</if>
+		</where>
+	</select>
+	
+	<!-- 상품리스트출력 -->
+	<select id="listProduct" parameterType="map" resultType="com.sp.app.admin.sales.Sales">
+		SELECT p.productCode, c.categoryName, productName, TO_CHAR(registrationDate, 'YYYY-MM-DD')registrationDate, productPrice, productCount, productState
+		FROM CorpProduct p
+		JOIN CorpCategory c ON c.categoryNum = p.categoryNum
+		<where>
+			<if test="categoryNum != 0">
+				p.categoryNum = #{categoryNum}
+			</if>
+			<if test="keyword != null and keyword != ''">
+				AND <include refid="search-list"/>
+			</if>
+		</where>
+		ORDER BY registrationDate
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<!-- 상품상세정보 -->
+	<select id="readProduct" parameterType="String" resultType="com.sp.app.admin.sales.Sales">
+		SELECT c.categoryName, p.productCode, productName, productPrice, registrationDate, productState, productCount, productInfo
+		FROM CorpProduct p
+		LEFT OUTER JOIN CorpCategory c ON c.categoryNum = p.categoryNum
+		WHERE p.productCode = #{productCode}
+	</select>
+	
+	
+</mapper>
