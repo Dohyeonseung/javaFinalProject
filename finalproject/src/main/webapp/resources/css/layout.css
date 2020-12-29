@@ -9,7 +9,8 @@
 .header {
     width:100%;
     text-align:center;
-    margin: 30px auto;
+    margin: auto;
+    padding-top: 30px;
 }
 
 .search-box{
@@ -57,7 +58,6 @@
     box-sizing: border-box;  /* padding과 border는 크기에 포함되지 않음 */
     margin: 0px auto 15px;
     min-height: 500px;
-    padding-top: 20px;
 }
 
 .body-title {
