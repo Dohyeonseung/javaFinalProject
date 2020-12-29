@@ -38,18 +38,23 @@
 	</select>
 	
 	<select id="dataCountQna" parameterType="map" resultType="Integer">
-		SELECT NVL(COUNT(*), 0) FROM sellqna q
-		JOIN member1 m ON r.userId = m.userId
+		SELECT NVL(COUNT(*), 0) FROM sellerQna q
+		JOIN member1 m ON q.userId = m.userId
 	 	WHERE q.productNum = #{productNum}
 	</select>
 	
 	<select id="listQna" parameterType="map" resultType="com.sp.app.selltab.infor.Qna">
-		SELECT num, q.userId, m.userName, content, q.created, state
-		FROM sellqna q
+		SELECT num, q.userId, m.userName, question, questionCreated, sellerId, answer, answerCreated
+		FROM sellerQna q
 		JOIN member1 m ON q.userId = m.userId
 		WHERE productNum=#{productNum}
 		ORDER BY num DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	</select>
-
+	
+	<update id="answerQna" parameterType="com.sp.app.selltab.infor.Qna">
+		UPDATE sellerQna SET sellerId=#{sellerId}, answer=#{answer, jdbcType=VARCHAR}, answerCreated=SYSDATE
+		WHERE num=#{num}
+	</update>
+	
 </mapper>

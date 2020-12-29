@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="ms">
-	<insert id="insertMaterialSell" parameterType="com.sp.app.materialSell.MaterialSell">
+<mapper namespace="cp">
+	
+	<insert id="insertCompleteSell" parameterType="com.sp.app.completeSell.CompleteSell">
 		INSERT INTO product(productNum,  productName, price, stock, 
 		content, reserves, imageFilename, categoryNum, userId, division, created_date) VALUES(
 		product_seq.NEXTVAL, #{productName}, #{price}, #{stock},
 		#{content}, #{reserves, jdbcType=VARCHAR}, #{imageFilename, jdbcType=VARCHAR}, #{categoryNum},#{userId}, #{division}, SYSDATE)
 	</insert>
-	
-	<sql id="where-list">
+
+<sql id="where-list">
 	 	<choose>
-	 		<when test="condition=='new'">
+	 		<when test="condition=='all'">
 	 			( INSTR(productName, #{keyword}) &gt;0
 	 				OR DBMS_LOB.INSTR(content, #{keyword}) &gt; 0 )
 	 		</when>
@@ -26,8 +27,23 @@
           </otherwise>
        </choose>
     </sql>
-    
-    <select id="dataCount" parameterType="map" resultType="Integer">
+
+<select id="listCompleteSell" parameterType="map" resultType="com.sp.app.completeSell.CompleteSell">
+	 	SELECT productNum, productName, price, stock, p.userId,
+	     imageFileName, c.categoryNum, c.categoryName, division,
+	 	 TO_CHAR(p.created_date,'YYYY-MM-DD') created_date
+	 	FROM product p
+	 	JOIN category c ON p.categoryNum=c.categoryNum
+	 	where division=1
+	  	<where>
+	  		<if test="keyword!=null and keyword!=''">
+	  			<include refid="where-list"/>
+	  		</if>
+	  	</where>
+	 	ORDER BY productNum 
+	 	OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	 </select>
+	<select id="dataCount" parameterType="map" resultType="Integer">
 	 	SELECT NVL(COUNT(*),0)
 	 	FROM product p
 	 	JOIN member1 m ON p.userId = m.userId
@@ -36,28 +52,11 @@
 	 			<include refid="where-list"/>
 	 		</if>
 	 	
-	 	</where>
-	 	
+	 	</where>	
 	 </select>
 	 
-	 <select id="listMaterialSell" parameterType="map" resultType="com.sp.app.materialSell.MaterialSell">
-	 	SELECT productNum, productName, price, stock, p.userId,
-	     imageFileName, c.categoryNum, c.categoryName, division,
-	 	 TO_CHAR(p.created_date,'YYYY-MM-DD') created_date
-	 	FROM product p
-	 	JOIN category c ON p.categoryNum=c.categoryNum
-	  	<where>
-	  		<if test="keyword!=null and keyword!=''">
-	  			<include refid="where-list"/>
-	  		</if>
-	  	</where>
-	 	ORDER BY productNum DESC 
-	 	OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
-	 </select>
-	 
-	 
-	 <select id="readMaterialSell" parameterType="Integer"
-	   resultType="com.sp.app.materialSell.MaterialSell">
+	  <select id="readCompleteSell" parameterType="Integer"
+	   resultType="com.sp.app.completeSell.CompleteSell">
 	   SELECT productNum, productName, p.userId, m.userName, stock,
 	   price, imageFileName, c.categoryNum, division, p.categoryNum,c.categoryName,
 	   TO_CHAR(p.created_date,'YYYY-MM-DD') created_date, content
@@ -67,41 +66,9 @@
 	 	WHERE productNum=#{productNum}
 	 </select>
 	 
-	
-	 
-	 <delete id="deleteMaterialSell" parameterType="Integer">
-		DELETE FROM product WHERE productNum = #{productNum}
-	</delete>
 	 
 	 
-	 <update id="updateMaterialSell" parameterType="com.sp.app.materialSell.MaterialSell">
-	 	UPDATE product SET productName=#{productName}, content=#{content},
-	 	price=#{price}, categoryNum=#{categoryNum}, imageFileName=#{imageFileName, jdbcType=VARCHAR}, stock=#{stock} ,content=#{content, jdbcType=VARCHAR}
-	 	WHERE productNum=#{productNum}
-	 </update>
-	 
-	<!-- 카테고리 -->
-	<insert id="insertCategory" parameterType="com.sp.app.materialSell.MaterialSell">
-		INSERT INTO qnaCategory(categoryNum, categoryName)
-			VALUES (qnaCategory_seq.NEXTVAL, #{category}) 
-	</insert>
-	
-	<update id="updateCategory" parameterType="com.sp.app.materialSell.MaterialSell">
-		UPDATE qnaCategory SET categoryName=#{categoryName}
-		WHERE categoryNum=#{categoryNum}
-	</update>
-	
-	<select id="listCategory" resultType="com.sp.app.materialSell.MaterialSell">
+	 <select id="listCategory" resultType="com.sp.app.completeSell.CompleteSell">
 		SELECT categoryNum, categoryName FROM category
 	</select>
-	
-	<delete id="deleteCategory" parameterType="Integer">
-		DELETE FROM category WHERE categoryNum=#{categoryNum}
-	</delete>
-	
-	
 </mapper>
-
-
-    
-    

@@ -5,14 +5,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sp.app.common.MyUtil;
+import com.sp.app.member.SessionInfo;
 
 
 @Controller("selltab.infor.informationController")
@@ -126,7 +130,7 @@ public class InformationController {
 		List<Qna> listQna=service.listQna(map);
 		
 		for(Qna dto : listQna) {
-			dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
+			dto.setQuestion(dto.getQuestion().replaceAll("\n", "<br>"));
 		}
 		
 		// AJAX 용 페이징
@@ -139,6 +143,28 @@ public class InformationController {
 		model.addAttribute("total_page", total_page);
 		model.addAttribute("paging", paging);
 		return "ms/tab/qna";
+	}
+	
+	// 답변및답변삭제
+	@RequestMapping(value="answerQna", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> answerQna(
+			Qna dto,
+			HttpSession session
+			) {
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		String state="true";
+		
+		try {
+			dto.setSellerId(info.getUserId());
+			service.answerQna(dto);
+		} catch (Exception e) {
+			state="false";
+		}
+		
+		Map<String, Object> model = new HashMap<>();
+		model.put("state", state);
+		return model;
 	}
 	
 }

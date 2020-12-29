@@ -9,8 +9,23 @@
 	<tbody id="listReviewBody">
 	<c:forEach var="dto" items="${list}">	
 		  <tr>
-		    <td colspan="3">${dto.starScore}</td>
-		  </tr>
+		  	<c:choose>
+			    <c:when test="${dto.starScore eq 1}">
+			        <td colspan="3" style="color: #FAE500;">★</td>
+			    </c:when>
+			    <c:when test="${dto.starScore eq 2}">
+			        <td colspan="3" style="color: #FAE500;">★★</td>
+			    </c:when>
+			    <c:when test="${dto.starScore eq 3}">
+			        <td colspan="3" style="color: #FAE500;">★★★</td>
+			    </c:when>
+			    <c:when test="${dto.starScore eq 4}">
+			        <td colspan="3" style="color: #FAE500;">★★★★</td>
+			    </c:when>
+			    <c:when test="${dto.starScore eq 5}">
+			        <td colspan="3" style="color: #FAE500;">★★★★★</td>
+			    </c:when>
+		  </c:choose>
 		  <tr>
 		    <td style="width:20%;">${dto.userName} &nbsp;&nbsp;&nbsp;  ${dto.created}</td>
 		

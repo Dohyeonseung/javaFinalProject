@@ -3,6 +3,7 @@ package com.sp.app.materialSell;
 import java.io.File;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -166,21 +167,21 @@ public class MaterialSellController {
 		   }
 		 
 		   MaterialSell dto=service.readMaterialSell(productNum);
-		   
 		   if(dto==null) {
 			   return "redirect:/ms/list?"+query;
 		   }
+		   List<String> listImage = new ArrayList<String>();
+		   listImage = myUtil.getImgSrc(dto.getContent());
 		   
 		   Map<String, Object> map=new HashMap<>();
 		   map.put("productNum", productNum);
 		   map.put("condition", condition);
 		   map.put("keyword", keyword);
 		   
-		 
-		   
 		   model.addAttribute("dto", dto);
 		   model.addAttribute("page", page);
 		   model.addAttribute("query", query);
+		   model.addAttribute("listImage", listImage);
 		   
 		   model.addAttribute("menuItem", "main");
 		   
@@ -220,7 +221,7 @@ public class MaterialSellController {
 			   HttpSession session
 			   ) throws Exception{
 		  String root=session.getServletContext().getRealPath("/");
-		  String pathname=root+"uploads"+File.separator+"photo";
+		  String pathname=root+"uploads"+File.separator+"ms";
 		   
 		   try {
 			  service.updateMaterialSell(dto, pathname);

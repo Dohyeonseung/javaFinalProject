@@ -100,6 +100,18 @@ img {
 	width: 100%;
 	height: 51px;
 }
+#toc-toggle{
+margin-top:20px; 
+width: 96%; 
+height: 45px;
+ border-radius: 5px 5px 5px 5px; 
+ background: #fafafa; 
+ font-size: 16px; 
+ display: flex; 
+ justify-content: center; 
+align-items: center; 
+cursor: pointer;
+}
 
 
 @media screen and (max-width: 786px){
@@ -113,7 +125,18 @@ img {
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/slider/js/jquery.bxslider.min.js"></script>
 
 <script type="text/javascript">
+function openCloseToc() {
+  if(document.getElementById('toc-content').style.display === 'block') {
+    document.getElementById('toc-content').style.display = 'none';
+  } else {
+    document.getElementById('toc-content').style.display = 'block';
+  }
+}
+
+
+
 $(function(){
+	
 	var menu = "${menuItem}"; 
 	$("#tab-"+menu).addClass("active");
 
@@ -191,10 +214,73 @@ function listPage(page) {
 	ajaxHTML(url, "get", query, selector); 
 }
 
+$(function(){
+		$("body").on("click", ".btnReplyAnswerLayout", function(){
+			var $trReplyAnswer = $(this).closest("tr").next();
+			
+			var isVisible = $trReplyAnswer.is(':visible');
+			// var num = $(this).attr("data-num");
+				
+			if(isVisible) {
+				$trReplyAnswer.hide();
+			} else {
+				$trReplyAnswer.show();
+			}
+		});
+});
+
+//댓글별 답글 등록
+$(function(){
+	$("body").on("click", ".btnSendReplyAnswer", function(){
+		var num=$(this).attr("data-num");
+		var $td=$(this).closest("td");
+		var $tr=$(this).closest("tr");
+		
+		var answer=$td.find("textarea").val().trim();
+		if(! answer) {
+			$td.find("textarea").focus();
+			return false;
+		}
+		answer = encodeURIComponent(answer);
+		
+		var url="${pageContext.request.contextPath}/selltab/information/answerQna";
+		var query="num="+num+"&answer="+answer;
+		
+		var fn = function(data){
+			$td.find("textarea").val("");
+			
+			var state=data.state;
+			if(state==="true") {
+				listPage(1);
+			}
+		};
+		
+		ajaxJSON(url, "post", query, fn);
+		
+	});
+});
+
+// 댓글별 답글 삭제
+$(function(){
+	$("body").on("click", ".deleteReplyAnswer", function(){
+		if(! confirm("답변을 삭제하시겠습니까 ? ")) {
+		    return false;
+		}
+		
+		var num=$(this).attr("data-num");
+		var url="${pageContext.request.contextPath}/selltab/information/answerQna";
+		var query="num="+num+"&answer=";
+		
+		var fn = function(data){
+			listPage(1);
+		};
+		
+		ajaxJSON(url, "post", query, fn);
+	});
+});
+
 </script>
 
-
-	
 <div id="msellBody">
 	
 <div id="materialSell_AT">
@@ -206,9 +292,12 @@ function listPage(page) {
 			  -->
 			<div class="thumbnail_main">
         		<ul class="slider">
-        				<li><a href="#"><img src="${pageContext.request.contextPath}/resources/img/slider1.jpg"></a></li>
-        				<li><a href="#"><img src="${pageContext.request.contextPath}/resources/img/slider2.JPG"></a></li>
-        				<li><a href="#"><img src="${pageContext.request.contextPath}/resources/img/slider3.jpg"></a></li>
+        		    <c:forEach var="vo" items="${listImage}">
+        				<li><a href="#"><img src="${vo}"></a></li>
+        		    </c:forEach>
+        		    <c:if test="${listImage.size()==0}">
+        				<li><a href="#"><img src="${pageContext.request.contextPath}/resources/img/no-image.png"></a></li>
+        		    </c:if>
         		</ul>
         	</div>
 		</div>
@@ -239,7 +328,11 @@ function listPage(page) {
 	   		</div>
 	   		<div id="tab-content" style="clear:both; padding: 20px 10px 0px;"></div>
 		</div>
-</div>
+		<div style="width: 100%; height: 15px; background: #f4f4f4;" ></div>
+		
+		<span id="toc-toggle" onclick="openCloseToc()"><i class="far fa-hand-point-up"></i> &nbsp; 상품상세 원본보기</span>
+		<div id="toc-content" style=" margin-top: 20px; display: none;">${dto.content}</div>
+	</div>	          
 
 </div>
 

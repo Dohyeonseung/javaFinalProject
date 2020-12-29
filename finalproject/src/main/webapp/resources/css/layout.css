@@ -66,6 +66,7 @@
     padding-bottom: 5px;
     margin: 0 0 25px 0;
     border-bottom: 1px solid #dddddd;
+    width: 130px;
 }
 .body-title h3 {
     font-size: 23px;
@@ -111,8 +112,9 @@
 }
 
 .header-right a:hover{
+	color: #1e1e1e;
 	text-decoration: none;
-	color: var(--accent-color);
+	text-shadow: -1px 0 #FAE500, 0 1px #FAE500, 1px 0 #FAE500, 0 -1px #FAE500;
 }
 
 .header-toogleBtn{
@@ -157,7 +159,7 @@
 
 
 .menu_bar li a:hover {
-	 color:var(--accent-color);
+	 color:#1e1e1e;
 	text-decoration: none;
 }
 
@@ -189,7 +191,9 @@
 }
 
 .subMenu .menuTable a:hover{
-	color: var(--accent-color);
+	color: #1e1e1e;
+	text-decoration:none;
+	text-shadow: 4px 4px 0px #FAE500;
 }
 
 
