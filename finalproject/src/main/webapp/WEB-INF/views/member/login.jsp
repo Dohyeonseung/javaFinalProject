@@ -13,7 +13,7 @@
   width: 287px; height: 47px;
   border:none;
   border-bottom:2px solid #ccc;
-  color:#ccc;
+  color:#1e1e1e;
   font-size:14px;
   
 }
