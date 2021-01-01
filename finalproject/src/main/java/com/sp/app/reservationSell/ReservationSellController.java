@@ -1,4 +1,4 @@
-package com.sp.app.completeSell;
+package com.sp.app.reservationSell;
 
 import java.io.File;
 import java.net.URLDecoder;
@@ -23,11 +23,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.sp.app.common.MyUtil;
 import com.sp.app.member.SessionInfo;
 
-@Controller("cp.completeSellController")
-@RequestMapping("/cp/*")
-public class CompleteSellController {
+@Controller("rv.reservationSellController")
+@RequestMapping("/rv/*")
+public class ReservationSellController {
 	@Autowired
-	private CompleteSellService service;
+	private ReservationSellService service;
 	
 	@Autowired
 	private MyUtil myUtil;
@@ -35,7 +35,7 @@ public class CompleteSellController {
 	@RequestMapping("list")
 	public String list(
 			@RequestParam(value="page", defaultValue="1") int current_page,
-			@RequestParam(defaultValue = "new")String sortCol,
+			@RequestParam(defaultValue = "new")String sortCol, 
 			@RequestParam(defaultValue = "")String keyword,
 			HttpServletRequest req,
 			 HttpSession session,
@@ -52,7 +52,7 @@ public class CompleteSellController {
 		 String userId=info.getUserId();
 		
 		 Map<String, Object> map = new HashMap<String, Object>();
-		 map.put("sortCol", sortCol);	
+		 map.put("sortCol", sortCol);
 	     map.put("keyword", keyword);
 	     map.put("userId", userId);
 
@@ -70,11 +70,11 @@ public class CompleteSellController {
 	        map.put("offset", offset);
 	        map.put("rows", rows);
 	        
-	        List<CompleteSell> list = service.listCompleteSell(map);
+	        List<ReservationSell> list = service.listReservationSell(map);
 	        
 	      //게시물 번호만들기
 			   int listNum, n=0;
-			   for(CompleteSell dto:list) {
+			   for(ReservationSell dto:list) {
 				   listNum=dataCount-(offset+n);
 				   dto.setListNum(listNum);
 				   n++;
@@ -104,7 +104,7 @@ public class CompleteSellController {
 			   model.addAttribute("keyword",keyword);
 			   
 
-		      return ".cp.list";
+		      return ".rv.list";
 	}
 	
 	@RequestMapping(value="created", method=RequestMethod.GET)
@@ -114,31 +114,31 @@ public class CompleteSellController {
 
 		Map<String, Object> map = new HashMap<>();
 		map.put("mode", "enabled");
-		List<CompleteSell> listCategory=service.listCategory(map);
+		List<ReservationSell> listCategory=service.listCategory(map);
 		
 		
 		model.addAttribute("pageNo", "1");
 		model.addAttribute("mode", "created");
 		model.addAttribute("listCategory", listCategory);
 
-		return ".cp.created";
+		return ".rv.created";
 	}
 	
 	@PostMapping("created") //포스트 방식 크리에티드
-	   public String createdSubmit(CompleteSell dto, 
+	   public String createdSubmit(ReservationSell dto, 
 			   HttpServletRequest req,
 			   HttpSession session) throws Exception {
 		 SessionInfo info = (SessionInfo)session.getAttribute("member");
 		 String root = session.getServletContext().getRealPath("/");//웹 어플리케이션 상의 절대경로
-	      String pathname = root+"uploads"+File.separator+"cp";
+	      String pathname = root+"uploads"+File.separator+"rv";
 	      
 	      try {
 	    	  dto.setUserId(info.getUserId());//세션에 등록되있는 아이디를가져와 dto에 UserId에 배치
-		         service.insertCompleteSell(dto, pathname);
+		         service.insertReservationSell(dto, pathname);
 		} catch (Exception e) {
 		}
 	      
-	      return "redirect:/cp/list";
+	      return "redirect:/rv/list";
 	}
 	
 	 @GetMapping("article")
@@ -158,9 +158,9 @@ public class CompleteSellController {
 					   URLEncoder.encode(keyword, "utf-8");
 		   }
 		 
-		   CompleteSell dto=service.readCompleteSell(productNum);
+		   ReservationSell dto=service.readReservationSell(productNum);
 		   if(dto==null) {
-			   return "redirect:/cp/list?"+query;
+			   return "redirect:/rv/list?"+query;
 		   }
 		   List<String> listImage = new ArrayList<String>();
 		   listImage = myUtil.getImgSrc(dto.getContent());
@@ -177,7 +177,7 @@ public class CompleteSellController {
 		   
 		   model.addAttribute("menuItem", "main");
 		   
-		   return ".cp.article";
+		   return ".rv.article";
 	   }
 	 
 	 @GetMapping("update")
@@ -189,14 +189,14 @@ public class CompleteSellController {
 				) throws Exception{
 			   
 			   SessionInfo info=(SessionInfo)session.getAttribute("member");
-			   CompleteSell dto=service.readCompleteSell(productNum);
+			   ReservationSell dto=service.readReservationSell(productNum);
 		
 			   if(dto==null) {
-				   return "redirect:/cp/list?page="+page;
+				   return "redirect:/rv/list?page="+page;
 			   }
 			   
 			   if(! dto.getUserId().equals(info.getUserId())) {
-					return "redirect:/cp/list?page="+page;
+					return "redirect:/rv/list?page="+page;
 				}
 			   
 			   model.addAttribute("dto", dto);
@@ -208,18 +208,18 @@ public class CompleteSellController {
 		   
 		   @PostMapping("update")
 		   public String updateSubmit(
-				   CompleteSell dto,
+				   ReservationSell dto,
 				   @RequestParam String page,
 				   HttpSession session
 				   ) throws Exception{
 			  String root=session.getServletContext().getRealPath("/");
-			  String pathname=root+"uploads"+File.separator+"cp";
+			  String pathname=root+"uploads"+File.separator+"rv";
 			   
 			   try {
-				  service.updateCompleteSell(dto, pathname);
+				  service.updateReservationSell(dto, pathname);
 			} catch (Exception e) {
 			}
-			   return "redirect:/cp/list?page="+page;
+			   return "redirect:/rv/list?page="+page;
 		   }
 		   
 		   @RequestMapping(value="delete", method=RequestMethod.GET)
@@ -237,15 +237,15 @@ public class CompleteSellController {
 			      }
 			      
 			      String root=session.getServletContext().getRealPath("/");
-				  String pathname=root+"uploads"+File.separator+"cp";
+				  String pathname=root+"uploads"+File.separator+"rv";
 			      
 			      SessionInfo info = (SessionInfo)session.getAttribute("member");
 			      try {
-						service.deleteCompleteSell(productNum, pathname, info.getUserId());
+						service.deleteReservationSell(productNum, pathname, info.getUserId());
 					} catch (Exception e) {
 					}
 		
 			   
-			   return "redirect:/cp/list?"+query;
+			   return "redirect:/rv/list?"+query;
 		   }
 }

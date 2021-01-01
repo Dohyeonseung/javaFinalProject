@@ -54,10 +54,10 @@ public class MyUtil {
 
 		sb.append("<style type='text/css'>");
 		sb.append("#paginate {clear:both;font:12px \"맑은 고딕\",NanumGothic,돋움,Dotum,AppleGothic;padding:15px 0px 0px 0px;text-align:center;height:28px;white-space:nowrap;}");
-		sb.append("#paginate a {border:1px solid #ccc;height:28px;color:#000000;text-decoration:none;padding:4px 7px 4px 7px;margin-left:3px;line-height:normal;vertical-align:middle;outline:none; select-dummy: expression(this.hideFocus=true);}");
-		sb.append("#paginate a:hover, a:active {border:1px solid #ccc;color:#6771ff;vertical-align:middle; line-height:normal;}");
-		sb.append("#paginate .curBox {border:1px solid #e28d8d; background: #fff; color:#cb3536; font-weight:bold;height:28px;padding:4px 7px 4px 7px;margin-left:3px;line-height:normal;vertical-align:middle;}");
-		sb.append("#paginate .numBox {border:1px solid #ccc;height:28px;font-weight:bold;text-decoration:none;padding:4px 7px 4px 7px;margin-left:3px;line-height:normal;vertical-align:middle;}");
+		sb.append("#paginate a {border:1px solid #ccc;height:28px;color:#1e1e1e;text-decoration:none;padding:4px 7px 4px 7px;margin-left:3px;line-height:normal;vertical-align:middle;outline:none; select-dummy: expression(this.hideFocus=true);}");
+		sb.append("#paginate a:hover, a:active {vertical-align:middle; line-height:normal;}");
+		sb.append("#paginate .curBox {border:none; border-radius:50px; background: #fff; color:#cb3536;  font-weight:bold;height:28px;padding:4px 7px 4px 7px;margin-left:1px;line-height:normal;vertical-align:middle;}");
+		sb.append("#paginate .numBox {border:none;border-radius:50px;background:#fff;height:28px;font-weight:bold;text-decoration:none;padding:4px 7px 4px 7px;margin-left:1px;line-height:normal;vertical-align:middle;}");
 		sb.append("</style>");
 		
 		sb.append("<div id='paginate'>");
@@ -118,9 +118,9 @@ public class MyUtil {
 		sb.append("<style type='text/css'>");
 		sb.append("#paginate {clear:both;font:12px \"맑은 고딕\",NanumGothic,돋움,Dotum,AppleGothic;padding:15px 0px 0px 0px;text-align:center;height:28px;white-space:nowrap;}");
 		sb.append("#paginate a {border:1px solid #ccc;height:28px;color:#000000;text-decoration:none;padding:4px 7px 4px 7px;margin-left:3px;line-height:normal;vertical-align:middle;outline:none; select-dummy: expression(this.hideFocus=true);}");
-		sb.append("#paginate a:hover, a:active {border:1px solid #ccc;color:#6771ff;vertical-align:middle; line-height:normal;}");
-		sb.append("#paginate .curBox {border:1px solid #e28d8d; background: #fff; color:#cb3536; font-weight:bold;height:28px;padding:4px 7px 4px 7px;margin-left:3px;line-height:normal;vertical-align:middle;}");
-		sb.append("#paginate .numBox {border:1px solid #ccc;height:28px;font-weight:bold;text-decoration:none;padding:4px 7px 4px 7px;margin-left:3px;line-height:normal;vertical-align:middle;}");
+		sb.append("#paginate a:hover, a:active {border:none; background:#e5e5e5; color:white;vertical-align:middle; line-height:normal;}");
+		sb.append("#paginate .curBox {border:none; border-radius:50px; background: #fff; color:#cb3536;  font-weight:bold;height:28px;padding:4px 7px 4px 7px;margin-left:1px;line-height:normal;vertical-align:middle;}");
+		sb.append("#paginate .numBox {border:none;border-radius:50px;background:#fff;height:28px;font-weight:bold;text-decoration:none;padding:4px 7px 4px 7px;margin-left:1px;line-height:normal;vertical-align:middle;}");
 		sb.append("</style>");
 		
 		sb.append("<div id='paginate'>");

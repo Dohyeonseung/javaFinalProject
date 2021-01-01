@@ -29,7 +29,7 @@
     		}
     	}
 
-    	f.action="${pageContext.request.contextPath}/ms/${mode}";
+    	f.action="${pageContext.request.contextPath}/cp/${mode}";
 			
         return true;
     }
@@ -58,7 +58,7 @@
 			      </td>
 		         <td width="100" bgcolor="#eeeeee" style="text-align: center;">구&nbsp;&nbsp;&nbsp;&nbsp;분</td>
 			      <td style="padding-left:10px;"> 
-			         <input type="radio" name="division" value="0" checked="checked"> 재료판매
+			         <input type="radio" name="division" value="2" checked="checked"> 예약판매
 			      </td>
 			     </tr>
 			  
@@ -89,7 +89,7 @@
 			        <textarea name="content" id="content" class="boxTA" style="width:98%; height: 270px;">${dto.content}</textarea>
 			      </td>
 			  </tr>
-			<c:if test="${mode=='update' }">
+			 
 			 <tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
 			      <td width="100" bgcolor="#eeeeee" style="text-align: center;">이미지</td>
 			      <td style="padding-left:10px;" colspan="3"> 
@@ -98,7 +98,7 @@
 			                     style="height: 25px; width: 97%;">
 			       </td>
 			  </tr>
-			</c:if>			  
+						  
 			  </tbody>
 			  </table>
 			
@@ -106,7 +106,6 @@
 			     <tr height="45"> 
 			      <td align="center" >
 			      	<c:if test="${mode=='update'}">
-						<input type="hidden" name="num" value="${dto.productNum }">
 						<input type="hidden" name="num" value="${dto.productNum }">
 						<input type="hidden" name="imageFilename" value="${dto.imageFilename}">
 						<input type="hidden" name="page" value="${page}">

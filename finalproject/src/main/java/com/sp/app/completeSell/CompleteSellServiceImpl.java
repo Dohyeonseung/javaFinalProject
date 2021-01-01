@@ -10,6 +10,7 @@ import com.sp.app.common.FileManager;
 import com.sp.app.common.dao.CommonDAO;
 
 
+
 @Service("cp.completeSellService")
 public class CompleteSellServiceImpl implements CompleteSellService {
 	@Autowired
@@ -93,4 +94,28 @@ public class CompleteSellServiceImpl implements CompleteSellService {
 		return dto;
 	}
 
+	@Override
+	public void updateCompleteSell(CompleteSell dto, String pathname) throws Exception {
+		try {
+			dao.updateData("cp.updateCategory", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	@Override
+	public void deleteCompleteSell(int productNum, String pathname, String userId) throws Exception {
+		try {
+			CompleteSell dto =readCompleteSell(productNum);
+			if(dto==null || (! userId.equals("admin") && !dto.getUserId().equals(userId))) {
+				return;
+			}
+			
+			dao.deleteData("cp.deleteCompleteSell", productNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+ 
+	}
 }

@@ -7,6 +7,25 @@
 .shoplistbox:hover{
 	background: #e5e5e5;
 }
+
+.btn2{
+background: white; 
+height:25px;
+width:30px;
+border:none;
+border-radius: 6px;
+}
+.btn2:hover{
+box-shadow: -1px 0 #FAE500, 0 1px #FAE500, 1px 0 #FAE500, 0 -1px #FAE500;
+}
+
+.shoplistbox td button{
+	background: none;
+	font-family: inherit;
+}
+.shoplistbox td button:hover{
+	background: #666;
+}
 </style>
 
 
@@ -28,6 +47,7 @@ function updateMaterialSell(productNum) {
 	}
 function searchList() {
 	var f=document.searchForm;
+	f.sortCol.value=$("#sortColumn").val();
 	f.submit();
 }
 	
@@ -37,17 +57,21 @@ function searchList() {
 	<div class="body-title">
 		<h4>홈 > Sell - 재료판매 </h4>
 	</div>
-
+	<div style="float: left;">
+		<form name="searchForm" action="${pageContext.request.contextPath}/ms/list" method="post"><!-- 서치폼을 만들고 모든정보를 ms action주소로 보낸다. -->
+			<input type="text" name="keyword" value="${keyword}" class="boxTF">
+			<input type="hidden" name="sortCol" value="new">
+		    <button type="button" class="btn2" onclick="searchList()">검색</button>
+		 </form>
+	</div>
 	<button type="button" class="btn" style="float: right;" onclick="javascript:location.href='${pageContext.request.contextPath}/ms/created';">게시물 추가</button>
-			<form name="searchForm" action="${pageContext.request.contextPath}/ms/list" method="post">
-		              <select style="float: right; margin-right: 5px;" name="condition" class="selectField" onchange="searchList()">
-		                  <option value="new" ${condition=="new"?"selected='selected'":""}>등록일순</option>
-		                  <option value="stock" ${condition=="stock"?"selected='selected'":""}>재고순</option>
-		                  <option value="popularity" ${condition=="popularity"?"selected='selected'":""}>분류순</option>
-		                  <option value="highPrice" ${condition=="highPrice"?"selected='selected'":""}>높은가격순</option>
-		                  <option value="rowPrice" ${condition=="rowPrice"?"selected='selected'":""}>낮은가격순</option>
-		            </select>
-			</form>
+            <select style="float: right; margin-right: 5px;" id="sortColumn" class="selectField" onchange="searchList()">
+                  <option value="new" ${sortCol=="new"?"selected='selected'":""}>등록일순</option>
+                  <option value="stock" ${sortCol=="stock"?"selected='selected'":""}>재고순</option>
+                  <option value="popularity" ${sortCol=="popularity"?"selected='selected'":""}>판매인기순</option>
+                  <option value="highPrice" ${sortCol=="highPrice"?"selected='selected'":""}>높은가격순</option>
+                  <option value="rowPrice" ${sortCol=="rowPrice"?"selected='selected'":""}>낮은가격순</option>
+            </select>
 		<table style="border-color:#e5e5e5;  width: 100%; border-spacing: 0px; border-collapse: collapse; border-radius:50%; " >
 			<tr align="center" bgcolor="white" height="35"  style="border-bottom: 2px solid #e5e5e5;"> 
 				<th width="40" style="color: #1e1e1e;">번호 </th>
@@ -60,10 +84,11 @@ function searchList() {
 			<tr class="shoplistbox" align="center" bgcolor="#ffffff" height="50" style="border-bottom: 1px solid #e5e5e5;"> 
 				<td >${dto.listNum}</td>
 			    <td height="100" >${dto.created_date}</td>
-			    <td  height="50px" style="display: flex; flex-direction: row;">
-		
+			    <td  height="50px" style="display: flex; flex-direction: row; justify-content: center;">
+					<div>
 						<a href="${articleUrl}&productNum=${dto.productNum}" style="text-decoration: none;height: 100%; "> <img src="${pageContext.request.contextPath}/uploads/ms/${dto.imageFilename}" width="70"
 			                   height="70" border="0" onclick="javascript:article('${dto.productNum}');"></a>
+			        </div>    
 			            <a href="${articleUrl}&productNum=${dto.productNum}" style="text-decoration: none; width: 100%; height:80px; display: flex; justify-content: center; align-items: center;"><span>${dto.categoryName} / ${dto.productName} / ${dto.price}원</span></a>
 				</td>
 				<td height="50">${dto.stock}</td>

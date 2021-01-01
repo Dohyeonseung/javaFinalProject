@@ -83,7 +83,7 @@ $(function() {
                </tr>
                <tr>
                   <td><a href="#">이용안내</a></td>
-                  <td><a href="#">예약 판매</a></td>
+                  <td><a href="${pageContext.request.contextPath}/rv/list">예약 판매</a></td>
                   <td><a href="#">예약 구매</a></td>
                   <td><a href="${pageContext.request.contextPath}/tip/main">DIY Tip</a></td>
                   <td><a href="${pageContext.request.contextPath}/consumer/list">자주하는 질문</a></td>

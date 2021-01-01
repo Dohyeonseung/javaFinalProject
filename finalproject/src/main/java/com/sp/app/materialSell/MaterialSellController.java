@@ -37,12 +37,18 @@ public class MaterialSellController {
 	
 	@RequestMapping("list") //주소뒷값이 list 이면
 	   public String list(
+			   
 			   @RequestParam(value="page", defaultValue="1") int current_page, //넘겨줄 값 
-			   @RequestParam(defaultValue = "all")String condition,// condition 값이 없을때 디폴트값 all로 넘겨줌
 			   @RequestParam(defaultValue = "")String keyword, // keyword값이 없을때 ""로 넘겨줌
+			   @RequestParam(defaultValue = "new")String sortCol, // keyword값이 없을때 ""로 넘겨줌
 			   HttpServletRequest req, //보내주는 객체
+			   HttpSession session,
 			   Model model
 			   ) throws Exception {
+		
+		SessionInfo info=(SessionInfo) session.getAttribute("member");
+		
+		String userId=info.getUserId();
 		   
 		   int rows=6;
 		   int total_page=0;
@@ -53,7 +59,8 @@ public class MaterialSellController {
 		   }
 		   
 		   Map<String, Object> map =new HashMap<>();
-		   map.put("condition", condition);
+		   map.put("userId", userId);
+		   map.put("sortCol", sortCol);		   
 		   map.put("keyword", keyword);
 		   
 		   dataCount=service.dataCount(map); //카운트 값 가져옴 
@@ -83,27 +90,27 @@ public class MaterialSellController {
 		   
 		   String cp=req.getContextPath();//현제페이지의 뿌리주소
 		   String query=""; //?
-		   String listUrl=cp+"/ms/list"; //현재페이지의 주소설정
-		   String articleUrl=cp+"/ms/article?page="+current_page;//아티클 페이지 주소설정
+		   String listUrl=cp+"/ms/list?sortCol="+sortCol; //현재페이지의 주소설정
+		   String articleUrl=cp+"/ms/article?page="+current_page+"&sortCol="+sortCol;//아티클 페이지 주소설정
 		   if(keyword.length()!=0) {//키워드가 값이 잇으면 쿼리 값에 검색값과 키워드 값을 넣어줘라
-			   query="condition="+condition+"&keyword="
-					   +URLEncoder.encode(keyword, "utf-8");
+			   query="keyword="+URLEncoder.encode(keyword, "utf-8");
 		   }
 		   if(query.length()!=0) {//위에서 정의한 쿼리가 값이 있을경우
-			   listUrl+="?"+query; //리스트 유알엘에 쿼리값 추가
+			   listUrl+="&"+query; //리스트 유알엘에 쿼리값 추가
 			   articleUrl+="&"+query;//아티클도 마찬가지
 		   }
 		   
 		   String paging=myUtil.paging(current_page, total_page, listUrl);
 		   
+		   model.addAttribute("userId",userId);
 		   model.addAttribute("list",list);
 		   model.addAttribute("articleUrl",articleUrl);
 		   model.addAttribute("page", current_page);
 		   model.addAttribute("dataCount",dataCount);
 		   model.addAttribute("total_page",total_page);
 		   model.addAttribute("paging",paging);
-		   model.addAttribute("condition",condition);
 		   model.addAttribute("keyword",keyword);
+		   model.addAttribute("sortCol",sortCol);
 		   
 
 	      return ".ms.list";
@@ -153,7 +160,6 @@ public class MaterialSellController {
 	   public String article(
 			   @RequestParam int productNum,
 			   @RequestParam String page,
-			   @RequestParam(defaultValue="all") String condition,
 			   @RequestParam(defaultValue="") String keyword,
 			   Model model
 			   ) throws Exception{
@@ -162,8 +168,7 @@ public class MaterialSellController {
 		   
 		   String query="page="+page;
 		   if(keyword.length()!=0) {
-			   query+="&condition="+condition+"&keyword"+
-					   URLEncoder.encode(keyword, "utf-8");
+			   query+="&keyword"+URLEncoder.encode(keyword, "utf-8");
 		   }
 		 
 		   MaterialSell dto=service.readMaterialSell(productNum);
@@ -175,7 +180,6 @@ public class MaterialSellController {
 		   
 		   Map<String, Object> map=new HashMap<>();
 		   map.put("productNum", productNum);
-		   map.put("condition", condition);
 		   map.put("keyword", keyword);
 		   
 		   model.addAttribute("dto", dto);
@@ -234,7 +238,6 @@ public class MaterialSellController {
 	   public String delete(
 			   @RequestParam int productNum, 
 			   @RequestParam (defaultValue="1") String page, 
-			   @RequestParam(defaultValue="all") String condition,
 			   @RequestParam(defaultValue = "") String keyword, 
 			   HttpSession session
 			   ) throws Exception{
@@ -242,7 +245,7 @@ public class MaterialSellController {
 		   	  keyword = URLDecoder.decode(keyword, "UTF-8");
 		      String query = "page="+page;
 		      if(keyword.length()!=0) {
-		      query += "&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "UTF-8");
+		      query += "&keyword="+URLEncoder.encode(keyword, "UTF-8");
 		      }
 		      
 		      String root=session.getServletContext().getRealPath("/");
