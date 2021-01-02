@@ -18,7 +18,7 @@
 		 	<span>></span>
 		 </li>
 		 <li style="float: left; margin-right: 8px;">
-		 	<span>고객센터 ></span>
+		 	<span>커뮤니티 ></span>
 		 </li>
 		 <li>
 		 	<a href="${pageContext.request.contextPath}/notice/list">공지사항</a>

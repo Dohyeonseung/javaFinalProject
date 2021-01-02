@@ -54,10 +54,25 @@ function article(listNum) {
 		</ul>         
 		 </div>
 <div class="body-container" style="width: 800px; margin: 0px;">
+	<div>
+		<ul style="list-style: none;">
+		 <li style="float: left; margin-right: 8px;">
+		 	<a href="${pageContext.request.contextPath}/">홈</a>
+		 	<span>></span>
+		 </li>
+		 <li style="float: left; margin-right: 8px;">
+		 	<span>커뮤니티 ></span>
+		 </li>
+		 <li>
+		 	<a href="${pageContext.request.contextPath}/tip/main">D.I.Y 팁</a>
+		 </li>
+		
+		</ul>
+	</div>
     <div class="body-title">
         <h3><i class="far fa-image"></i> D.I.Y Tip</h3>
-        
     </div>
+    
     
     <div>
 		<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
