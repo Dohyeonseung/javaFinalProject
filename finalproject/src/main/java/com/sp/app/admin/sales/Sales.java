@@ -12,19 +12,31 @@ public class Sales {
 	private int categoryNum;
 	private int salesNum;
 	private int detailOrderNum;
+	private int stateCode;
 	private String userId;
 	
 	// 카테고리 테이블
 	private String categoryName;
+	
+	// 상품상태 테이블
+	private int stateNum; // 상태번호
+	private String stateName; // 상태명
+	private String stateDate; // 상태변경일
+	private String stateMemo; // 변경사유
+	
+	// 발주테이블
+	private int productOrderNum; // 발주번호
+	private String productOrderMemo; // 발주사유
+	private String productOrderDate; // 발주날자
+	private int  productOrderCount; // 상품 발주 갯수 = 현재 상품 보유갯수
 	
 	// 상품테이블
 	private String productCode; // 상품코드
 	private String productName; // 상품명
 	private String productInfo; // 상품정보
 	private String registrationDate; // 상품등록일
-	private int productState; // 상품상태 ( 판매중 or 미판매중 )
 	private int productPrice; // 상품가격
-	private int productCount; // 상품수
+	private int productCount; // 상품개수
 	
 	// 판매게시판테이블
 	private String salesTitle; // 판매글 제목
@@ -49,8 +61,6 @@ public class Sales {
 	private String r_content; // 리뷰내용
 	private String reviewDate; // 리뷰등록일
 	private int starCount; // 별점
-	
-	
 	public int getNum() {
 		return num;
 	}
@@ -93,6 +103,12 @@ public class Sales {
 	public void setDetailOrderNum(int detailOrderNum) {
 		this.detailOrderNum = detailOrderNum;
 	}
+	public int getStateCode() {
+		return stateCode;
+	}
+	public void setStateCode(int stateCode) {
+		this.stateCode = stateCode;
+	}
 	public String getUserId() {
 		return userId;
 	}
@@ -104,6 +120,54 @@ public class Sales {
 	}
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
+	}
+	public int getStateNum() {
+		return stateNum;
+	}
+	public void setStateNum(int stateNum) {
+		this.stateNum = stateNum;
+	}
+	public String getStateName() {
+		return stateName;
+	}
+	public void setStateName(String stateName) {
+		this.stateName = stateName;
+	}
+	public String getStateDate() {
+		return stateDate;
+	}
+	public void setStateDate(String stateDate) {
+		this.stateDate = stateDate;
+	}
+	public String getStateMemo() {
+		return stateMemo;
+	}
+	public void setStateMemo(String stateMemo) {
+		this.stateMemo = stateMemo;
+	}
+	public int getProductOrderNum() {
+		return productOrderNum;
+	}
+	public void setProductOrderNum(int productOrderNum) {
+		this.productOrderNum = productOrderNum;
+	}
+	public String getProductOrderMemo() {
+		return productOrderMemo;
+	}
+	public void setProductOrderMemo(String productOrderMemo) {
+		this.productOrderMemo = productOrderMemo;
+	}
+	public String getProductOrderDate() {
+		return productOrderDate;
+	}
+	public void setProductOrderDate(String productOrderDate) {
+		this.productOrderDate = productOrderDate;
+	}
+	public int getProductOrderCount() {
+		return productOrderCount;
+	}
+	public void setProductOrderCount(int productOrderCount) {
+		this.productOrderCount = productOrderCount;
 	}
 	public String getProductCode() {
 		return productCode;
@@ -128,12 +192,6 @@ public class Sales {
 	}
 	public void setRegistrationDate(String registrationDate) {
 		this.registrationDate = registrationDate;
-	}
-	public int getProductState() {
-		return productState;
-	}
-	public void setProductState(int productState) {
-		this.productState = productState;
 	}
 	public int getProductPrice() {
 		return productPrice;

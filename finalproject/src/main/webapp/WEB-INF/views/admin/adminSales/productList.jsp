@@ -112,7 +112,7 @@ a {
 		      <td width="100">${dto.productName}</td>
 		      <td width="50">${dto.productPrice}원</td>
 		      <td width="50">${dto.productCount}</td>
-		      <td width="50">${dto.productState == 0?'판매':'미판매'}</td>
+		      <td width="50">${dto.stateName}</td>
 		      <td width="30">
 		      <a href="${pageContext.request.contextPath}/admin/adminSales/productinfo?productCode=${dto.productCode}&page=${page}" style="float: center" class="productList_a"><i class="fas fa-cog" style="color: #1e1e1e;"></i></a>
 		      </td>

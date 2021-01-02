@@ -4,8 +4,14 @@
 <mapper namespace="sales">
 	<!-- 상품등록 -->
 	<insert id="insertProduct" parameterType="com.sp.app.admin.sales.Sales">
-		INSERT INTO CorpProduct(productCode, productName, productInfo, productPrice, registrationDate, categoryNum, memberIdx)
-			VALUES (#{productCode}, #{productName}, #{productInfo}, #{productPrice}, SYSDATE, #{categoryNum}, #{memberIdx})
+		INSERT INTO CorpProduct(productCode, productName, productInfo, productPrice, registrationDate, categoryNum, memberIdx, stateCode)
+			VALUES (#{productCode}, #{productName}, #{productInfo}, #{productPrice}, SYSDATE, #{categoryNum}, #{memberIdx}, 0)
+	</insert>
+	
+	<!-- 상품상태등록 -->
+	<insert id="insertProductState" parameterType="com.sp.app.admin.sales.Sales">
+		INSERT INTO ProductState(stateCode, stateNum, stateName, stateMemo, stateDate)
+			VALUES (#{stateCode}, ProductState_seq.NEXTVAL, #{stateName}, #{stateMemo}, SYSDATE)
 	</insert>
 	
 	<sql id="search-list">
@@ -46,9 +52,10 @@
 	
 	<!-- 상품리스트출력 -->
 	<select id="listProduct" parameterType="map" resultType="com.sp.app.admin.sales.Sales">
-		SELECT p.productCode, c.categoryName, productName, TO_CHAR(registrationDate, 'YYYY-MM-DD')registrationDate, productPrice, productCount, productState
+		SELECT p.productCode, c.categoryName, s.stateCode, s.stateName, productName, TO_CHAR(registrationDate, 'YYYY-MM-DD')registrationDate, productPrice, productCount
 		FROM CorpProduct p
 		JOIN CorpCategory c ON c.categoryNum = p.categoryNum
+		LEFT OUTER JOIN ProductState s ON s.stateCode = p.stateCode
 		<where>
 			<if test="categoryNum != 0">
 				p.categoryNum = #{categoryNum}
@@ -63,11 +70,38 @@
 	
 	<!-- 상품상세정보 -->
 	<select id="readProduct" parameterType="String" resultType="com.sp.app.admin.sales.Sales">
-		SELECT c.categoryName, p.productCode, productName, productPrice, registrationDate, productState, productCount, productInfo
-		FROM CorpProduct p
-		LEFT OUTER JOIN CorpCategory c ON c.categoryNum = p.categoryNum
-		WHERE p.productCode = #{productCode}
+		SELECT p.productCode, productName, productPrice, productCount, registrationDate, productInfo, c.categoryName,
+			s.stateName, s.stateDate, s.stateMemo, o.productOrderDate, o.productOrderMemo, o.productOrderCount
+			FROM CorpProduct p
+			JOIN CorpCategory c ON c.categoryNum = p.categoryNum
+			LEFT OUTER JOIN ProductState s ON s.stateCode = p.stateCode
+			LEFT OUTER JOIN ProductOrder o ON o.productCode = p.productCode
+			WHERE p.productCode = #{productCode}
 	</select>
+	
+	<!-- 상품 상태변경 정보리스트 -->
+	<select id="listProductState" parameterType="String" resultType="com.sp.app.admin.sales.Sales">
+		SELECT p.productCode, stateName, stateMemo, stateDate
+		FROM ProductState s
+		JOIN CorpProduct p ON p.stateCode = s.stateCode
+		WHERE p.productCode = #{productCode}
+		ORDER BY stateNum DESC
+		OFFSET 0 ROWS FETCH FIRST 10 ROWS ONLY
+	</select>
+	
+	<!-- 상태변경 정보창 보기 -->
+	<select id="readProductState" parameterType="String" resultType="com.sp.app.admin.sales.Sales">
+		SELECT stateCode, stateName, stateMemo, p.productCode, p.productName, p.productPrice,
+		p.productCount, p.registrationDate
+		FROM ProductState s
+		JOIN CorpProduct p ON p.stateCode = s.stateCode
+		WHERE productCode = #{productCode}
+	</select>
+	
+	<!-- 상품 상태변경 -->
+	<update id="updateProductState" parameterType="map">
+		UPDATE CorpProduct SET stateCode = #{stateCode} WHERE productCode = #{productCode}
+	</update>
 	
 	
 </mapper>

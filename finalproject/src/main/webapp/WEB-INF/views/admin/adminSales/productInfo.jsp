@@ -86,7 +86,7 @@ function ajaxFun(url, method, dataType, query, fn) {
 		},
 		error : function(jqXHR) {
 			if (jqXHR.status == 403) {
-				location.href="${pageContext.request.contextPath}/admin/adminSales/detaile";
+				location.href="${pageContext.request.contextPath}/admin/adminSales/adminProductDetaile";
 				return false;
 			}
 			console.log(jqXHR.responseText);
@@ -94,7 +94,7 @@ function ajaxFun(url, method, dataType, query, fn) {
 	});
 }
 
-function detailedProduct(userId) {
+function detailedProduct(productCode) {
 	var dlg = $("#info_dialog").dialog({
 		  autoOpen: false,
 		  modal: true,
@@ -103,7 +103,7 @@ function detailedProduct(userId) {
 		    	   updateOk(); 
 		       },
 		       " 삭제 " : function() {
-		    	   deleteOk(userId);
+		    	   deleteOk(productCode);
 			   },
 		       " 닫기 " : function() {
 		    	   $(this).dialog("close");
@@ -116,8 +116,8 @@ function detailedProduct(userId) {
 		  }
 	});
 
-	var url = "${pageContext.request.contextPath}/admin/adminSales/detaile";
-	var query = "userId="+userId;
+	var url = "${pageContext.request.contextPath}/admin/adminSales/adminProductDetaile";
+	var query = "productCode="+productCode;
 	
 	var fn = function(data){
 		$('#info_dialog').html(data);
@@ -126,6 +126,47 @@ function detailedProduct(userId) {
 	ajaxFun(url, "post", "html", query, fn);
 }
 
+function updateOk() {
+	var f = document.deteailedProductForm;
+	
+	if(! f.stateCode.value) {
+		f.stateCode.focus();
+		return;
+	}
+	if(! $.trim(f.stateMemo.value)) {
+		f.stateMemo.focus();
+		return;
+	}
+	
+	var url = "${pageContext.request.contextPath}/admin/adminSales/updateProductState";
+	var query=$("#deteailedProductForm").serialize();
+
+	var fn = function(data){
+		location.href="${pageContext.request.contextPath}/admin/adminSales/productinfo?productCode=${dto.productCode}&page=${page}";
+	};
+	ajaxFun(url, "post", "html", query, fn);
+		
+	$('#info_dialog').dialog("close");
+	
+}
+
+function selectStateChange() {
+	var f = document.deteailedProductForm;
+	
+	var s = f.stateCode.value;
+	var txt = f.stateCode.options[f.stateCode.selectedIndex].text;
+	
+	f.stateMemo.value = "";	
+	if(! s) {
+		return;
+	}
+
+	if(s!="0" && s!="3") {
+		f.stateMemo.value = txt;
+	}
+	
+	f.stateMemo.focus();
+}
 </script>
 
 <div id="mainContainer">
@@ -175,7 +216,7 @@ function detailedProduct(userId) {
 	    	<tr style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
 	    		<th class="category_name">상태분류</th>
 	    		<td class="info_value">
-					<span>${dto.productState == 0?'판매':'미판매'}</span>
+					<span>${dto.stateName}</span>
 	    		</td>
 	    	</tr>
 	    	
@@ -210,9 +251,9 @@ function detailedProduct(userId) {
 					  </tr>
 					 
 					  <tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
-					      <td width="30">2020-12-18</td>
-					      <td width="100" style="text-align: center;"><a style="color: #1e1e1e;">재고소진</a></td>
-					      <td width="30">판매중지</td>
+					      <td width="30">${dto.stateDate}</td>
+					      <td width="100" style="text-align: center;"><a style="color: #1e1e1e;">${dto.stateMemo}</a></td>
+					      <td width="30">${dto.stateName}</td>
 					  </tr>
 
 				</table>
@@ -230,14 +271,12 @@ function detailedProduct(userId) {
 					      <th width="30" style="color: #787878;">발주날짜</th>
 					      <th width="100" style="color: #787878;">발주사유</th>
 					      <th width="30" style="color: #787878;">주문개수</th>
-					      <th width="30" style="color: #787878;">입고예정일</th>
 					  </tr>
 					 
 					  <tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
-					      <td width="30">2020-12-18</td>
-					      <td width="100" style="text-align: center"><a style="color: #1e1e1e;">재고없음</a></td>
-					      <td width="30">100개</td>
-					      <td width="30">2020-12-31</td>
+					      <td width="30">${dto.productOrderDate}</td>
+					      <td width="100" style="text-align: center"><a style="color: #1e1e1e;">${dto.productOrderMemo}</a></td>
+					      <td width="30">${dto.productOrderCount}개</td>
 					  </tr>
 
 				</table>
@@ -246,7 +285,7 @@ function detailedProduct(userId) {
 	    	<div class="btn_box">
 	    		<form action="">
 	    			<button type="button" class="btn_style" id="returnList_btn" style="margin-right: 860px;" onclick="location.href='${pageContext.request.contextPath}/admin/adminSales/productlist'">리스트</button>
-	    			<button type="button" class="btn_style" id="stateChange_btn" onclick="detailedProduct('${dto.userId}');">상태변경</button>
+	    			<button type="button" class="btn_style" id="stateChange_btn" onclick="detailedProduct('${dto.productCode}');">상태변경</button>
 	    			<button type="button" class="btn_style" id="productOrder_btn">상품발주</button>
 	    			<button type="button" class="btn_style" id="productDelete_btn">상품삭제</button>
 	    		</form>

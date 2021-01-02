@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sp.app.common.MyUtil;
 import com.sp.app.member.SessionInfo;
@@ -118,15 +119,7 @@ public class SalesController {
 		return ".admin.adminSales.productList";
 	}
 	
-	@RequestMapping(value="orderlist", method=RequestMethod.GET)
-	public String orderList() {
-		return ".admin.adminSales.orderList";
-	}
-	
-	@RequestMapping(value="registration", method=RequestMethod.GET)
-	public String productCrated() {
-		return ".admin.adminSales.productRegistration";
-	}
+
 	// 상품 등록
 	@RequestMapping(value = "registration", method = RequestMethod.POST)
 	public String productCreatedSubmit(Sales dto, HttpSession session) throws Exception {
@@ -142,24 +135,18 @@ public class SalesController {
 	
 	@RequestMapping(value="productinfo", method=RequestMethod.GET)
 	public String productInfo(@RequestParam String productCode,
-			@RequestParam String page,
-			@RequestParam(defaultValue="all") String condition,
-			@RequestParam(defaultValue="") String keyword,
-			Model model) throws Exception {
-		
-		keyword = URLDecoder.decode(keyword, "utf-8");
+			@RequestParam String page, Model model) throws Exception {
 		
 		String query="page="+page;
-		if(keyword.length()!=0) {
-			query+="&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "UTF-8");
-		}
-
-
 		// 해당 레코드 가져 오기
 		Sales dto = service.readProduct(productCode);
 		if(dto==null)
 			return "redirect:/admin/adminSales/productlist?"+query;
 		
+		List<Sales> listState = service.listProductState(productCode);
+		
+		
+		listState = service.listProductState(productCode);
 		// 스마트 에디터에서는 주석 처리
         // dto.setContent(myUtil.htmlSymbols(dto.getContent()));
         
@@ -167,8 +154,62 @@ public class SalesController {
 		model.addAttribute("dto", dto);
 		model.addAttribute("page", page);
 		model.addAttribute("query", query);
+		model.addAttribute("listState", listState);
 
 		return ".admin.adminSales.productInfo";
+	}
+
+	@RequestMapping(value = "adminProductDetaile")
+	public String adminProductDetaile(@RequestParam String productCode, Model model) throws Exception {
+		
+		Sales dto = service.readProduct(productCode);
+		Sales productState = service.readProductState(productCode);
+		
+		model.addAttribute("dto", dto);
+		model.addAttribute("productState", productState);
+		
+		return "admin/adminSales/adminProductDetaile";
+	}
+	
+	@RequestMapping(value = "updateProductState", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> updateProductState(Sales dto) throws Exception {
+		
+		String state = "true";
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("productCode", dto.getProductCode());
+			if(dto.getStateCode() == 0) {
+				map.put("stateCode", 1);
+			} else if(dto.getStateCode() == 0) {
+				map.put("stateCode", 2);
+			} else if(dto.getStateCode() == 0) {
+				map.put("stateCode", 3);
+			} else {
+				map.put("stateCode", 0);
+			}
+			// 상태변경
+			service.updateProductState(map);
+			// 변경내용저장
+			service.insertProductState(dto);
+		} catch (Exception e) {
+			state = "false";
+		}
+		
+		Map<String, Object> model = new HashMap<String, Object>();
+		model.put("state", state);
+		return model;
+	}
+	
+	
+	@RequestMapping(value="orderlist", method=RequestMethod.GET)
+	public String orderList() {
+		return ".admin.adminSales.orderList";
+	}
+	
+	@RequestMapping(value="registration", method=RequestMethod.GET)
+	public String productCrated() {
+		return ".admin.adminSales.productRegistration";
 	}
 	
 	

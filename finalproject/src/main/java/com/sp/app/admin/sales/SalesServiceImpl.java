@@ -95,4 +95,48 @@ public class SalesServiceImpl implements SalesService {
 		
 	}
 
+	@Override
+	public void insertProductState(Sales dto) throws Exception {
+		try {
+			dao.updateData("sales.insertProductState", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	@Override
+	public void updateProductState(Map<String, Object> map) throws Exception {
+		try {
+			dao.updateData("sales.updateProductState", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	@Override
+	public List<Sales> listProductState(String productCode) {
+		List<Sales> list = null;
+		
+		try {
+			list = dao.selectList("sales.listProductState", productCode);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
+	@Override
+	public Sales readProductState(String productCode) {
+		Sales dto = null;
+		try {
+			dto = dao.selectOne("sales.readProductState", productCode);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
+	}
+
 }
