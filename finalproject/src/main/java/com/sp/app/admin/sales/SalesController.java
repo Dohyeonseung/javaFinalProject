@@ -144,9 +144,8 @@ public class SalesController {
 			return "redirect:/admin/adminSales/productlist?"+query;
 		
 		List<Sales> listState = service.listProductState(productCode);
+		List<Sales> listOrder = service.listProductOrder(productCode);
 		
-		
-		listState = service.listProductState(productCode);
 		// 스마트 에디터에서는 주석 처리
         // dto.setContent(myUtil.htmlSymbols(dto.getContent()));
         
@@ -155,6 +154,7 @@ public class SalesController {
 		model.addAttribute("page", page);
 		model.addAttribute("query", query);
 		model.addAttribute("listState", listState);
+		model.addAttribute("listOrder", listOrder);
 
 		return ".admin.adminSales.productInfo";
 	}
@@ -163,10 +163,8 @@ public class SalesController {
 	public String adminProductDetaile(@RequestParam String productCode, Model model) throws Exception {
 		
 		Sales dto = service.readProduct(productCode);
-		Sales productState = service.readProductState(productCode);
 		
 		model.addAttribute("dto", dto);
-		model.addAttribute("productState", productState);
 		
 		return "admin/adminSales/adminProductDetaile";
 	}
@@ -179,17 +177,11 @@ public class SalesController {
 		try {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("productCode", dto.getProductCode());
-			if(dto.getStateCode() == 0) {
-				map.put("stateCode", 1);
-			} else if(dto.getStateCode() == 0) {
-				map.put("stateCode", 2);
-			} else if(dto.getStateCode() == 0) {
-				map.put("stateCode", 3);
-			} else {
-				map.put("stateCode", 0);
-			}
+			map.put("statement", dto.getStateCode());
+
 			// 상태변경
 			service.updateProductState(map);
+			
 			// 변경내용저장
 			service.insertProductState(dto);
 		} catch (Exception e) {
@@ -201,6 +193,45 @@ public class SalesController {
 		return model;
 	}
 	
+	@RequestMapping(value = "deleteProduct", method = RequestMethod.POST)
+	@ResponseBody
+	public String deleteProduct(String productCode) throws Exception {
+		try {
+			service.deleteProduct(productCode);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+		return "redirect:/admin/adminSales/productlist";
+	}
+	
+	// 발주
+	@RequestMapping(value = "productOrder")
+	public String productOrder(@RequestParam String productCode, Model model) throws Exception {
+		
+		Sales dto = service.readProduct(productCode);
+		String orderDate = dto.getProductOrderDate();
+		model.addAttribute("dto", dto);
+		model.addAttribute("orderDate", orderDate);
+		
+		return "admin/adminSales/productOrder";
+	}
+	
+	@RequestMapping(value = "insertproductOrder", method = RequestMethod.POST)
+	@ResponseBody
+	public String productOrderSubmit(Sales dto, String productCode) throws Exception {
+		
+		try {
+			service.insertProductOrderCount(dto);
+			service.updateProductCount(dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+		return "redirect:/admin/adminSales/productinfo";
+	}
 	
 	@RequestMapping(value="orderlist", method=RequestMethod.GET)
 	public String orderList() {

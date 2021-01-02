@@ -20,7 +20,22 @@
     <td align="right" style="padding-right: 9px;"><label style="font-weight: 900;">상품등록일</label></td>
     <td align="left" style="padding-left: 5px;"><span>${dto.registrationDate}</span></td>
     <td align="right" style="padding-right: 9px;"><label style="font-weight: 900;">상태분류</label></td>
-    <td align="left" style="padding-left: 5px;"><span>${dto.stateName}</span></td>
+    <td align="left" style="padding-left: 5px;">
+    <c:choose>
+    	<c:when test="${dto.statement == 0}">
+    		<span>판매대기</span>
+    	</c:when>
+    	<c:when test="${dto.statement == 1}">
+    		<span>판매</span>
+    	</c:when>
+    	<c:when test="${dto.statement == 2}">
+    		<span>판매중단</span>
+    	</c:when>
+    	<c:when test="${dto.statement == 3}">
+    		<span>판매종료</span>
+    	</c:when>
+    </c:choose>
+    </td>
 </tr>
 
 
@@ -30,13 +45,11 @@
 <h3 style="font-size: 15px;">상품 상태 변경</h3>
 <table style="margin: 5px auto 0px; width: 100%; border-spacing: 1px; background: #cccccc">
 <tr height="37" style="background: #ffffff;">
-   <td align="right" width="15%" style="padding-right: 9px;"><label style="font-weight: 900;">계정상태</label></td>
+   <td align="right" width="15%" style="padding-right: 9px;"><label style="font-weight: 900;">상품상태</label></td>
    <td style="padding-left: 5px;">
        <select class="selectField" id="stateCode" name="stateCode" onchange="selectStateChange()">
        	  <option value="">::상태코드::</option>
-       	  <c:if test="${dto.stateCode==0}">
-       	      <option value="0">판매대기</option>
-       	  </c:if>
+       	  <option value="0">판매대기</option>
        	  <option value="1">판매</option>
        	  <option value="2">판매중단</option>
        	  <option value="3">판매종료</option>
@@ -50,7 +63,6 @@
    </td>
 </tr>
 </table>
-<input type="hidden" name="memberIdx" value="${dto.memberIdx}">
 <input type="hidden" name="productCode" value="${dto.productCode}">
 
 </form>

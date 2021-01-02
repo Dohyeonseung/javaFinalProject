@@ -4,15 +4,10 @@
 <mapper namespace="sales">
 	<!-- 상품등록 -->
 	<insert id="insertProduct" parameterType="com.sp.app.admin.sales.Sales">
-		INSERT INTO CorpProduct(productCode, productName, productInfo, productPrice, registrationDate, categoryNum, memberIdx, stateCode)
+		INSERT INTO CorpProduct(productCode, productName, productInfo, productPrice, registrationDate, categoryNum, memberIdx, statement)
 			VALUES (#{productCode}, #{productName}, #{productInfo}, #{productPrice}, SYSDATE, #{categoryNum}, #{memberIdx}, 0)
 	</insert>
-	
-	<!-- 상품상태등록 -->
-	<insert id="insertProductState" parameterType="com.sp.app.admin.sales.Sales">
-		INSERT INTO ProductState(stateCode, stateNum, stateName, stateMemo, stateDate)
-			VALUES (#{stateCode}, ProductState_seq.NEXTVAL, #{stateName}, #{stateMemo}, SYSDATE)
-	</insert>
+
 	
 	<sql id="search-list">
 		<choose>
@@ -52,10 +47,9 @@
 	
 	<!-- 상품리스트출력 -->
 	<select id="listProduct" parameterType="map" resultType="com.sp.app.admin.sales.Sales">
-		SELECT p.productCode, c.categoryName, s.stateCode, s.stateName, productName, TO_CHAR(registrationDate, 'YYYY-MM-DD')registrationDate, productPrice, productCount
+		SELECT p.productCode, statement, c.categoryName, productName, TO_CHAR(registrationDate, 'YYYY-MM-DD')registrationDate, productPrice, productCount
 		FROM CorpProduct p
 		JOIN CorpCategory c ON c.categoryNum = p.categoryNum
-		LEFT OUTER JOIN ProductState s ON s.stateCode = p.stateCode
 		<where>
 			<if test="categoryNum != 0">
 				p.categoryNum = #{categoryNum}
@@ -64,44 +58,66 @@
 				AND <include refid="search-list"/>
 			</if>
 		</where>
-		ORDER BY registrationDate
+		ORDER BY registrationDate DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	</select>
 	
 	<!-- 상품상세정보 -->
 	<select id="readProduct" parameterType="String" resultType="com.sp.app.admin.sales.Sales">
-		SELECT p.productCode, productName, productPrice, productCount, registrationDate, productInfo, c.categoryName,
-			s.stateName, s.stateDate, s.stateMemo, o.productOrderDate, o.productOrderMemo, o.productOrderCount
+		SELECT p.productCode, productName, productPrice, productCount, registrationDate, productInfo, c.categoryName, statement, o.productOrderDate
 			FROM CorpProduct p
 			JOIN CorpCategory c ON c.categoryNum = p.categoryNum
-			LEFT OUTER JOIN ProductState s ON s.stateCode = p.stateCode
 			LEFT OUTER JOIN ProductOrder o ON o.productCode = p.productCode
 			WHERE p.productCode = #{productCode}
+			ORDER BY o.productOrderDate DESC
+			FETCH FIRST 1 ROWS ONLY
 	</select>
 	
 	<!-- 상품 상태변경 정보리스트 -->
 	<select id="listProductState" parameterType="String" resultType="com.sp.app.admin.sales.Sales">
-		SELECT p.productCode, stateName, stateMemo, stateDate
+		SELECT stateMemo, stateDate, stateCode
 		FROM ProductState s
-		JOIN CorpProduct p ON p.stateCode = s.stateCode
+		JOIN CorpProduct p ON p.productCode = s.productCode
 		WHERE p.productCode = #{productCode}
 		ORDER BY stateNum DESC
 		OFFSET 0 ROWS FETCH FIRST 10 ROWS ONLY
 	</select>
 	
-	<!-- 상태변경 정보창 보기 -->
-	<select id="readProductState" parameterType="String" resultType="com.sp.app.admin.sales.Sales">
-		SELECT stateCode, stateName, stateMemo, p.productCode, p.productName, p.productPrice,
-		p.productCount, p.registrationDate
-		FROM ProductState s
-		JOIN CorpProduct p ON p.stateCode = s.stateCode
-		WHERE productCode = #{productCode}
-	</select>
+	<!-- 상품상태등록 -->
+	<insert id="insertProductState" parameterType="com.sp.app.admin.sales.Sales">
+		INSERT INTO ProductState(stateCode, stateNum, stateMemo, productCode, stateDate)
+			VALUES (#{stateCode}, ProductState_seq.NEXTVAL, #{stateMemo}, #{productCode}, SYSDATE)
+	</insert>
 	
-	<!-- 상품 상태변경 -->
+	<!-- 상품 상태변경 업데이트-->
 	<update id="updateProductState" parameterType="map">
-		UPDATE CorpProduct SET stateCode = #{stateCode} WHERE productCode = #{productCode}
+		UPDATE CorpProduct SET statement = #{statement} WHERE productCode = #{productCode}
 	</update>
 	
+	<!-- 상품삭제 -->
+	<delete id="deleteProduct" parameterType="String">
+		DELETE FROM CorpProduct WHERE productCode = #{productCode}
+	</delete>
+	
+	<!-- 상품발주 -->
+	<insert id="insertProductOrder" parameterType="com.sp.app.admin.sales.Sales">
+		INSERT INTO ProductOrder(productOrderNum, productOrderMemo, productOrderDate, productOrderCount, productCode)
+			VALUES(ProductOrder_seq.NEXTVAL, #{productOrderMemo}, SYSDATE, #{productOrderCount}, #{productCode})
+	</insert>
+	
+	<!-- 상품수량 갱신 -->
+	<update id="updateProductCount" parameterType="com.sp.app.admin.sales.Sales">
+		UPDATE CorpProduct SET productCount = productCount+#{productOrderCount} WHERE productCode=#{productCode}
+	</update>
+	
+	<!-- 발주기록 리스트 -->
+	<select id="listProductOrder" parameterType="String" resultType="com.sp.app.admin.sales.Sales">
+		SELECT productOrderMemo, productOrderDate, productOrderCount
+		FROM ProductOrder o
+		JOIN CorpProduct p ON p.productCode = o.productCode
+		WHERE p.productCode = #{productCode}
+		ORDER BY productOrderNum DESC
+		OFFSET 0 ROWS FETCH FIRST 10 ROWS ONLY
+	</select>
 	
 </mapper>

@@ -111,8 +111,23 @@ a {
 		      <td width="50">${dto.productCode}</td>
 		      <td width="100">${dto.productName}</td>
 		      <td width="50">${dto.productPrice}원</td>
-		      <td width="50">${dto.productCount}</td>
-		      <td width="50">${dto.stateName}</td>
+		      <td width="50">${dto.productCount}EA</td>
+		      <td width="50">
+		      	<c:choose>
+			    	<c:when test="${dto.statement == 0}">
+			    		<span>판매대기</span>
+			    	</c:when>
+			    	<c:when test="${dto.statement == 1}">
+			    		<span>판매</span>
+			    	</c:when>
+			    	<c:when test="${dto.statement == 2}">
+			    		<span>판매중단</span>
+			    	</c:when>
+			    	<c:when test="${dto.statement == 3}">
+			    		<span>판매종료</span>
+			    	</c:when>
+			    </c:choose>
+		      </td>
 		      <td width="30">
 		      <a href="${pageContext.request.contextPath}/admin/adminSales/productinfo?productCode=${dto.productCode}&page=${page}" style="float: center" class="productList_a"><i class="fas fa-cog" style="color: #1e1e1e;"></i></a>
 		      </td>

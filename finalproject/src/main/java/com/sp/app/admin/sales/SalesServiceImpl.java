@@ -31,9 +31,13 @@ public class SalesServiceImpl implements SalesService {
 	}
 
 	@Override
-	public void deleteProduct(Sales dto) throws Exception {
-		// TODO Auto-generated method stub
-		
+	public void deleteProduct(String productCode) throws Exception {
+		try {
+			dao.deleteData("sales.deleteProduct", productCode);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	@Override
@@ -129,14 +133,36 @@ public class SalesServiceImpl implements SalesService {
 	}
 
 	@Override
-	public Sales readProductState(String productCode) {
-		Sales dto = null;
+	public void insertProductOrderCount(Sales dto) throws Exception {
 		try {
-			dto = dao.selectOne("sales.readProductState", productCode);
+			dao.insertData("sales.insertProductOrder", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	@Override
+	public void updateProductCount(Sales dto) throws Exception {
+		try {
+			dao.updateData("updateProductCount", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+	}
+
+	@Override
+	public List<Sales> listProductOrder(String productCode) {
+		List<Sales> list = null;
+		try {
+			list  = dao.selectList("sales.listProductOrder", productCode);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return dto;
+		return list;
 	}
+
 
 }

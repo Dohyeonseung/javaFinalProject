@@ -12,15 +12,15 @@ public class Sales {
 	private int categoryNum;
 	private int salesNum;
 	private int detailOrderNum;
-	private int stateCode;
+	private String productCode; // 상품코드
 	private String userId;
 	
 	// 카테고리 테이블
 	private String categoryName;
 	
 	// 상품상태 테이블
+	private int stateCode;
 	private int stateNum; // 상태번호
-	private String stateName; // 상태명
 	private String stateDate; // 상태변경일
 	private String stateMemo; // 변경사유
 	
@@ -31,12 +31,12 @@ public class Sales {
 	private int  productOrderCount; // 상품 발주 갯수 = 현재 상품 보유갯수
 	
 	// 상품테이블
-	private String productCode; // 상품코드
 	private String productName; // 상품명
 	private String productInfo; // 상품정보
 	private String registrationDate; // 상품등록일
 	private int productPrice; // 상품가격
 	private int productCount; // 상품개수
+	private int statement; // 상품상태
 	
 	// 판매게시판테이블
 	private String salesTitle; // 판매글 제목
@@ -61,6 +61,8 @@ public class Sales {
 	private String r_content; // 리뷰내용
 	private String reviewDate; // 리뷰등록일
 	private int starCount; // 별점
+	
+	
 	public int getNum() {
 		return num;
 	}
@@ -103,11 +105,11 @@ public class Sales {
 	public void setDetailOrderNum(int detailOrderNum) {
 		this.detailOrderNum = detailOrderNum;
 	}
-	public int getStateCode() {
-		return stateCode;
+	public String getProductCode() {
+		return productCode;
 	}
-	public void setStateCode(int stateCode) {
-		this.stateCode = stateCode;
+	public void setProductCode(String productCode) {
+		this.productCode = productCode;
 	}
 	public String getUserId() {
 		return userId;
@@ -121,17 +123,17 @@ public class Sales {
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}
+	public int getStateCode() {
+		return stateCode;
+	}
+	public void setStateCode(int stateCode) {
+		this.stateCode = stateCode;
+	}
 	public int getStateNum() {
 		return stateNum;
 	}
 	public void setStateNum(int stateNum) {
 		this.stateNum = stateNum;
-	}
-	public String getStateName() {
-		return stateName;
-	}
-	public void setStateName(String stateName) {
-		this.stateName = stateName;
 	}
 	public String getStateDate() {
 		return stateDate;
@@ -169,12 +171,6 @@ public class Sales {
 	public void setProductOrderCount(int productOrderCount) {
 		this.productOrderCount = productOrderCount;
 	}
-	public String getProductCode() {
-		return productCode;
-	}
-	public void setProductCode(String productCode) {
-		this.productCode = productCode;
-	}
 	public String getProductName() {
 		return productName;
 	}
@@ -204,6 +200,12 @@ public class Sales {
 	}
 	public void setProductCount(int productCount) {
 		this.productCount = productCount;
+	}
+	public int getStatement() {
+		return statement;
+	}
+	public void setStatement(int statement) {
+		this.statement = statement;
 	}
 	public String getSalesTitle() {
 		return salesTitle;
@@ -301,7 +303,5 @@ public class Sales {
 	public void setStarCount(int starCount) {
 		this.starCount = starCount;
 	}
-	
-	
 	
 }

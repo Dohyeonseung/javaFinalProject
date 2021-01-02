@@ -150,6 +150,21 @@ function updateOk() {
 	
 }
 
+function deleteOk(productCode) {
+	if(confirm("선택한 상품을 삭제 하시겠습니까?")) {
+		var url = "${pageContext.request.contextPath}/admin/adminSales/deleteProduct";
+		var query = "productCode="+productCode;
+		
+		var fn = function(data) {
+			location.href="${pageContext.request.contextPath}/admin/adminSales/productlist";
+		};
+		ajaxFun(url, "post", "html", query, fn);
+	} else {
+		$('#info_dialog').dialog("close");
+	}
+	
+}
+
 function selectStateChange() {
 	var f = document.deteailedProductForm;
 	
@@ -166,6 +181,60 @@ function selectStateChange() {
 	}
 	
 	f.stateMemo.focus();
+}
+
+
+//=========================상품발주===================================	
+function productOrder(productCode) {
+	var dlg = $("#order_dialog").dialog({
+		  autoOpen: false,
+		  modal: true,
+		  buttons: {
+		       " 발주 " : function() {
+		    	   orderOk(); 
+		       },
+		       " 닫기 " : function() {
+		    	   $(this).dialog("close");
+		       }
+		  },
+		  height: 520,
+		  width: 800,
+		  title: "회원상세정보",
+		  close: function(event, ui) {
+		  }
+	});
+
+	var url = "${pageContext.request.contextPath}/admin/adminSales/productOrder";
+	var query = "productCode="+productCode;
+	
+	var fn = function(data){
+		$('#order_dialog').html(data);
+		dlg.dialog("open");
+	};
+	ajaxFun(url, "post", "html", query, fn);
+}
+
+function orderOk() {
+	var f = document.productOrderForm;
+	
+	if(! f.productOrderCount.value) {
+		f.productOrderCount.focus();
+		return;
+	}
+	if(! $.trim(f.productOrderMemo.value)) {
+		f.productOrderMemo.focus();
+		return;
+	}
+	
+	var url = "${pageContext.request.contextPath}/admin/adminSales/insertproductOrder";
+	var query=$("#productOrderForm").serialize();
+
+	var fn = function(data){
+		location.href="${pageContext.request.contextPath}/admin/adminSales/productinfo?productCode=${dto.productCode}&page=${page}";
+	};
+	ajaxFun(url, "post", "html", query, fn);
+		
+	$('#info_dialog').dialog("close");
 }
 </script>
 
@@ -216,14 +285,27 @@ function selectStateChange() {
 	    	<tr style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
 	    		<th class="category_name">상태분류</th>
 	    		<td class="info_value">
-					<span>${dto.stateName}</span>
+					<c:choose>
+				    	<c:when test="${dto.statement == 0}">
+				    		<span>판매대기</span>
+				    	</c:when>
+				    	<c:when test="${dto.statement == 1}">
+				    		<span>판매</span>
+				    	</c:when>
+				    	<c:when test="${dto.statement == 2}">
+				    		<span>판매중단</span>
+				    	</c:when>
+				    	<c:when test="${dto.statement == 3}">
+				    		<span>판매종료</span>
+				    	</c:when>
+				    </c:choose>
 	    		</td>
 	    	</tr>
 	    	
 	    	<tr style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
 	    		<th class="category_name">재고개수</th>
 	    		<td class="info_value">
-					<span>${dto.productCount}</span>
+					<span>${dto.productCount}EA</span>
 	    		</td>
 	    	</tr>
 	    		
@@ -250,11 +332,28 @@ function selectStateChange() {
 					      <th width="30" style="color: #787878;">상태</th>
 					  </tr>
 					 
+					 <c:forEach var="dto" items="${listState}">
 					  <tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
 					      <td width="30">${dto.stateDate}</td>
 					      <td width="100" style="text-align: center;"><a style="color: #1e1e1e;">${dto.stateMemo}</a></td>
-					      <td width="30">${dto.stateName}</td>
+					      <td width="30">
+					      <c:choose>
+					    	<c:when test="${dto.stateCode == 0}">
+					    		<span>판매대기</span>
+					    	</c:when>
+					    	<c:when test="${dto.stateCode == 1}">
+					    		<span>판매</span>
+					    	</c:when>
+					    	<c:when test="${dto.stateCode == 2}">
+					    		<span>판매중단</span>
+					    	</c:when>
+					    	<c:when test="${dto.stateCode == 3}">
+					    		<span>판매종료</span>
+					    	</c:when>
+					    </c:choose>
+					      </td>
 					  </tr>
+					 </c:forEach>
 
 				</table>
 	    	</div>
@@ -273,21 +372,22 @@ function selectStateChange() {
 					      <th width="30" style="color: #787878;">주문개수</th>
 					  </tr>
 					 
+					  <c:forEach var="vo" items="${listOrder}">
 					  <tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
-					      <td width="30">${dto.productOrderDate}</td>
-					      <td width="100" style="text-align: center"><a style="color: #1e1e1e;">${dto.productOrderMemo}</a></td>
-					      <td width="30">${dto.productOrderCount}개</td>
+					      <td width="30">${vo.productOrderDate}</td>
+					      <td width="100" style="text-align: center"><a style="color: #1e1e1e;">${vo.productOrderMemo}</a></td>
+					      <td width="30">${vo.productOrderCount}EA</td>
 					  </tr>
+					  </c:forEach>
 
 				</table>
 	    	</div>
 	    	
 	    	<div class="btn_box">
 	    		<form action="">
-	    			<button type="button" class="btn_style" id="returnList_btn" style="margin-right: 860px;" onclick="location.href='${pageContext.request.contextPath}/admin/adminSales/productlist'">리스트</button>
-	    			<button type="button" class="btn_style" id="stateChange_btn" onclick="detailedProduct('${dto.productCode}');">상태변경</button>
-	    			<button type="button" class="btn_style" id="productOrder_btn">상품발주</button>
-	    			<button type="button" class="btn_style" id="productDelete_btn">상품삭제</button>
+	    			<button type="button" class="btn_style" id="returnList_btn" style="margin-right: 965px;" onclick="location.href='${pageContext.request.contextPath}/admin/adminSales/productlist'">리스트</button>
+	    			<button type="button" class="btn_style" id="stateChange_btn" onclick="detailedProduct('${dto.productCode}');">상품관리</button>
+	    			<button type="button" class="btn_style" id="productOrder_btn" onclick="productOrder('${dto.productCode}');">상품발주</button>
 	    		</form>
 	    	</div>
 	    	
@@ -295,5 +395,9 @@ function selectStateChange() {
 	</div>
 </div>
 <div id="info_dialog" style="display: none;">
+
+</div>
+
+<div id="order_dialog" style="display: none;">
 
 </div>
