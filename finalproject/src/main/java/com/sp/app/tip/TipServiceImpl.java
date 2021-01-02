@@ -22,7 +22,7 @@ public class TipServiceImpl implements TipService {
 		try {
 			String saveFilename=fileManager.doFileUpload(dto.getUpload(), pathname);
 			if(saveFilename!=null) {
-				dto.setSaveFilename(saveFilename);
+				dto.setImageFilename(saveFilename);
 
 				dao.insertData("tip.insertTip", dto);
 			}
@@ -35,8 +35,15 @@ public class TipServiceImpl implements TipService {
 
 	@Override
 	public int dataCount(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		
+		try{
+			result=dao.selectOne("tip.dataCount", map);			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
@@ -45,6 +52,7 @@ public class TipServiceImpl implements TipService {
 		
 		try {
 			list=dao.selectList("tip.listTip", map);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -53,32 +61,193 @@ public class TipServiceImpl implements TipService {
 
 	@Override
 	public Tip readTip(int num) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Tip preReadTip(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Tip nextReadTip(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		Tip dto=null;
+		
+		try{
+			// 게시물 가져오기
+			dto=dao.selectOne("tip.readTip", num);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
 	}
 
 	@Override
 	public void updateTip(Tip dto, String pathname) throws Exception {
-		// TODO Auto-generated method stub
-		
+		try{
+			String saveFilename=fileManager.doFileUpload(dto.getUpload(), pathname);
+			if(saveFilename != null) {
+				if(dto.getImageFilename()!=null && dto.getImageFilename().length()!=0)
+					fileManager.doFileDelete(dto.getImageFilename(), pathname);
+				
+				dto.setImageFilename(saveFilename);
+			}
+			
+			dao.updateData("tip.updateTip", dto);
+		} catch(Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	@Override
 	public void deleteTip(int num, String pathname, String userId) throws Exception {
-		// TODO Auto-generated method stub
+		try{
+			Tip dto=readTip(num);
+			if(dto==null || (! userId.equals("admin") && ! userId.equals(dto.getUserId())))
+				return;
+			
+			fileManager.doFileDelete(dto.getImageFilename(), pathname);
+			
+			dao.deleteData("tip.deleteTip", num);
+		} catch(Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 		
+	}
+
+	@Override
+	public void insertCategory(Tip dto) throws Exception {
+		try {
+			dao.insertData("tip.insertCategory", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+	}
+
+	@Override
+	public List<Tip> listCategory(Map<String, Object> map) {
+		List<Tip> listCategory = null;
+		try {
+			listCategory = dao.selectList("tip.listCategory", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return listCategory;
+	}
+
+	@Override
+	public void deleteCategory(int categoryNum) throws Exception {
+		try {
+			dao.deleteData("tip.deleteCategory", categoryNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+	}
+
+	@Override
+	public void insertTipLike(Map<String, Object> map) throws Exception {
+		try {
+			dao.insertData("tip.insertTipLike", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+	}
+
+	@Override
+	public int tipLikeCount(int num) {
+		int result=0;
+		try {
+			result=dao.selectOne("tip.tipLikeCount", num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public void insertReply(Reply dto) throws Exception {
+		try {
+			dao.insertData("tip.insertReply", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+	}
+
+	@Override
+	public List<Reply> listReply(Map<String, Object> map) {
+		List<Reply> list=null;
+		try {
+			list=dao.selectList("tip.listReply", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public int replyCount(Map<String, Object> map) {
+		int result=0;
+		try {
+			result=dao.selectOne("tip.replyCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public void deleteReply(Map<String, Object> map) throws Exception {
+		try {
+			dao.deleteData("tip.deleteReply", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	@Override
+	public List<Reply> listReplyAnswer(int answer) {
+		List<Reply> list=null;
+		try {
+			list=dao.selectList("tip.listReplyAnswer", answer);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public int replyAnswerCount(int answer) {
+		int result=0;
+		try {
+			result=dao.selectOne("tip.replyAnswerCount", answer);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public void insertReplyLike(Map<String, Object> map) throws Exception {
+		try {
+			dao.insertData("tip.insertReplyLike", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+	}
+
+	@Override
+	public Map<String, Object> replyLikeCount(Map<String, Object> map) {
+		Map<String, Object> countMap=null;
+		try {
+			countMap=dao.selectOne("tip.replyLikeCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return countMap;
 	}
 	
 }

@@ -2,7 +2,7 @@ package com.sp.app.tip;
 
 public class Reply {
 	private int replyNum;
-	private int num;
+	private int listNum;
 	private String userId;
 	private String userName;
 	private String content;
@@ -19,14 +19,6 @@ public class Reply {
 
 	public void setReplyNum(int replyNum) {
 		this.replyNum = replyNum;
-	}
-
-	public int getNum() {
-		return num;
-	}
-
-	public void setNum(int num) {
-		this.num = num;
 	}
 
 	public String getUserId() {
@@ -91,5 +83,13 @@ public class Reply {
 
 	public void setDisLikeCount(int disLikeCount) {
 		this.disLikeCount = disLikeCount;
+	}
+
+	public int getListNum() {
+		return listNum;
+	}
+
+	public void setListNum(int listNum) {
+		this.listNum = listNum;
 	}
 }

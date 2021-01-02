@@ -4,6 +4,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <style type="text/css">
+.bigbox{
+display: flex;
+justify-content: center;
+}
+
 .imgLayout{
 	width: 190px;
 	height: 205px;
@@ -32,15 +37,26 @@ function searchList() {
 		f.submit();
 }
 
-function article(num) {
-	var url="${articleUrl}&num="+num;
+function article(listNum) {
+	var url="${articleUrl}&listNum="+listNum;
 	location.href=url;
 }
 </script>
+<div class="bigbox">
+<div style="width: 200px; margin-left: 50px;">
+		<p>카테고리</p>
 
-<div class="body-container" style="width: 630px;">
+		<ul style="list-style: none;">
+			<li><a href="${pageContext.request.contextPath}/tip/main">모두보기</a></li>
+			<c:forEach var="dto" items="${listCategory}">
+		        		<li><a href="${pageContext.request.contextPath}/tip/main?categoryNum=${dto.categoryNum}">${dto.category}</a></li>
+		        	</c:forEach>
+		</ul>         
+		 </div>
+<div class="body-container" style="width: 800px; margin: 0px;">
     <div class="body-title">
-        <h3><i class="far fa-image"></i> 포토갤러리 </h3>
+        <h3><i class="far fa-image"></i> D.I.Y Tip</h3>
+        
     </div>
     
     <div>
@@ -55,6 +71,7 @@ function article(num) {
 		   </tr>
 		</table>
 		
+		
 		<table style="width: 100%; margin: 0px auto; border-spacing: 0px;">
 <c:forEach var="dto" items="${list}" varStatus="status">
                  <c:if test="${status.index==0}">
@@ -65,13 +82,15 @@ function article(num) {
                  </c:if>
 			     <td width="210" align="center">
 			        <div class="imgLayout">
-			             <img src="${pageContext.request.contextPath}/uploads/photo/${dto.imageFilename}" width="180"
-			                   height="180" border="0" onclick="javascript:article('${dto.num}');">
-			             <span class="subject" onclick="javascript:article('${dto.num}');" >
-			                   ${dto.subject}
+			             <img src="${pageContext.request.contextPath}/uploads/tip/${dto.imageFilename}" width="180"
+			                   height="180" border="0" onclick="javascript:article('${dto.listNum}');">
+			             <span class="subject" onclick="javascript:article('${dto.listNum}');" >
+			                   제목:${dto.subject}
 			             </span>
 			         </div>
+			         <div>좋아요 : ${dto.tipLikeCount}</div>
 			     </td>
+			     
 </c:forEach>
 
 <c:set var="n" value="${list.size()}"/>
@@ -86,8 +105,8 @@ function article(num) {
 <c:if test="${n!=0 }">
 		       <c:out value="</tr>" escapeXml="false"/>
 </c:if>
-		</table>           
-		 
+		</table>  
+		
 		<table style="width: 100%; margin: 0px auto; border-spacing: 0px;">
 		   <tr height="35">
 			<td align="center">
@@ -99,10 +118,10 @@ function article(num) {
 		<table style="width: 100%; margin: 10px auto; border-spacing: 0px;">
 		   <tr height="40">
 		      <td align="left" width="100">
-		          <button type="button" class="btn" onclick="javascript:location.href='${pageContext.request.contextPath}/photo/list';">새로고침</button>
+		          <button type="button" class="btn" onclick="javascript:location.href='${pageContext.request.contextPath}/tip/main';">새로고침</button>
 		      </td>
 		      <td align="center">
-		          <form name="searchForm" action="${pageContext.request.contextPath}/photo/list" method="post">
+		          <form name="searchForm" action="${pageContext.request.contextPath}/tip/main" method="post">
 		              <select name="condition" class="selectField">
 		                  <option value="all" ${condition=="all"?"selected='selected'":""}>모두</option>
 		                  <option value="subject" ${condition=="subject"?"selected='selected'":""}>제목</option>
@@ -121,4 +140,6 @@ function article(num) {
 		</table>
     </div>
 
+</div>
+<div class="lastbox" style="width: 200px; margin-right: 50px;"></div>
 </div>

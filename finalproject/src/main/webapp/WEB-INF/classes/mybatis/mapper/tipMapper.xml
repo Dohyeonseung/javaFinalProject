@@ -4,9 +4,9 @@
 <mapper namespace="tip">
 
 	<insert id="insertTip" parameterType="com.sp.app.tip.Tip">
-		INSERT INTO tip(listNum, categoryNum userId, subject, saveFilename, content, created)
+		INSERT INTO tip(listNum, categoryNum, userId, subject, imageFilename, content, created)
 			VALUES (tip_seq.NEXTVAL, #{categoryNum}, #{userId}, #{subject},  
-					#{saveFilename}, #{content}, SYSDATE)
+					#{imageFilename}, #{content}, SYSDATE)
 	</insert>
 	
 	<sql id="where-list">
@@ -20,25 +20,164 @@
 			   ( TO_CHAR(created, 'YYYYMMDD') = #{keyword}
 		          OR TO_CHAR(created, 'YYYY-MM-DD') = #{keyword} )
 			</when>
+			
 			<otherwise>
 			    ( INSTR(${condition}, #{keyword}) &gt; 0 )
 			</otherwise>
 		</choose>
 	</sql>
 	
+	<sql id="where-categoryList">
+		<choose>
+			<when test="categoryNum!=null">
+				c.categoryNum=#{categoryNum}
+			</when>
+		</choose>
+	</sql>
+	
 	<select id="listTip" parameterType="map" resultType="com.sp.app.tip.Tip">
-		SELECT t.listNum, t.userId, userName, subject, saveFilename, 
+		SELECT t.listNum, t.userId, userName, subject, imageFilename, 
 		       TO_CHAR(t.created, 'YYYY-MM-DD') created, content,
-		       c.categoryNum, category
+		       c.categoryNum, category, NVL(tipLikeCount, 0) tipLikeCount
 		FROM tip t
 		JOIN member1 m ON t.userId = m.userId
 		JOIN tip_category c ON t.categoryNum = c.categoryNum
+		LEFT OUTER JOIN (
+			SELECT listNum, COUNT(*) tipLikeCount FROM tipLike
+			GROUP BY listNum
+		) tc ON t.listNum = tc.listNum
 		<where>
 			<if test="keyword != null and keyword != ''">
 				<include refid="where-list"/>
+			</if>
+		</where>	
+		<where>	
+			<if test="categoryNum!=null and categoryNum!=0 ">
+				<include refid="where-categoryList"/>
 			</if>
 		</where>
 		ORDER BY listNum DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	</select>
+	
+	<select id="readTip" parameterType="Integer" resultType="com.sp.app.tip.Tip">
+		SELECT t.listNum, t.userId, tc.category, userName, subject, content,
+			   hitCount, t.created,  imageFilename,
+			   NVL(tipLikeCount, 0) tipLikeCount
+		FROM tip t
+		JOIN member1 m ON t.userId=m.userId
+		JOIN tip_category tc ON t.categoryNum=tc.categoryNum
+		LEFT OUTER JOIN (
+			SELECT listNum, COUNT(*) tipLikeCount FROM tipLike
+			GROUP BY listNum
+		) tc ON t.listNum = tc.listNum
+		WHERE t.listNum = #{listNum}
+	</select>
+	
+	<delete id="deleteTip" parameterType="Integer">
+		DELETE FROM tip WHERE listNum = #{listNum}
+	</delete>
+	
+	<update id="updateTip" parameterType="com.sp.app.tip.Tip">
+		UPDATE tip SET subject=#{subject}, content=#{content},
+				imageFilename=#{imageFilename}
+		WHERE listNum = #{listNum}
+	</update>
+	
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM tip t
+		JOIN member1 m ON t.userId=m.userId
+		JOIN tip_category c ON t.categoryNum = c.categoryNum
+		<where>
+			<if test="keyword!=null and keyword!='' ">
+				<include refid="where-list"/>
+			</if>
+		</where>
+		<where>	
+			<if test="categoryNum!=null and categoryNum!=0 ">
+				<include refid="where-categoryList"/>
+			</if>
+		</where>   
+	</select>
+	
+	<insert id="insertCategory" parameterType="com.sp.app.tip.Tip">
+		INSERT INTO tip_category(categoryNum, category)
+			VALUES (category_seq.NEXTVAL, #{category})
+	</insert>
+	
+
+	<select id="listCategory" parameterType="map" resultType="com.sp.app.tip.Tip">
+		SELECT categoryNum, category
+		FROM tip_category
+		ORDER BY categoryNum
+	</select>
+	
+	<update id="updateCategory" parameterType="com.sp.app.tip.Tip">
+		UPDATE tip_category SET category=#{category}
+		WHERE categoryNum = #{categoryNum}
+	</update>
+	
+	<delete id="deleteCategory" parameterType="Integer">
+		DELETE FROM tip_category
+		WHERE categoryNum = #{categoryNum}
+	</delete>
+	
+
+	<insert id="insertTipLike" parameterType="map">
+		INSERT INTO tipLike(listNum, userId) VALUES (#{listNum}, #{userId})
+	</insert>
+
+	<select id="tipLikeCount" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*) FROM tipLike WHERE listNum=#{listNum}
+	</select>
+
+	<insert id="insertReply" parameterType="com.sp.app.tip.Reply">
+		INSERT INTO tipReply(replyNum, listNum, userId, content, answer, created)
+			VALUES (tipReply_seq.NEXTVAL, #{listNum}, #{userId}, #{content}, #{answer}, SYSDATE)
+	</insert>
+
+	<select id="replyCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) FROM tipReply
+		WHERE listNum=#{listNum} AND answer=0
+	</select>
+
+	<select id="listReply" parameterType="map" resultType="com.sp.app.tip.Reply">
+		SELECT r.replyNum, r.userId, userName, listNum, content, r.created, 
+		       NVL(answerCount, 0) answerCount
+		FROM tipReply r
+		JOIN member1 m ON r.userId = m.userId
+		LEFT OUTER JOIN (
+			SELECT answer, COUNT(*) answerCount
+			FROM tipReply WHERE answer!=0 GROUP BY answer
+		) a ON r.replyNum = a.answer
+		WHERE listNum=#{listNum}  AND r.answer=0
+		ORDER BY r.replyNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+
+	<delete id="deleteReply" parameterType="map">
+		DELETE FROM tipReply
+		WHERE replyNum=#{replyNum}
+		<if test="mode=='reply'">
+			OR answer=#{replyNum}
+		</if>
+	</delete>
+	
+
+	<select id="listReplyAnswer" parameterType="Integer" resultType="com.sp.app.tip.Reply">
+		SELECT replyNum, listNum, r.userId, userName, content, created, answer
+		FROM tipReply r
+		JOIN member1 m ON r.userId = m.userId
+		WHERE answer = #{answer}
+		ORDER BY replyNum DESC
+	</select>
+	
+
+	<select id="replyAnswerCount" parameterType="Integer" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM tipReply WHERE answer = #{answer}
+	</select>
+	
 </mapper>

@@ -7,13 +7,22 @@ public class Tip {
     private String userName, userId;
     private String subject, content;
     private String created;
-    private String saveFilename;
+    private String imageFilename;
 	private int categoryNum;
     private String category;
     private int hitCount;
     private MultipartFile upload;
     
-    public int getNum() {
+    private int replyCount;
+	private int tipLikeCount;
+    
+    public int getReplyCount() {
+		return replyCount;
+	}
+	public void setReplyCount(int replyCount) {
+		this.replyCount = replyCount;
+	}
+	public int getNum() {
 		return num;
 	}
 	public void setNum(int num) {
@@ -80,13 +89,18 @@ public class Tip {
 	public void setHitCount(int hitCount) {
 		this.hitCount = hitCount;
 	}
-	public String getSaveFilename() {
-		return saveFilename;
+	public String getImageFilename() {
+		return imageFilename;
 	}
-	public void setSaveFilename(String saveFilename) {
-		this.saveFilename = saveFilename;
+	public void setImageFilename(String imageFilename) {
+		this.imageFilename = imageFilename;
 	}
-
+	public int getTipLikeCount() {
+		return tipLikeCount;
+	}
+	public void setTipLikeCount(int tipLikeCount) {
+		this.tipLikeCount = tipLikeCount;
+	}
 	
 	
 }

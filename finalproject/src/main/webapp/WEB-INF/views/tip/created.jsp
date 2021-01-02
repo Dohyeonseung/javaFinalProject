@@ -4,29 +4,104 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/se/js/HuskyEZCreator.js" charset="utf-8"></script>
+<style type="text/css">
+.ui-widget-header {
+	background: none;
+	border: none;
+	height:35px;
+	line-height:35px;
+	border-bottom: 1px solid #cccccc;
+	border-radius: 0px;
+}
+
+.category-table input {
+	border:1px solid #ccc;
+	padding:3px 5px 5px;
+	background-color:#ffffff;
+	width:100%;
+	box-sizing:border-box;
+	font-family:"맑은 고딕", 나눔고딕, 돋움, sans-serif;
+}
+.category-table button {
+	border:1px solid #ccc;
+	padding:3px 5px 5px;
+	background-color:#ffffff;
+	width:100%;
+	box-sizing:border-box;
+	font-family:"맑은 고딕", 나눔고딕, 돋움, sans-serif;
+}
+.category-table input[disabled] {
+    pointer-events: none;
+    border: none;
+    text-align: center;
+}
+.category-table select {
+	border:1px solid #ccc;
+	padding:3px 5px 5px;
+	background-color:#ffffff;
+	width:100%;
+	box-sizing:border-box;
+	font-family:"맑은 고딕", 나눔고딕, 돋움, sans-serif;
+}
+.category-table select[disabled] {
+    pointer-events: none;
+    border: none;
+    text-align: center;
+}
+.btnSpanIcon {
+	cursor: pointer;
+}
+</style>
+
 <script type="text/javascript">
-    function check() {
-        var f = document.boardForm;
+function check() {
+    var f = document.tipForm;
 
-    	var str = f.subject.value;
-        if(!str) {
-            alert("제목을 입력하세요. ");
-            f.subject.focus();
-            return false;
-        }
-
-        str = f.content.value;
-        if(!str || str=="<p>&nbsp;</p>") {
-        	alert("내용을 입력하세요. ");
-     		f.content.focus();
-        	return false;
-        }
-
-    	f.action="${pageContext.request.contextPath}/bbs/${mode}";
-
-        return true;
+    
+    
+	var str = f.subject.value;
+    if(!str) {
+        alert("제목을 입력하세요. ");
+        f.subject.focus();
+        return;
     }
+    
+    str = f.categoryNum.value;
+    if(!str) {
+        alert("카테고리를 선택하세요. ");
+        f.categoryNum.focus();
+        return;
+    }
+    
+    str = f.content.value;
+    if(!str || str=="<p>&nbsp;</p>") {
+    	alert("내용을 입력하세요. ");
+ 		f.content.focus();
+    	return false;
+    }
+    
+    str = f.upload.value;
+    if(!str) {
+        alert("배너 이미지는 필수로 등록해 주시기 바랍니다. ");
+        f.upload.focus();
+        return;
+    }
+    
+    var mode="${mode}";
+    if(mode=="created"||mode=="update" && f.upload.value!="") {
+		if(! /(\.gif|\.jpg|\.png|\.jpeg)$/i.test(f.upload.value)) {
+			alert('이미지 파일만 가능합니다.(bmp 파일은 불가) !!!');
+			f.upload.focus();
+			return;
+		}
+	}
+    
+    f.action="${pageContext.request.contextPath}/tip/${mode}";
+    f.submit();
+}
 </script>
+
+
 
 <div class="body-container" style="width: 830px;">
     <div class="body-title">
@@ -34,7 +109,7 @@
     </div>
     
     <div>
-			<form name="boardForm" method="post" enctype="multipart/form-data" onsubmit="return submitContents(this);">
+			<form name="tipForm" method="post" enctype="multipart/form-data" onsubmit="return submitContents(this);">
 			  <table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
 			  <tr align="left" height="40" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
 			      <td width="100" bgcolor="#eeeeee" style="text-align: center;">제&nbsp;&nbsp;&nbsp;&nbsp;목</td>
@@ -42,6 +117,18 @@
 			        <input type="text" name="subject" maxlength="100" class="boxTF" style="width: 97%;" value="${dto.subject}">
 			      </td>
 			  </tr>
+			  
+			  <tr align="left" height="40" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
+		      <td width="100" bgcolor="#eeeeee" style="text-align: center;">카테고리</td>
+		      <td style="padding-left:10px;"> 
+		        <select name="categoryNum" class="selectField">
+		        	<c:forEach var="dto" items="${listCategory}">
+		        		<option value="${dto.categoryNum}" ${dto.categoryNum==dto.categoryNum?"selected='selected'":""}>${dto.category}</option>
+		        	</c:forEach>
+		        </select>
+		        <button type="button" class="btn" onclick="javascript:location.href='${pageContext.request.contextPath}/tip/listAllCategory';"> 변경 </button>
+		      </td>
+		  </tr>
 			
 			  <tr align="left" height="40" style="border-bottom: 1px solid #cccccc;"> 
 			      <td width="100" bgcolor="#eeeeee" style="text-align: center;">작성자</td>
@@ -58,23 +145,11 @@
 			  </tr>
 			  
 			  <tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
-			      <td width="100" bgcolor="#eeeeee" style="text-align: center;">첨&nbsp;&nbsp;&nbsp;&nbsp;부</td>
+			      <td width="100" bgcolor="#eeeeee" style="text-align: center;">배너 이미지</td>
 			      <td style="padding-left:10px;"> 
 			          <input type="file" name="upload" class="boxTF" size="53" style="width: 97%; height: 25px;">
 			       </td>
-			  </tr>
-			  
-			  <c:if test="${mode=='update' }">
-				  <tr align="left" height="40" style="border-bottom: 1px solid #cccccc;">
-				      <td width="100" bgcolor="#eeeeee" style="text-align: center;">첨부된파일</td>
-				      <td style="padding-left:10px;">
-				          <c:if test="${not empty dto.saveFilename}">
-				          		<a href="${pageContext.request.contextPath}/tip/deleteFile?num=${dto.num}&page=${page}"><i class="far fa-trash-alt"></i></a>
-				          </c:if>
-						  ${dto.originalFilename}
-				       </td>
-				  </tr>
-			  </c:if>
+			  </tr>			 
 
 			  </table>
 			
@@ -86,14 +161,15 @@
 			        <button type="button" class="btn" onclick="javascript:location.href='${pageContext.request.contextPath}/tip/main';">${mode=='update'?'수정취소':'등록취소'}</button>
 			         <c:if test="${mode=='update'}">
 			         	 <input type="hidden" name="num" value="${dto.num}">
-			         	 <input type="hidden" name="saveFilename" value="${dto.saveFilename}">
-			         	 <input type="hidden" name="originalFilename" value="${dto.originalFilename}">
+			         	 <input type="hidden" name="imageFilename" value="${dto.imageFilename}">
 			        	 <input type="hidden" name="page" value="${page}">
 			        </c:if>
 			      </td>
 			    </tr>
 			  </table>
 			</form>
+			
+			
     </div>
     
 <script type="text/javascript">
