@@ -86,7 +86,7 @@ function ajaxFun(url, method, dataType, query, fn) {
 		},
 		error : function(jqXHR) {
 			if (jqXHR.status == 403) {
-				location.href="${pageContext.request.contextPath}/admin/adminSales/detaile";
+				location.href="${pageContext.request.contextPath}/admin/adminSales/adminProductDetaile";
 				return false;
 			}
 			console.log(jqXHR.responseText);
@@ -94,7 +94,7 @@ function ajaxFun(url, method, dataType, query, fn) {
 	});
 }
 
-function detailedProduct(userId) {
+function detailedProduct(productCode) {
 	var dlg = $("#info_dialog").dialog({
 		  autoOpen: false,
 		  modal: true,
@@ -103,7 +103,7 @@ function detailedProduct(userId) {
 		    	   updateOk(); 
 		       },
 		       " 삭제 " : function() {
-		    	   deleteOk(userId);
+		    	   deleteOk(productCode);
 			   },
 		       " 닫기 " : function() {
 		    	   $(this).dialog("close");
@@ -116,8 +116,8 @@ function detailedProduct(userId) {
 		  }
 	});
 
-	var url = "${pageContext.request.contextPath}/admin/adminSales/detaile";
-	var query = "userId="+userId;
+	var url = "${pageContext.request.contextPath}/admin/adminSales/adminProductDetaile";
+	var query = "productCode="+productCode;
 	
 	var fn = function(data){
 		$('#info_dialog').html(data);
@@ -126,6 +126,116 @@ function detailedProduct(userId) {
 	ajaxFun(url, "post", "html", query, fn);
 }
 
+function updateOk() {
+	var f = document.deteailedProductForm;
+	
+	if(! f.stateCode.value) {
+		f.stateCode.focus();
+		return;
+	}
+	if(! $.trim(f.stateMemo.value)) {
+		f.stateMemo.focus();
+		return;
+	}
+	
+	var url = "${pageContext.request.contextPath}/admin/adminSales/updateProductState";
+	var query=$("#deteailedProductForm").serialize();
+
+	var fn = function(data){
+		location.href="${pageContext.request.contextPath}/admin/adminSales/productinfo?productCode=${dto.productCode}&page=${page}";
+	};
+	ajaxFun(url, "post", "html", query, fn);
+		
+	$('#info_dialog').dialog("close");
+	
+}
+
+function deleteOk(productCode) {
+	if(confirm("선택한 상품을 삭제 하시겠습니까?")) {
+		var url = "${pageContext.request.contextPath}/admin/adminSales/deleteProduct";
+		var query = "productCode="+productCode;
+		
+		var fn = function(data) {
+			location.href="${pageContext.request.contextPath}/admin/adminSales/productlist";
+		};
+		ajaxFun(url, "post", "html", query, fn);
+	} else {
+		$('#info_dialog').dialog("close");
+	}
+	
+}
+
+function selectStateChange() {
+	var f = document.deteailedProductForm;
+	
+	var s = f.stateCode.value;
+	var txt = f.stateCode.options[f.stateCode.selectedIndex].text;
+	
+	f.stateMemo.value = "";	
+	if(! s) {
+		return;
+	}
+
+	if(s!="0" && s!="3") {
+		f.stateMemo.value = txt;
+	}
+	
+	f.stateMemo.focus();
+}
+
+
+//=========================상품발주===================================	
+function productOrder(productCode) {
+	var dlg = $("#order_dialog").dialog({
+		  autoOpen: false,
+		  modal: true,
+		  buttons: {
+		       " 발주 " : function() {
+		    	   orderOk(); 
+		       },
+		       " 닫기 " : function() {
+		    	   $(this).dialog("close");
+		       }
+		  },
+		  height: 520,
+		  width: 800,
+		  title: "회원상세정보",
+		  close: function(event, ui) {
+		  }
+	});
+
+	var url = "${pageContext.request.contextPath}/admin/adminSales/productOrder";
+	var query = "productCode="+productCode;
+	
+	var fn = function(data){
+		$('#order_dialog').html(data);
+		dlg.dialog("open");
+	};
+	ajaxFun(url, "post", "html", query, fn);
+}
+
+function orderOk() {
+	var f = document.productOrderForm;
+	
+	if(! f.productOrderCount.value) {
+		f.productOrderCount.focus();
+		return;
+	}
+	if(! $.trim(f.productOrderMemo.value)) {
+		f.productOrderMemo.focus();
+		return;
+	}
+	
+	var url = "${pageContext.request.contextPath}/admin/adminSales/insertproductOrder";
+	var query=$("#productOrderForm").serialize();
+
+	var fn = function(data){
+		location.href="${pageContext.request.contextPath}/admin/adminSales/productinfo?productCode=${dto.productCode}&page=${page}";
+	};
+	ajaxFun(url, "post", "html", query, fn);
+		
+	$('#info_dialog').dialog("close");
+}
 </script>
 
 <div id="mainContainer">
@@ -139,51 +249,73 @@ function detailedProduct(userId) {
 	    	<tr style="border-bottom: 1px solid #cccccc; border-top: 1px solid #101010;">
 	    		<th class="category_name">상품명</th>
 	    		<td class="info_value">
-	    			<span>직접 만드는 DIY 책상 제작 키트</span>
+	    			<span>${dto.productName}</span>
 	    		</td>
 	    	</tr>
 	    	
 	    	<tr style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
 				<th class="category_name">상품코드</th>
 	    		<td class="info_value">
-					<span>DIY201221</span>
+					<span>${dto.productCode}</span>
+					<input type="hidden" name="productCode" value="${productCode}">
+	    		</td>
+	    	</tr>
+	    	
+	    	<tr style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
+				<th class="category_name">상품분류</th>
+	    		<td class="info_value">
+					<span>${dto.categoryName}</span>
 	    		</td>
 	    	</tr>
 	    	
 	    	<tr style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
 				<th class="category_name">판매가격</th>
 	    		<td class="info_value">
-					<span>124,000원</span>
+					<span>${dto.productPrice}</span>
 	    		</td>
 	    	</tr>
 	    	
 	    	<tr style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-	    		<th class="category_name">최초입고일자</th>
+	    		<th class="category_name">상품등록일</th>
 	    		<td class="info_value">
-					<span>2020-08-15</span>
-	    		</td>
-	    	</tr>
-	    	
-	    	<tr style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-	    		<th class="category_name">최근발주일자</th>
-	    		<td class="info_value">
-					<span>2020-11-08</span>
+					<span>${dto.registrationDate}</span>
 	    		</td>
 	    	</tr>
 	    	
 	    	<tr style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
 	    		<th class="category_name">상태분류</th>
 	    		<td class="info_value">
-					<span>판매중</span>
+					<c:choose>
+				    	<c:when test="${dto.statement == 0}">
+				    		<span>판매대기</span>
+				    	</c:when>
+				    	<c:when test="${dto.statement == 1}">
+				    		<span>판매</span>
+				    	</c:when>
+				    	<c:when test="${dto.statement == 2}">
+				    		<span>판매중단</span>
+				    	</c:when>
+				    	<c:when test="${dto.statement == 3}">
+				    		<span>판매종료</span>
+				    	</c:when>
+				    </c:choose>
 	    		</td>
 	    	</tr>
 	    	
-	    	<tr style="border-top: 1px solid #cccccc; border-bottom: 1px solid #101010;">
+	    	<tr style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
 	    		<th class="category_name">재고개수</th>
 	    		<td class="info_value">
-					<span>42개</span>
+					<span>${dto.productCount}EA</span>
 	    		</td>
 	    	</tr>
+	    		
+	    	<tr style="border-top: 1px solid #cccccc; border-bottom: 1px solid #1e1e1e;">
+	    		<th class="category_name">상세정보</th>
+	    		<td class="info_value">
+					<span>${dto.productInfo}</span>
+	    		</td>
+	    	</tr>
+	    	
 	    	</table>
 	    	
 	    	<div class="table_box">
@@ -200,11 +332,28 @@ function detailedProduct(userId) {
 					      <th width="30" style="color: #787878;">상태</th>
 					  </tr>
 					 
+					 <c:forEach var="dto" items="${listState}">
 					  <tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
-					      <td width="30">2020-12-18</td>
-					      <td width="100" style="text-align: center;"><a style="color: #1e1e1e;">재고소진</a></td>
-					      <td width="30">판매중지</td>
+					      <td width="30">${dto.stateDate}</td>
+					      <td width="100" style="text-align: center;"><a style="color: #1e1e1e;">${dto.stateMemo}</a></td>
+					      <td width="30">
+					      <c:choose>
+					    	<c:when test="${dto.stateCode == 0}">
+					    		<span>판매대기</span>
+					    	</c:when>
+					    	<c:when test="${dto.stateCode == 1}">
+					    		<span>판매</span>
+					    	</c:when>
+					    	<c:when test="${dto.stateCode == 2}">
+					    		<span>판매중단</span>
+					    	</c:when>
+					    	<c:when test="${dto.stateCode == 3}">
+					    		<span>판매종료</span>
+					    	</c:when>
+					    </c:choose>
+					      </td>
 					  </tr>
+					 </c:forEach>
 
 				</table>
 	    	</div>
@@ -221,25 +370,24 @@ function detailedProduct(userId) {
 					      <th width="30" style="color: #787878;">발주날짜</th>
 					      <th width="100" style="color: #787878;">발주사유</th>
 					      <th width="30" style="color: #787878;">주문개수</th>
-					      <th width="30" style="color: #787878;">입고예정일</th>
 					  </tr>
 					 
+					  <c:forEach var="vo" items="${listOrder}">
 					  <tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
-					      <td width="30">2020-12-18</td>
-					      <td width="100" style="text-align: center"><a style="color: #1e1e1e;">재고없음</a></td>
-					      <td width="30">100개</td>
-					      <td width="30">2020-12-31</td>
+					      <td width="30">${vo.productOrderDate}</td>
+					      <td width="100" style="text-align: center"><a style="color: #1e1e1e;">${vo.productOrderMemo}</a></td>
+					      <td width="30">${vo.productOrderCount}EA</td>
 					  </tr>
+					  </c:forEach>
 
 				</table>
 	    	</div>
 	    	
 	    	<div class="btn_box">
 	    		<form action="">
-	    			<button type="button" class="btn_style" id="returnList_btn" style="margin-right: 860px;" onclick="location.href='${pageContext.request.contextPath}/admin/adminSales/productlist'">리스트</button>
-	    			<button type="button" class="btn_style" id="stateChange_btn" onclick="detailedProduct('${dto.userId}');">상태변경</button>
-	    			<button type="button" class="btn_style" id="productOrder_btn">상품발주</button>
-	    			<button type="button" class="btn_style" id="productDelete_btn">상품삭제</button>
+	    			<button type="button" class="btn_style" id="returnList_btn" style="margin-right: 965px;" onclick="location.href='${pageContext.request.contextPath}/admin/adminSales/productlist'">리스트</button>
+	    			<button type="button" class="btn_style" id="stateChange_btn" onclick="detailedProduct('${dto.productCode}');">상품관리</button>
+	    			<button type="button" class="btn_style" id="productOrder_btn" onclick="productOrder('${dto.productCode}');">상품발주</button>
 	    		</form>
 	    	</div>
 	    	
@@ -247,5 +395,9 @@ function detailedProduct(userId) {
 	</div>
 </div>
 <div id="info_dialog" style="display: none;">
+
+</div>
+
+<div id="order_dialog" style="display: none;">
 
 </div>

@@ -10,58 +10,49 @@
 	</insert>
 	
 	<sql id="where-list">
-	 	<choose>
-	 		<when test="condition=='all'">
-	 			( INSTR(productName, #{keyword}) &gt;0
-	 				OR DBMS_LOB.INSTR(content, #{keyword}) &gt; 0 )
-	 		</when>
-	 	   <when test="condition=='created_date'">
-             (TO_CHAR(created, 'YYMMDD')=#{keyword} OR TO_CHAR(created, 'YYYY-MM-DD')=#{keyword})
-          </when>  
-          <when test="condition=='content'">
-             (DBMS_LOB.INSTR(content, #{keyword}) &gt;0)
-          </when>
-          <otherwise>
-             INSTR(${condition}, #{keyword}) &gt;0
-          </otherwise>
-       </choose>
-    </sql>
+			   ( INSTR(productName, #{keyword}) &gt; 0
+		          OR TO_CHAR(created_date, 'YYYYMMDD') = #{keyword}
+		          OR TO_CHAR(created_date, 'YYYY-MM-DD') = #{keyword} )
+	</sql>
     
     <select id="dataCount" parameterType="map" resultType="Integer">
 	 	SELECT NVL(COUNT(*),0)
 	 	FROM product p
 	 	JOIN member1 m ON p.userId = m.userId
-	 	<where>
+	 	WHERE division=0 and p.userId=#{userId}
 	 		<if test="keyword!=null and keyword!=''">
-	 			<include refid="where-list"/>
+	 			AND <include refid="where-list"/>
 	 		</if>
-	 	
-	 	</where>
-	 	
+
 	 </select>
 	 
 	 <select id="listMaterialSell" parameterType="map" resultType="com.sp.app.materialSell.MaterialSell">
 	 	SELECT productNum, productName, price, stock, p.userId,
-	     imageFileName, c.categoryNum, c.categoryName, division,
-	 	 TO_CHAR(p.created_date,'YYYY-MM-DD') created_date
+	       imageFileName, c.categoryNum, c.categoryName, division,
+	 	   TO_CHAR(p.created_date,'YYYY-MM-DD') created_date
 	 	FROM product p
 	 	JOIN category c ON p.categoryNum=c.categoryNum
-	  	<where>
+	 	WHERE division=0 and p.userId=#{userId}
 	  		<if test="keyword!=null and keyword!=''">
-	  			<include refid="where-list"/>
+	  			AND <include refid="where-list"/>
 	  		</if>
-	  	</where>
-	 	ORDER BY productNum 
+	  	<choose>
+	  		<when test="sortCol=='new'"> ORDER BY created_date DESC  </when>
+	  		<when test="sortCol=='stock'"> ORDER BY stock DESC  </when>
+	  		<when test="sortCol=='popularity'"> ORDER BY price DESC </when>
+	  		<when test="sortCol=='highPrice'"> ORDER BY price DESC  </when>
+	  		<when test="sortCol=='rowPrice'"> ORDER BY price ASC  </when>
+	  	</choose>
+
 	 	OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	 </select>
 	 
 	 
 	 <select id="readMaterialSell" parameterType="Integer"
 	   resultType="com.sp.app.materialSell.MaterialSell">
-	   
 	   SELECT productNum, productName, p.userId, m.userName, stock,
 	   price, imageFileName, c.categoryNum, division, p.categoryNum,c.categoryName,
-	   TO_CHAR(p.created_date,'YYYY-MM-DD') created_date
+	   TO_CHAR(p.created_date,'YYYY-MM-DD') created_date, content
 	   FROM product p
 	 	JOIN member1 m ON p.userId=m.userId
 	 	JOIN category c ON p.categoryNum=c.categoryNum
@@ -77,7 +68,7 @@
 	 
 	 <update id="updateMaterialSell" parameterType="com.sp.app.materialSell.MaterialSell">
 	 	UPDATE product SET productName=#{productName}, content=#{content},
-	 	price=#{price}, categoryNum=#{categoryNum}, division=#{division},
+	 	price=#{price}, categoryNum=#{categoryNum}, imageFileName=#{imageFileName, jdbcType=VARCHAR}, stock=#{stock} ,content=#{content, jdbcType=VARCHAR}
 	 	WHERE productNum=#{productNum}
 	 </update>
 	 

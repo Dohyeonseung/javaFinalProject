@@ -21,7 +21,7 @@
 	
 	<!-- 상품 상세설명 확인 -->
 	<select id="readProduct" parameterType="Integer" resultType="com.sp.app.buy.Product">
-		SELECT productNum, p.userId, productName, price, content, reserves,
+		SELECT productNum, p.userId, s.userName, productName, price, content, reserves,
 			TO_CHAR(created_date, 'YYYY-MM-DD') created_date, imageFileName, categoryNum
 		FROM product p
 		JOIN seller s ON p.userId=s.userId
@@ -35,14 +35,25 @@
 	</insert>
 	
 	<select id="listCart" parameterType="map" resultType="com.sp.app.buy.Cart">
-		SELECT cId, userId, c.productNum, count, cName, cPrice, seller, get_date, reserves
+		SELECT cId, c.userId, c.productNum, count, cName, p.imageFilename,
+				cPrice, seller, TO_CHAR(get_date, 'YYYY-MM-DD') get_date, c.reserves
 		FROM cart c
-		<!--
-		JOIN product p ON c.prodcutNum=p.productNum
-		WHERE c.prodcutNum=#{productNum}
-		-->
+		JOIN product p ON c.productNum=p.productNum
+		WHERE c.userId=#{userId}
 		ORDER BY get_date DESC
 	</select>
+	
+	<delete id="deleteCart" parameterType="Integer">
+		DELETE FROM cart WHERE cId = #{cId}
+	</delete>
+	
+	<delete id="deleteCartlist" parameterType="java.util.List">
+		DELETE FROM cart
+		WHERE cId IN
+		<foreach collection="list" item="cId" index="index" open="(" separator="," close=")">
+      	#{cId}
+      </foreach>
+	</delete>
 	
 	<!-- 주문 항목 기입 -->
 	<insert id="insertOrder_detail" parameterType="com.sp.app.buy.Orderinfo">

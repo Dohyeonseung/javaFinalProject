@@ -113,6 +113,7 @@ public class MemberController {
 		SessionInfo info=new SessionInfo();
 		info.setUserId(dto.getUserId());
 		info.setUserName(dto.getUserName());
+		info.setMemberIdx(dto.getMemberIdx());
 		
 		session.setMaxInactiveInterval(30*60); // 세션유지시간 30분, 기본:30분
 		

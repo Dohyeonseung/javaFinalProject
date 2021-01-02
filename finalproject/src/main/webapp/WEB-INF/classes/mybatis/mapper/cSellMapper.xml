@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cp">
+	
+	<insert id="insertCompleteSell" parameterType="com.sp.app.completeSell.CompleteSell">
+		INSERT INTO product(productNum,  productName, price, stock, 
+		content, reserves, imageFilename, categoryNum, userId, division, created_date) VALUES(
+		product_seq.NEXTVAL, #{productName}, #{price}, #{stock},
+		#{content}, #{reserves, jdbcType=VARCHAR}, #{imageFilename, jdbcType=VARCHAR}, #{categoryNum},#{userId}, #{division}, SYSDATE)
+	</insert>
+
+<sql id="where-list">
+			   ( INSTR(productName, #{keyword}) &gt; 0
+		          OR TO_CHAR(created_date, 'YYYYMMDD') = #{keyword}
+		          OR TO_CHAR(created_date, 'YYYY-MM-DD') = #{keyword} )
+				
+	</sql>
+
+<select id="listCompleteSell" parameterType="map" resultType="com.sp.app.completeSell.CompleteSell">
+	 	SELECT productNum, productName, price, stock, p.userId,
+	     imageFileName, c.categoryNum, c.categoryName, division,
+	 	 TO_CHAR(p.created_date,'YYYY-MM-DD') created_date
+	 	FROM product p
+	 	JOIN category c ON p.categoryNum=c.categoryNum
+	 	WHERE division=1 and p.userId=#{userId}
+
+	  		<if test="keyword!=null and keyword!=''">
+	  			AND <include refid="where-list"/>
+	  		</if>
+
+	  	<choose>
+	  		<when test="sortCol=='new'"> ORDER BY created_date DESC  </when>
+	  		<when test="sortCol=='stock'"> ORDER BY stock DESC  </when>
+	  		<when test="sortCol=='popularity'"> ORDER BY price DESC </when>
+	  		<when test="sortCol=='highPrice'"> ORDER BY price DESC  </when>
+	  		<when test="sortCol=='rowPrice'"> ORDER BY price ASC  </when>
+	  	</choose>
+	 	OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	 </select>
+	 
+	<select id="dataCount" parameterType="map" resultType="Integer">
+	 	SELECT NVL(COUNT(*),0)
+	 	FROM product p
+	 	JOIN member1 m ON p.userId = m.userId
+	 	WHERE division=1 and p.userId=#{userId}
+	 		<if test="keyword!=null and keyword!=''">
+	 			AND <include refid="where-list"/>
+	 		</if>
+	
+	 </select>
+	 
+	  <select id="readCompleteSell" parameterType="Integer"
+	   resultType="com.sp.app.completeSell.CompleteSell">
+	   SELECT productNum, productName, p.userId, m.userName, stock,
+	   price, imageFileName, c.categoryNum, division, p.categoryNum,c.categoryName,
+	   TO_CHAR(p.created_date,'YYYY-MM-DD') created_date, content
+	   FROM product p
+	 	JOIN member1 m ON p.userId=m.userId
+	 	JOIN category c ON p.categoryNum=c.categoryNum
+	 	WHERE productNum=#{productNum}
+	 </select>
+	 
+	 <update id="updateCompleteSell" parameterType="com.sp.app.completeSell.CompleteSell">
+	 	UPDATE product SET productName=#{productName}, content=#{content},
+	 	price=#{price}, categoryNum=#{categoryNum}, imageFileName=#{imageFileName, jdbcType=VARCHAR}, stock=#{stock} ,content=#{content, jdbcType=VARCHAR}
+	 	WHERE productNum=#{productNum}
+	 </update>
+	 
+	 <delete id="deleteCompleteSell" parameterType="Integer">
+		DELETE FROM product WHERE productNum = #{productNum}
+	</delete>
+	 
+	 
+	 
+	 <select id="listCategory" resultType="com.sp.app.completeSell.CompleteSell">
+		SELECT categoryNum, categoryName FROM category
+	</select>
+</mapper>

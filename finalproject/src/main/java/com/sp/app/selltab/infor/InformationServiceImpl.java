@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.sp.app.common.dao.CommonDAO;
 
 @Service("selltab.informationService")
@@ -84,9 +85,9 @@ public class InformationServiceImpl implements InformationService {
 	}
 
 	@Override
-	public void insertQna(Qna dto) throws Exception {
+	public void answerQna(Qna dto) throws Exception {
 		try {
-			dao.insertData("infor.insertQna", dto);
+			dao.updateData("infor.answerQna", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
@@ -94,28 +95,5 @@ public class InformationServiceImpl implements InformationService {
 		
 	}
 
-	@Override
-	public int replyQnaCount(int answer) {
-		int result=0;
-		try {
-			result=dao.selectOne("infor.replyQnaCount", answer);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
-
-	@Override
-	public void deleteQna(Map<String, Object> map) throws Exception {
-		try {
-			dao.deleteData("infor.deleteQna", map);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw e;
-		}
-		
-	}
 	
-	
-
 }

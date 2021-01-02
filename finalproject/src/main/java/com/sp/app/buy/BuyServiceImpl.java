@@ -83,6 +83,26 @@ public class BuyServiceImpl implements BuyService {
 		return list;
 	}
 
+	@Override
+	public void deleteCart(int cId) throws Exception {
+		try {
+			dao.deleteData("buy.deleteCart", cId);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	@Override
+	public void deleteCart(List<Integer> cIds) throws Exception {
+		try {
+			dao.deleteData("buy.deleteCartlist", cIds);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
 	
 
 }

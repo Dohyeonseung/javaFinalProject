@@ -12,30 +12,29 @@ body {
 
 a {
 	cursor: pointer;
-	color: #000000;
+	color: #1e1e1e;
 	text-decoration: none;
 	/*line-height: 150%;*/
 }
 a:hover, a:active {
-	color: #F28011;
-	text-decoration: underline;
+	font-weight: bold;
 }
 
 .btn {
-	color:#333333;
-	font-weight:500;
-	border:1px solid #cccccc;
-	background-color:#ffffff;
+	color:#1e1e1e;
+	font-weight:bold;
+	border:none;
+	background-color:#ffeb00;
 	text-align:center;
 	cursor:pointer;
 	padding:3px 10px 5px;
-	border-radius:4px;
+	border-radius:7px;
 	font-family:"Malgun Gothic", "맑은 고딕", NanumGothic, 나눔고딕, 돋움, sans-serif;
 }
 .btn:active, .btn:focus, .btn:hover {
-	background-color:#e6e6e6;
-	border-color: #adadad;
-	color: #333333;
+	background-color:#1e1e1e;
+	border-color: none;
+	color: white;
 }
 .btn[disabled], fieldset[disabled] .btn {
 	pointer-events: none;
@@ -49,9 +48,9 @@ a:hover, a:active {
 .btnConfirm {
 	font-size: 15px; 
 	border:none;
-	color:#ffffff;
-	background:#507CD1;
-	width: 360px;
+	color:#1e1e1e;
+	background:#FAE500;
+	width: 287px;
 	height: 50px;
 	line-height: 50px;
 	border-radius:4px;

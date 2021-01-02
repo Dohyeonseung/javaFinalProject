@@ -44,10 +44,15 @@ $(function() {
                <c:if test="${not empty sessionScope.member}">
                    <span style="color:blue;">${sessionScope.member.userName}</span>님
                    &nbsp;|&nbsp;
-                   <a href="${pageContext.request.contextPath}/">로그아웃</a>
+                   <a href="${pageContext.request.contextPath}/member/logout">로그아웃</a>
                    &nbsp;|&nbsp;
                    <a href="${pageContext.request.contextPath}/">정보수정</a>
-                   
+                   <c:if test="${not empty sessionScope.member and sessionScope.member.userId!='admin'}">
+                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   <a href=""><i class="fas fa-user" style="font-size: 32px; "></i></a>
+                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   <a href="${pageContext.request.contextPath}/buy/cart"><i class="fas fa-shopping-cart" style="font-size: 32px;"></i></a>
+                   </c:if>
                    <c:if test="${sessionScope.member.userId=='admin'}">
                        &nbsp;|&nbsp;
                        <a href="${pageContext.request.contextPath}/admin/home">관리자</a>
@@ -68,7 +73,7 @@ $(function() {
       </ul>
       
       <div class="subMenu" style="z-index: 9999; display: none;" >
-            <table class="menuTable" style="height: 200px;">
+            <table class="menuTable" style="height: 180px;">
                <tr>
                   <td><a href="${pageContext.request.contextPath}/company/company">회사소개</a></td>
                   <td><a href="${pageContext.request.contextPath}/ms/list">재료 판매</a></td>
@@ -78,14 +83,14 @@ $(function() {
                </tr>
                <tr>
                   <td><a href="#">이용안내</a></td>
-                  <td><a href="#">예약 판매</a></td>
+                  <td><a href="${pageContext.request.contextPath}/rv/list">예약 판매</a></td>
                   <td><a href="#">예약 구매</a></td>
                   <td><a href="${pageContext.request.contextPath}/tip/main">DIY Tip</a></td>
                   <td><a href="${pageContext.request.contextPath}/consumer/list">자주하는 질문</a></td>
                </tr>
                <tr>
                   <td><a href="${pageContext.request.contextPath}/company/ethics">윤리규정</a></td>
-                  <td><a href="#">완제품 판매</a></td>
+                  <td><a href="${pageContext.request.contextPath}/cp/list">완제품 판매</a></td>
                   <td><a href="#">완제품구매</a></td>
                   <td><a href="${pageContext.request.contextPath}/qna/list">묻고 답하기</a></td>
                   <td><a href="#"></a></td>

@@ -49,7 +49,8 @@ $(function(){
 		autoControls: true,  // 시작 및 중지 버튼
 		pager: true, // 동그라미(불릿) 버튼 노출 여부
 		captions: true,  // 이미지 위에 텍스트 표시
-		touchEnabled: false // <a href="주소"> 에서 설정한 주소로 이동 가능하도록 
+		touchEnabled: false, // <a href="주소"> 에서 설정한 주소로 이동 가능하도록 
+		controls: false // 좌우 버튼 노출 여부
 	});
 });
 </script>
