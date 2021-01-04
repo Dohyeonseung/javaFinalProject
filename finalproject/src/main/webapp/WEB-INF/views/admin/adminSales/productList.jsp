@@ -99,7 +99,8 @@ a {
 		      <th width="50" style="color: #1e1e1e;">상품분류</th>
 		      <th width="50" style="color: #1e1e1e;">상품코드</th>
 		      <th width="100" style="color: #1e1e1e;">상품명</th>
-		      <th width="50" style="color: #1e1e1e;">가격</th>
+		      <th width="50" style="color: #1e1e1e;">매입가격</th>
+		      <th width="50" style="color: #1e1e1e;">판매가격</th>
 		      <th width="50" style="color: #1e1e1e;">수량</th>
 		      <th width="30" style="color: #1e1e1e;">상태</th>
 		      <th width="20" style="color: #1e1e1e;"></th>
@@ -111,6 +112,7 @@ a {
 		      <td width="50">${dto.productCode}</td>
 		      <td width="100">${dto.productName}</td>
 		      <td width="50">${dto.productPrice}원</td>
+		      <td width="50">${dto.salesPrice}원</td>
 		      <td width="50">${dto.productCount}EA</td>
 		      <td width="50">
 		      	<c:choose>

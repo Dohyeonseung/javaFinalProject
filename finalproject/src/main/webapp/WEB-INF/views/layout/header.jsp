@@ -110,7 +110,7 @@ $(document).ready(function(){
                <tr>
                   <td><a href="#">찾아 오시는길</a></td>
                   <td></td>
-                  <td></td>
+                  <td><a href="${pageContext.request.contextPath}/market/list">D-Market</a></td>
                   <td><a href="${pageContext.request.contextPath}/notice/list">공지사항</a></td>
                   <td><a href="#"></a></td>
                </tr>
