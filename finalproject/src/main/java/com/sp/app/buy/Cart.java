@@ -11,7 +11,14 @@ public class Cart {
 	private String get_date;
 	private int reserves;
 	private String imageFilename;
+	private int stock;
 	
+	public int getStock() {
+		return stock;
+	}
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
 	public String getImageFilename() {
 		return imageFilename;
 	}

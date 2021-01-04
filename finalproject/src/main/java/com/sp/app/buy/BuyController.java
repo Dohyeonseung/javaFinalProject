@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mongodb.DuplicateKeyException;
-import com.sp.app.common.FileManager;
 import com.sp.app.common.MyUtil;
 import com.sp.app.member.SessionInfo;
 
@@ -28,8 +27,6 @@ public class BuyController {
 	private BuyService service;
 	@Autowired
 	private MyUtil myUtil;
-	@Autowired
-	private FileManager fileManager;
 	
 	@RequestMapping(value = "material")
 	public String product(
@@ -161,14 +158,11 @@ public class BuyController {
 		try {
 			dto.setUserId(info.getUserId());
 			service.insertCart(dto);
-		} catch (DuplicateKeyException e) {
-			model.addAttribute("msg", "이미 있습니다.");
-			return "buy/product";
-		} 
+		}
 		catch (Exception e) {
 		}
 		
-		return "redirect:/buy/cart";
+		return "redirect:/buy/material";
 	}
 	
 	@RequestMapping(value = "cart", method = RequestMethod.GET)
@@ -189,6 +183,7 @@ public class BuyController {
 		for(Cart dto:list) {
 			dto.setcId(dto.getcId());
 		}
+		
 		
 		String cp=req.getContextPath();
 		String query="";
@@ -219,7 +214,7 @@ public class BuyController {
 	
 	@RequestMapping(value = "deleteCartlist")
 	public String deleteCartlist(
-			@RequestParam List<Integer> cIds
+			@RequestParam List<String> cIds
 			) throws Exception {
 		try {
 			service.deleteCart(cIds);
@@ -232,25 +227,18 @@ public class BuyController {
 	@RequestMapping(value = "orderForm")
 	public String orderForm(
 			@RequestParam int productNum,
-			@RequestParam(defaultValue = "") String keyword,
+			@RequestParam int count,
 			Model model
 			) throws Exception {
 		
-		keyword = URLDecoder.decode(keyword, "utf-8");
-		
-		String query="";
-		if(keyword.length()!=0) {
-			query+="&keyword="+URLEncoder.encode(keyword, "UTF-8");
-		}
-		
 		Product dto = service.readProduct(productNum);
-		if (dto == null)
-			return "redirect:/buy/product?"+query;
+		if (dto == null) {
+			return "redirect:/buy/product";
+		}
+		dto.setCount(count);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("productNum", productNum);
-		
-		// dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
 		
 		model.addAttribute("dto", dto);
 		
@@ -266,8 +254,56 @@ public class BuyController {
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
 		
 		try {
+			
 			dto.setMemberIdx(info.getMemberIdx());
 			service.insertOrderinfo(dto);
+			
+		} catch (Exception e) {
+		}
+		
+		return ".buy.material";
+	}
+	
+	@RequestMapping(value = "orderCart", method = RequestMethod.POST)
+	public String orderCart(
+			@RequestParam List<String> cIds,
+			Model model,
+			HttpSession session
+			) throws Exception {
+		
+		try {
+			List<Cart> listCart = service.listCart(cIds);
+			int total=0;
+			int reserves=0;
+			for(Cart dto:listCart) {
+				total+=dto.getcPrice();
+				reserves+=dto.getReserves();
+			}
+			
+			model.addAttribute("listCart", listCart);
+			model.addAttribute("total", total);
+			model.addAttribute("reserves", reserves);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return ".buy.order.order";
+	}
+	
+	@RequestMapping(value = "orderCartsubmit", method = RequestMethod.POST)
+	public String orderCartsubmit(
+			Orderinfo dto,
+			@RequestParam List<String> cIds,
+			HttpSession session
+			) throws Exception {
+		
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		
+		try {
+			
+			dto.setMemberIdx(info.getMemberIdx());
+			service.insertOrderinfo(dto);
+			service.deleteCart(cIds);
 		} catch (Exception e) {
 		}
 		

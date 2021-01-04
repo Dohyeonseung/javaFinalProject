@@ -12,6 +12,15 @@ public class Product {
 	private int categoryNum;
 	private String userId;
 	private String userName;
+	
+	private int count;
+	
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
 	public String getUserName() {
 		return userName;
 	}

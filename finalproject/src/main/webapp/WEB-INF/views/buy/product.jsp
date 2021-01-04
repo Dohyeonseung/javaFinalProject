@@ -10,22 +10,38 @@
 function cartSubmit() {
 	var f=document.orderForm;
 
+	var str = f.count.value;
+    if(!str) {
+        alert("수량을 입력하세요.");
+        f.count.focus();
+        return;
+    }
+	
 	f.action="${pageContext.request.contextPath}/buy/addcart";
 
 	f.submit();
+	
 }
 
-function check() {
-    var f = document.productForm;
-
-	f.action="${pageContext.request.contextPath}/buy/${mode}";
-
-    return true;
-}
 
 function orderSubmit(productNum) {
-	var url="orderForm?productNum="+productNum;
+	
+	var f=document.orderForm;
+
+	var str = f.count.value;
+    if(!str) {
+        alert("수량을 입력하세요.");
+        f.count.focus();
+        return;
+    }
+    
+	var count;
+	count = $('#count').val();
+	var url="orderForm?productNum="+productNum+"&count="+count;
 	location.href=url;
+	
+
+
 }
 
 </script>
@@ -181,15 +197,9 @@ ul.center {
 				</div>
 				<div class="thumbnail_others">
 					<ul class="center">
-						<li>
-							<img alt="" src="${dto.content}">
-						</li>
-						<li>
-							<img alt="" src="${dto.content}">
-						</li>
-						<li>
-							<img alt="" src="${dto.content}">
-						</li>
+						<c:forEach var="vo" items="${listImage}">
+        				<li><a href="#"><img src="${vo}"></a></li>
+        		    </c:forEach>
 					</ul>
 				</div>
 			</div>

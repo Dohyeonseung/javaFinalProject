@@ -10,7 +10,7 @@ public interface BuyService {
 	public void insertOrderinfo(Orderinfo dto) throws Exception; // 주문하기
 	public void insertCart(Cart dto) throws Exception; // 장바구니 넣기
 	public List<Cart> listCart(Map<String, Object> map); // 장바구니 리스트
-	public void deleteCart(int cId) throws Exception;
-	public void deleteCart(List<Integer> cIds) throws Exception;
-	
+	public void deleteCart(int cId) throws Exception; // 장바구니 목록 하나 삭제
+	public void deleteCart(List<String> cIds) throws Exception; // 장바구니 목록 여러 개 삭제
+	public List<Cart> listCart(List<String> list); // 주문에 장바구니 목록 여러 개 띄우기
 }

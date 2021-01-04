@@ -35,7 +35,7 @@
 	</insert>
 	
 	<select id="listCart" parameterType="map" resultType="com.sp.app.buy.Cart">
-		SELECT cId, c.userId, c.productNum, count, cName, p.imageFilename,
+		SELECT cId, c.userId, c.productNum, count, cName, p.imageFilename, p.stock,
 				cPrice, seller, TO_CHAR(get_date, 'YYYY-MM-DD') get_date, c.reserves
 		FROM cart c
 		JOIN product p ON c.productNum=p.productNum
@@ -52,8 +52,20 @@
 		WHERE cId IN
 		<foreach collection="list" item="cId" index="index" open="(" separator="," close=")">
       	#{cId}
-      </foreach>
+     	 </foreach>
 	</delete>
+	
+	<select id="seq" resultType="Integer">
+		SELECT orderinfo_seq.NEXTVAL FROM dual
+	</select>
+	
+	<!-- 주문 -->
+	<insert id="insertOrderinfo" parameterType="com.sp.app.buy.Orderinfo">
+		INSERT INTO orderinfo(orderId, memberIdx, total_price, order_state,
+		 		order_date, Addr1, Addr2, reserves) VALUES
+		 		(#{orderId}, #{memberIdx}, #{total_price}, #{order_state},
+		 		SYSDATE, #{Addr1, jdbcType=VARCHAR}, #{Addr2, jdbcType=VARCHAR}, #{reserves})
+	</insert>
 	
 	<!-- 주문 항목 기입 -->
 	<insert id="insertOrder_detail" parameterType="com.sp.app.buy.Orderinfo">
@@ -64,20 +76,24 @@
 				)
 	</insert>
 	
-	<!-- 주문 -->
-	<insert id="insertOrderinfo" parameterType="com.sp.app.buy.Orderinfo">
-		INSERT INTO orderinfo(orderId, memberIdx, total_price, order_state,
-		 		order_date, Addr1, Addr2, reserves) VALUES
-		 		(orderinfo_seq.NEXTVAL, #{memberIdx}, #{total_price}, #{order_state},
-		 		SYSDATE, #{Addr1, jdbcType=VARCHAR}, #{Addr2, jdbcType=VARCHAR}, #{reserves})
-	</insert>
+	
+		<insert id="insertdelivery" parameterType="com.sp.app.buy.Orderinfo">
+		INSERT INTO delivery(orderId, Addr1, Addr2, zip,
+				 customer, tel, othertel, content) VALUES
+				 (#{orderId}, #{Addr1, jdbcType=VARCHAR}
+				 , #{Addr2, jdbcType=VARCHAR}, #{zip, jdbcType=VARCHAR}
+				 , #{customer}, #{tel}, #{othertel, jdbcType=VARCHAR}, #{content, jdbcType=VARCHAR})
+		</insert>
 	
 	
-	<!-- 주문 내역 수정 -->
-	<update id="updateOrder" parameterType="com.sp.app.buy.Orderinfo">
-		UPDATE order SET total_price=#{total_price}, order_date=#{order_date},
-				Addr1=#{Addr1}, Addr2=#{Addr2}, reserves=#{reserves}
-		WHERE orderId = #{orderId}
-	</update>
-	
+	<select id="listCartBuy" parameterType="map" resultType="com.sp.app.buy.Cart">
+		SELECT cId, userId, c.productNum, count, cPrice, cName, get_date
+		FROM cart c
+		WHERE cId IN
+		<foreach collection="list" item="cId" index="index" open="(" separator="," close=")">
+		   #{cId}
+		</foreach>
+		ORDER BY get_date DESC
+	</select>
+		
 </mapper>
