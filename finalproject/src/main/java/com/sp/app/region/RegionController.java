@@ -1,4 +1,4 @@
-package com.sp.app.tip;
+package com.sp.app.region;
 
 import java.io.File;
 import java.math.BigDecimal;
@@ -22,12 +22,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.sp.app.common.MyUtil;
 import com.sp.app.member.SessionInfo;
 
-@Controller("tip.tipController")
-@RequestMapping("/tip/*")
-public class TipController {
+@Controller("region.regionController")
+@RequestMapping("/region/*")
+public class RegionController {
 		
 		@Autowired
-		private TipService service;
+		private RegionService service;
 		@Autowired
 		private MyUtil myUtil;
 		
@@ -36,7 +36,7 @@ public class TipController {
 				@RequestParam(value="page", defaultValue="1") int current_page,
 				@RequestParam(defaultValue="all") String condition,
 				@RequestParam(defaultValue="") String keyword,
-				@RequestParam(defaultValue="0") int categoryNum,
+				@RequestParam(defaultValue="0") int region,
 				HttpServletRequest req,
 				Model model
 				) throws Exception {
@@ -48,7 +48,7 @@ public class TipController {
 			int dataCount;
 			
 			
-			if(req.getMethod().equalsIgnoreCase("GET")) { // GET 방식인 경우
+			if(req.getMethod().equalsIgnoreCase("GET")) { 
 				keyword = URLDecoder.decode(keyword, "utf-8");
 			}
 			
@@ -56,7 +56,7 @@ public class TipController {
 
 	        map.put("condition", condition);
 	        map.put("keyword", keyword);
-	        map.put("categoryNum", categoryNum);
+	        map.put("region", region);
 	        
 	        dataCount = service.dataCount(map);
 			total_page = myUtil.pageCount(rows, dataCount);
@@ -69,32 +69,30 @@ public class TipController {
 	        map.put("offset", offset);
 	        map.put("rows", rows);
 	        
-	        List<Tip> list = service.listTip(map);
-	        List<Tip> listCategory = service.listCategory(map);
+	        List<Region> list = service.listregion(map);
 	        int num, n = 0;
-			for(Tip dto : list) {
+			for(Region dto : list) {
 				num = dataCount - (offset + n);
 				dto.setNum(num);
 				n++;
 			}
 			
 			String query = "";
-	        String listUrl = cp+"/tip/main";
-	        String articleUrl = cp+"/tip/article?page=" + current_page;
+	        String listUrl = cp+"/region/main";
+	        String articleUrl = cp+"/region/article?page=" + current_page;
 	        if(keyword.length()!=0) {
 	        	query = "condition=" +condition + 
 	        	           "&keyword=" + URLEncoder.encode(keyword, "utf-8");	
 	        }
 	        
 	        if(query.length()!=0) {
-	        	listUrl = cp+"/tip/main?" + query;
-	        	articleUrl = cp+"/tip/article?page=" + current_page + "&"+ query;
+	        	listUrl = cp+"/region/main?" + query;
+	        	articleUrl = cp+"/region/article?page=" + current_page + "&"+ query;
 	        }
 	        
 	        String paging = myUtil.paging(current_page, total_page, listUrl);
 	        
 	        model.addAttribute("list", list);
-	        model.addAttribute("listCategory", listCategory);
 			model.addAttribute("dataCount", dataCount);
 			model.addAttribute("total_page", total_page);
 			model.addAttribute("articleUrl", articleUrl);
@@ -103,40 +101,35 @@ public class TipController {
 			
 			model.addAttribute("condition", condition);
 			model.addAttribute("keyword", keyword);
-			model.addAttribute("categoryNum", categoryNum);
 			
-			return ".tip.list";
+			return ".region.list";
 		}
 		
 		@RequestMapping(value="created", method=RequestMethod.GET)
 		public String createdForm(Model model) throws Exception {
 			
-			Map<String, Object> map = new HashMap<>();
-			List<Tip> listCategory=service.listCategory(map);
-			
-			model.addAttribute("listCategory", listCategory);	
 			model.addAttribute("mode", "created");
-			return ".tip.created";
+			return ".region.created";
 		}
 		
 		@RequestMapping(value="created", method=RequestMethod.POST)
 		public String createdSubmit(
-				Tip dto,
+				Region dto,
 				HttpSession session) throws Exception {
 			String root=session.getServletContext().getRealPath("/");
-			String pathname=root+"uploads"+File.separator+"tip";
+			String pathname=root+"uploads"+File.separator+"region";
 			
 			SessionInfo info=(SessionInfo)session.getAttribute("member");
 			
 			try {
 				dto.setUserId(info.getUserId());
-				service.insertTip(dto, pathname);
+				service.insertregion(dto, pathname);
 			} catch (Exception e) {
 				e.printStackTrace();
 				throw e;
 			}
 			
-			return "redirect:/tip/main";
+			return "redirect:/region/main";
 		}
 		
 		@RequestMapping(value="article")
@@ -154,29 +147,24 @@ public class TipController {
 				query+="&condition="+condition+"&keyword="+URLEncoder.encode(keyword, "UTF-8");
 			}
 
-			Tip dto = service.readTip(listNum);
+			Region dto = service.readregion(listNum);
 			if(dto==null)
-				return "redirect:/tip/list?"+query;
+				return "redirect:/region/list?"+query;
 			
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("condition", condition);
 			map.put("keyword", keyword);
 			map.put("num", listNum);
-
-			//Tip preReadDto = service.preReadTip(map);
-			//Tip nextReadDto = service.nextReadTip(map);
 	        
 			model.addAttribute("dto", dto);
-			//model.addAttribute("preReadDto", preReadDto);
-			//model.addAttribute("nextReadDto", nextReadDto);
 			model.addAttribute("page", page);
 			model.addAttribute("query", query);
 
-	        return ".tip.article";
+	        return ".region.article";
 		}
 		
 		@RequestMapping(value="delete")
-		public String deleteTip(
+		public String deleteregion(
 				@RequestParam int listNum,
 				@RequestParam String page,
 				@RequestParam(defaultValue="all") String condition,
@@ -191,11 +179,11 @@ public class TipController {
 			}
 			
 			String root=session.getServletContext().getRealPath("/");
-			String pathname=root+"uploads"+File.separator+"tip";
+			String pathname=root+"uploads"+File.separator+"region";
 			
-			service.deleteTip(listNum, pathname, info.getUserId());
+			service.deleteregion(listNum, pathname, info.getUserId());
 			
-			return "redirect:/tip/main?"+query;
+			return "redirect:/region/main?"+query;
 		}
 		
 		@RequestMapping(value="update", method=RequestMethod.GET)
@@ -206,85 +194,38 @@ public class TipController {
 				Model model) throws Exception {
 			SessionInfo info=(SessionInfo)session.getAttribute("member");
 			
-			Tip dto = service.readTip(listNum);
+			Region dto = service.readregion(listNum);
 			if(dto==null) {
-				return "redirect:/tip/main?page="+page;
+				return "redirect:/region/main?page="+page;
 			}
 
 			if(! info.getUserId().equals(dto.getUserId())) {
-				return "redirect:/tip/main?page="+page;
+				return "redirect:/region/main?page="+page;
 			}
-			Map<String, Object> map = new HashMap<>();
-			List<Tip> listCategory=service.listCategory(map);
 			
-			model.addAttribute("listCategory", listCategory);
 			model.addAttribute("dto", dto);
 			model.addAttribute("mode", "update");
 			model.addAttribute("page", page);
 			
-			return ".tip.created";
+			return ".region.created";
 		}
 		
 		@RequestMapping(value="update", method=RequestMethod.POST)
 		public String updateSubmit(
-				Tip dto, 
+				Region dto, 
 				@RequestParam String page,
 				HttpSession session) throws Exception {
 			
 			String root=session.getServletContext().getRealPath("/");
-			String pathname=root+"uploads"+File.separator+"tip";		
+			String pathname=root+"uploads"+File.separator+"region";		
 
 			try {
-				service.updateTip(dto, pathname);
+				service.updateregion(dto, pathname);
 			} catch (Exception e) {
 				
 			}
 			
-			return "redirect:/tip/article?listNum="+dto.getListNum()+"&page="+page;
-		}
-		
-		@RequestMapping(value="listAllCategory", method=RequestMethod.GET)
-		public String CategoryUpdateForm(
-				Model model
-				) throws Exception {
-			Map<String, Object> map = new HashMap<>();
-			List<Tip> listCategory=service.listCategory(map);
-			model.addAttribute("listAllCategory", listCategory);
-			
-			return ".tip.listAllCategory";
-		}
-		
-		@RequestMapping(value="insertCategory", method=RequestMethod.POST)
-		public String insertCategory(
-				Tip dto) throws Exception {
-			try {
-				service.insertCategory(dto);
-			} catch (Exception e) {
-			}
-			return "redirect:/tip/listAllCategory";
-		}
-		
-		@RequestMapping(value="deleteCategory")
-		public String deleteCategory(
-				@RequestParam int categoryNum
-				) throws Exception {
-			try {
-				service.deleteCategory(categoryNum);
-			} catch (Exception e) {
-			}
-			return "redirect:/tip/listAllCategory";
-		}
-		
-		@RequestMapping(value="listCategory")
-		public Map<String, Object> listCategory(
-				@RequestParam String mode
-				) throws Exception {
-			Map<String, Object> map = new HashMap<>();
-			List<Tip> listCategory=service.listCategory(map);
-			
-			Map<String, Object> model = new HashMap<>();
-			model.put("listCategory", listCategory);
-			return model;
+			return "redirect:/region/article?listNum="+dto.getListNum()+"&page="+page;
 		}
 		
 		@RequestMapping(value="listReply")
@@ -324,7 +265,7 @@ public class TipController {
 			model.addAttribute("total_page", total_page);
 			model.addAttribute("paging", paging);
 			
-			return "tip/listReply";
+			return "region/listReply";
 		}
 		
 		@RequestMapping(value="insertReply", method=RequestMethod.POST)
@@ -380,7 +321,7 @@ public class TipController {
 			}
 			
 			model.addAttribute("listReplyAnswer", listReplyAnswer);
-			return "tip/listReplyAnswer";
+			return "region/listReplyAnswer";
 		}
 		
 		@RequestMapping(value="countReplyAnswer")
@@ -444,14 +385,14 @@ public class TipController {
 		}
 		
 		// 게시글 좋아요 추가 :  : AJAX-JSON
-		@RequestMapping(value="insertTipLike", method=RequestMethod.POST)
+		@RequestMapping(value="insertRegionLike", method=RequestMethod.POST)
 		@ResponseBody
-		public Map<String, Object> insertTipLike(
+		public Map<String, Object> insertregionLike(
 				@RequestParam int listNum,
 				HttpSession session
 				) {
 			String state="true";
-			int tipLikeCount=0;
+			int regionLikeCount=0;
 			SessionInfo info=(SessionInfo)session.getAttribute("member");
 			
 			Map<String, Object> paramMap=new HashMap<>();
@@ -459,16 +400,16 @@ public class TipController {
 			paramMap.put("userId", info.getUserId());
 			
 			try {
-				service.insertTipLike(paramMap);
+				service.insertregionLike(paramMap);
 			} catch (Exception e) {
 				state="false";
 			}
 				
-			tipLikeCount = service.tipLikeCount(listNum);
+			regionLikeCount = service.regionLikeCount(listNum);
 			
 			Map<String, Object> model=new HashMap<>();
 			model.put("state", state);
-			model.put("tipLikeCount", tipLikeCount);
+			model.put("regionLikeCount", regionLikeCount);
 			
 			return model;
 		}

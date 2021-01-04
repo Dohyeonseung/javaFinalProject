@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="region">
+
+	<insert id="insertregion" parameterType="com.sp.app.region.Region">
+		INSERT INTO region_bbs(listNum, region, userId, subject, saveFilename, content, created)
+			VALUES (region_bbs_seq.NEXTVAL, #{region}, #{userId}, #{subject},  
+					#{saveFilename, jdbcType=VARCHAR}, #{content}, SYSDATE)
+	</insert>
+	
+	<sql id="where-list">
+		<choose>
+			<when test="condition == 'all' ">
+			   ( INSTR(subject, #{keyword}) &gt; 0
+		          OR DBMS_LOB.INSTR(content, #{keyword}) &gt; 0 
+		          OR INSTR(LOWER(category), LOWER(#{keyword})) &gt; 0 )
+			</when>
+			<when test="condition == 'created' ">
+			   ( TO_CHAR(created, 'YYYYMMDD') = #{keyword}
+		          OR TO_CHAR(created, 'YYYY-MM-DD') = #{keyword} )
+			</when>
+			
+			<otherwise>
+			    ( INSTR(${condition}, #{keyword}) &gt; 0 )
+			</otherwise>
+		</choose>
+	</sql>
+	
+	<sql id="where-regionList">
+		<choose>
+			<when test="region!=null">
+				r.region=#{region}
+			</when>
+		</choose>
+	</sql>
+	
+	<select id="listregion" parameterType="map" resultType="com.sp.app.region.Region">
+		SELECT r.listNum, region, r.userId, userName, subject, saveFilename, 
+		       TO_CHAR(r.created, 'YYYY-MM-DD') created, content,
+		     	 NVL(regionLikeCount, 0) regionLikeCount
+		FROM region_bbs r
+		JOIN member1 m ON r.userId = m.userId
+		LEFT OUTER JOIN (
+			SELECT listNum, COUNT(*) regionLikeCount FROM region_bbsLike
+			GROUP BY listNum
+		) tc ON r.listNum = tc.listNum
+		<where>
+			<if test="keyword != null and keyword != ''">
+				<include refid="where-list"/>
+			</if>
+		</where>
+		<where>	
+			<if test="region!=null and region!=0 ">
+				<include refid="where-regionList"/>
+			</if>
+		</where>	
+		ORDER BY listNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<select id="readregion" parameterType="Integer" resultType="com.sp.app.region.Region">
+		SELECT r.listNum, region, r.userId, userName, subject, content,
+			   hitCount, r.created,  saveFilename,
+			   NVL(regionLikeCount, 0) regionLikeCount
+		FROM region_bbs r
+		JOIN member1 m ON r.userId=m.userId
+		LEFT OUTER JOIN (
+			SELECT listNum, COUNT(*) regionLikeCount FROM region_bbsLike
+			GROUP BY listNum
+		) tc ON r.listNum = tc.listNum
+		WHERE r.listNum = #{listNum}
+	</select>
+	
+	<delete id="deleteregion" parameterType="Integer">
+		DELETE FROM region_bbs WHERE listNum = #{listNum}
+	</delete>
+	
+	<update id="updateregion" parameterType="com.sp.app.region.Region">
+		UPDATE region_bbs SET subject=#{subject}, content=#{content},
+				saveFilename=#{saveFilename,  jdbcType=VARCHAR}
+		WHERE listNum = #{listNum}
+	</update>
+	
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM region_bbs r
+		JOIN member1 m ON r.userId=m.userId
+		<where>
+			<if test="keyword!=null and keyword!='' ">
+				<include refid="where-list"/>
+			</if>
+		</where>
+		<where>	
+			<if test="region!=null and region!=0 ">
+				<include refid="where-regionList"/>
+			</if>
+		</where> 
+	</select>
+
+	<insert id="insertregionLike" parameterType="map">
+		INSERT INTO region_bbsLike(listNum, userId) VALUES (#{listNum}, #{userId})
+	</insert>
+
+	<select id="regionLikeCount" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*) FROM region_bbsLike WHERE listNum=#{listNum}
+	</select>
+
+	<insert id="insertReply" parameterType="com.sp.app.region.Reply">
+		INSERT INTO region_bbsReply(replyNum, listNum, userId, content, answer, created)
+			VALUES (region_bbsReply_seq.NEXTVAL, #{listNum}, #{userId}, #{content}, #{answer}, SYSDATE)
+	</insert>
+
+	<select id="replyCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) FROM region_bbsReply
+		WHERE listNum=#{listNum} AND answer=0
+	</select>
+
+	<select id="listReply" parameterType="map" resultType="com.sp.app.region.Reply">
+		SELECT r.replyNum, r.userId, userName, listNum, content, r.created, 
+		       NVL(answerCount, 0) answerCount
+		FROM region_bbsReply r
+		JOIN member1 m ON r.userId = m.userId
+		LEFT OUTER JOIN (
+			SELECT answer, COUNT(*) answerCount
+			FROM region_bbsReply WHERE answer!=0 GROUP BY answer
+		) a ON r.replyNum = a.answer
+		WHERE listNum=#{listNum}  AND r.answer=0
+		ORDER BY r.replyNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+
+	<delete id="deleteReply" parameterType="map">
+		DELETE FROM region_bbsReply
+		WHERE replyNum=#{replyNum}
+		<if test="mode=='reply'">
+			OR answer=#{replyNum}
+		</if>
+	</delete>
+	
+
+	<select id="listReplyAnswer" parameterType="Integer" resultType="com.sp.app.region.Reply">
+		SELECT replyNum, listNum, r.userId, userName, content, created, answer
+		FROM region_bbsReply r
+		JOIN member1 m ON r.userId = m.userId
+		WHERE answer = #{answer}
+		ORDER BY replyNum DESC
+	</select>
+	
+
+	<select id="replyAnswerCount" parameterType="Integer" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM region_bbsReply WHERE answer = #{answer}
+	</select>
+	
+	
+</mapper>

@@ -6,7 +6,7 @@
 	<insert id="insertTip" parameterType="com.sp.app.tip.Tip">
 		INSERT INTO tip(listNum, categoryNum, userId, subject, imageFilename, content, created)
 			VALUES (tip_seq.NEXTVAL, #{categoryNum}, #{userId}, #{subject},  
-					#{imageFilename}, #{content}, SYSDATE)
+					#{imageFilename, jdbcType=VARCHAR}, #{content}, SYSDATE)
 	</insert>
 	
 	<sql id="where-list">
@@ -80,7 +80,7 @@
 	
 	<update id="updateTip" parameterType="com.sp.app.tip.Tip">
 		UPDATE tip SET subject=#{subject}, content=#{content},
-				imageFilename=#{imageFilename}
+				imageFilename=#{imageFilename,  jdbcType=VARCHAR}, categoryNum=#{categoryNum}
 		WHERE listNum = #{listNum}
 	</update>
 	

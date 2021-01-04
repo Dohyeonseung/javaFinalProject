@@ -47,10 +47,13 @@ function article(listNum) {
 		<p>카테고리</p>
 
 		<ul style="list-style: none;">
-			<li><a href="${pageContext.request.contextPath}/tip/main">모두보기</a></li>
-			<c:forEach var="dto" items="${listCategory}">
-		        		<li><a href="${pageContext.request.contextPath}/tip/main?categoryNum=${dto.categoryNum}">${dto.category}</a></li>
-		        	</c:forEach>
+		<li><a href="${pageContext.request.contextPath}/region/main">모두보기</a></li>
+		<li><a href="${pageContext.request.contextPath}/region/main?region=1">서울</a></li>
+		<li><a href="${pageContext.request.contextPath}/region/main?region=2">경기</a></li>
+		<li><a href="${pageContext.request.contextPath}/region/main?region=3">강원</a></li>
+		<li><a href="${pageContext.request.contextPath}/region/main?region=4">충청</a></li>
+		<li><a href="${pageContext.request.contextPath}/region/main?region=5">경상</a></li>
+		<li><a href="${pageContext.request.contextPath}/region/main?region=6">전라</a></li>
 		</ul>         
 		 </div>
 <div class="body-container" style="width: 800px; margin: 0px;">
@@ -64,13 +67,13 @@ function article(listNum) {
 		 	<span>커뮤니티 ></span>
 		 </li>
 		 <li>
-		 	<a href="${pageContext.request.contextPath}/tip/main">D.I.Y 팁</a>
+		 	<a href="${pageContext.request.contextPath}/tip/main">지역 게시판</a>
 		 </li>
 		
 		</ul>
 	</div>
     <div class="body-title">
-        <h3><i class="far fa-image"></i> D.I.Y Tip</h3>
+        <h3><i class="far fa-image"></i>지역 게시판</h3>
     </div>
     
     
@@ -97,7 +100,7 @@ function article(listNum) {
                  </c:if>
 			     <td width="210" align="center" style="padding-bottom: 30px">
 			        <div class="imgLayout">
-			        	<c:if test="${dto.imageFilename==null}">	
+			        	<c:if test="${dto.saveFilename==null}">	
 			             <img src="${pageContext.request.contextPath}/resources/img/no-image.png" width="180"
 			                   height="180" border="0" onclick="javascript:article('${dto.listNum}');">
 			             <span class="subject" onclick="javascript:article('${dto.listNum}');" >
@@ -105,15 +108,15 @@ function article(listNum) {
 			                   제목:${dto.subject}
 			             </span>
 			             </c:if>
-			             <c:if test="${dto.imageFilename!=null}">	
-			             <img src="${pageContext.request.contextPath}/uploads/tip/${dto.imageFilename}" width="180"
+			             <c:if test="${dto.saveFilename!=null}">	
+			             <img src="${pageContext.request.contextPath}/uploads/tip/${dto.saveFilename}" width="180"
 			                   height="180" border="0" onclick="javascript:article('${dto.listNum}');">
 			             <span class="subject" onclick="javascript:article('${dto.listNum}');" >
 			             
 			                   제목:${dto.subject}
 			             </span>
 			             </c:if>
-			         <span style="border-bottom: 1px solid #DAD9FF; ;">좋아요 : ${dto.tipLikeCount}</span>
+			         <span style="border-bottom: 1px solid #DAD9FF;">좋아요 : ${dto.regionLikeCount}</span>
 			         </div>
 			     </td>
 			     
@@ -144,10 +147,10 @@ function article(listNum) {
 		<table style="width: 100%; margin: 10px auto; border-spacing: 0px;">
 		   <tr height="40">
 		      <td align="left" width="100">
-		          <button type="button" class="btn" onclick="javascript:location.href='${pageContext.request.contextPath}/tip/main';">새로고침</button>
+		          <button type="button" class="btn" onclick="javascript:location.href='${pageContext.request.contextPath}/region/main';">새로고침</button>
 		      </td>
 		      <td align="center">
-		          <form name="searchForm" action="${pageContext.request.contextPath}/tip/main" method="post">
+		          <form name="searchForm" action="${pageContext.request.contextPath}/region/main" method="post">
 		              <select name="condition" class="selectField">
 		                  <option value="all" ${condition=="all"?"selected='selected'":""}>모두</option>
 		                  <option value="subject" ${condition=="subject"?"selected='selected'":""}>제목</option>
@@ -160,7 +163,7 @@ function article(listNum) {
 		        </form>
 		      </td>
 		      <td align="right" width="100">
-		          <button type="button" class="btn" onclick="javascript:location.href='${pageContext.request.contextPath}/tip/created';">등록하기</button>
+		          <button type="button" class="btn" onclick="javascript:location.href='${pageContext.request.contextPath}/region/created';">등록하기</button>
 		      </td>
 		   </tr>
 		</table>

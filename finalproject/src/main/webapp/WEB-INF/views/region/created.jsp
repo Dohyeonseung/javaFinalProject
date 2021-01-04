@@ -116,10 +116,13 @@ function check() {
 			  <tr align="left" height="40" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
 		      <td width="100" bgcolor="#eeeeee" style="text-align: center;">카테고리</td>
 		      <td style="padding-left:10px;"> 
-		        <select name="categoryNum" class="selectField">
-		        	<c:forEach var="dto" items="${listCategory}">
-		        		<option value="${dto.categoryNum}" ${dto.categoryNum==dto.categoryNum?"selected='selected'":""}>${dto.category}</option>
-		        	</c:forEach>
+		        <select name="region" class="selectField">
+		        		<option value="1">서울</option>
+		        		<option value="2">경기</option>
+		        		<option value="3">강원</option>
+		        		<option value="4">충청</option>
+		        		<option value="5">경상</option>
+		        		<option value="6">전라</option>
 		        </select>
 		        <c:if test="${dto.userId=='admin'}">
 		        <button type="button" class="btn" onclick="javascript:location.href='${pageContext.request.contextPath}/tip/listAllCategory';"> 변경 </button>
@@ -158,7 +161,7 @@ function check() {
 			        <button type="button" class="btn" onclick="javascript:location.href='${pageContext.request.contextPath}/tip/main';">${mode=='update'?'수정취소':'등록취소'}</button>
 			         <c:if test="${mode=='update'}">
 			         	 <input type="hidden" name="listNum" value="${dto.listNum}">
-			         	 <input type="hidden" name="imageFilename" value="${dto.imageFilename}">
+			         	 <input type="hidden" name="saveFilename" value="${dto.saveFilename}">
 			        	 <input type="hidden" name="page" value="${page}">
 			        </c:if>
 			      </td>

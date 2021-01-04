@@ -4,10 +4,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <script type="text/javascript">
-function deleteTip() {
+function deleteRegion() {
 <c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId==dto.userId}">
 	var q = "listNum=${dto.listNum}&${query}";
-    var url = "${pageContext.request.contextPath}/tip/delete?" + q;
+    var url = "${pageContext.request.contextPath}/region/delete?" + q;
 
     if(confirm("위 자료를 삭제 하시 겠습니까 ? "))
   	  location.href=url;
@@ -17,10 +17,10 @@ function deleteTip() {
 </c:if>
 }
 
-function updateTip() {
+function updateRegion() {
 <c:if test="${sessionScope.member.userId==dto.userId}">
 	var q = "listNum=${dto.listNum}&page=${page}";
-    var url = "${pageContext.request.contextPath}/tip/update?" + q;
+    var url = "${pageContext.request.contextPath}/region/update?" + q;
 
     location.href=url;
 </c:if>
@@ -83,12 +83,12 @@ function ajaxHTML(url, method, query, selector) {
 
 // 게시글 조아요 여부
 $(function(){
-	$(".btnSendTipLike").click(function(){
+	$(".btnSendRegionLike").click(function(){
 		if(! confirm("게시물에 공감 하십니까 ? ")) {
 			return false;
 		}
 		
-		var url="${pageContext.request.contextPath}/tip/insertTipLike";
+		var url="${pageContext.request.contextPath}/region/insertRegionLike";
 		var listNum="${dto.listNum}";
 		// var query={num:num};
 		var query="listNum="+listNum;
@@ -96,8 +96,8 @@ $(function(){
 		var fn = function(data){
 			var state=data.state;
 			if(state==="true") {
-				var count = data.tipLikeCount;
-				$("#tipLikeCount").text(count);
+				var count = data.regionLikeCount;
+				$("#regionLikeCount").text(count);
 			} else if(state==="false") {
 				alert("좋아요는 한번만 가능합니다. !!!");
 			}
@@ -111,7 +111,7 @@ $(function(){
 });
 
 function listPage(page) {
-	var url = "${pageContext.request.contextPath}/tip/listReply";
+	var url = "${pageContext.request.contextPath}/region/listReply";
 	var query = "listNum=${dto.listNum}&pageNo="+page;
 	var selector = "#listReply";
 	
@@ -130,7 +130,7 @@ $(function(){
 		}
 		content = encodeURIComponent(content);
 		
-		var url="${pageContext.request.contextPath}/tip/insertReply";
+		var url="${pageContext.request.contextPath}/region/insertReply";
 		var query="listNum="+listNum+"&content="+content+"&answer=0";
 		
 		var fn = function(data){
@@ -159,7 +159,7 @@ $(function(){
 		var replyNum=$(this).attr("data-replyNum");
 		var page=$(this).attr("data-pageNo");
 		
-		var url="${pageContext.request.contextPath}/tip/deleteReply";
+		var url="${pageContext.request.contextPath}/region/deleteReply";
 		var query="replyNum="+replyNum+"&mode=reply";
 		
 		var fn = function(data){
@@ -173,7 +173,7 @@ $(function(){
 
 // 댓글별 답글 리스트
 function listReplyAnswer(answer) {
-	var url="${pageContext.request.contextPath}/tip/listReplyAnswer";
+	var url="${pageContext.request.contextPath}/region/listReplyAnswer";
 	var query="answer="+answer;
 	var selector="#listReplyAnswer"+answer;
 	
@@ -182,7 +182,7 @@ function listReplyAnswer(answer) {
 
 // 댓글별 답글 개수
 function countReplyAnswer(answer) {
-	var url="${pageContext.request.contextPath}/tip/countReplyAnswer";
+	var url="${pageContext.request.contextPath}/region/countReplyAnswer";
 	var query="answer="+answer;
 	
 	var fn = function(data){
@@ -233,7 +233,7 @@ $(function(){
 		}
 		content = encodeURIComponent(content);
 		
-		var url="${pageContext.request.contextPath}/tip/insertReply";
+		var url="${pageContext.request.contextPath}/region/insertReply";
 		var query="listNum="+listNum+"&content="+content+"&answer="+replyNum;
 		
 		var fn = function(data){
@@ -261,7 +261,7 @@ $(function(){
 		var replyNum=$(this).attr("data-replyNum");
 		var answer=$(this).attr("data-answer");
 		
-		var url="${pageContext.request.contextPath}/tip/deleteReply";
+		var url="${pageContext.request.contextPath}/region/deleteReply";
 		var query="replyNum="+replyNum+"&mode=answer";
 		
 		var fn = function(data){
@@ -283,7 +283,7 @@ $(function(){
 			<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
 			<tr height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
 			    <td colspan="2" align="center">
-				   ${dto.category}
+				   ${dto.region}
 			    </td>
 			</tr>
 			<tr height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
@@ -308,7 +308,7 @@ $(function(){
 			</tr>	
 			<tr style="border-bottom: 1px solid #cccccc;">
 				<td colspan="2" height="40" style="padding-bottom: 15px;" align="center">
-					<button type="button" class="btn btnSendTipLike" title="좋아요"><i class="fas fa-thumbs-up"></i>&nbsp;&nbsp;<span id="tipLikeCount">${dto.tipLikeCount}</span></button>
+					<button type="button" class="btn btnSendRegionLike" title="좋아요"><i class="fas fa-thumbs-up"></i>&nbsp;&nbsp;<span id="regionLikeCount">${dto.regionLikeCount}</span></button>
 				</td>
 			</tr>
 			</table>
@@ -317,15 +317,15 @@ $(function(){
 			<tr height="45">
 			    <td width="300" align="left">
 			       <c:if test="${sessionScope.member.userId==dto.userId}">				    
-			          <button type="button" class="btn" onclick="updateTip();">수정</button>
+			          <button type="button" class="btn" onclick="updateRegion();">수정</button>
 			       </c:if>
 			       <c:if test="${sessionScope.member.userId==dto.userId || sessionScope.member.userId=='admin'}">				    
-			          <button type="button" class="btn" onclick="deleteTip();">삭제</button>
+			          <button type="button" class="btn" onclick="deleteRegion();">삭제</button>
 			       </c:if>
 			    </td>
 			
 			    <td align="right">
-			        <button type="button" class="btn" onclick="javascript:location.href='${pageContext.request.contextPath}/tip/main?${query}';">리스트</button>
+			        <button type="button" class="btn" onclick="javascript:location.href='${pageContext.request.contextPath}/region/main?${query}';">리스트</button>
 			    </td>
 			</tr>
 			</table>
