@@ -89,7 +89,7 @@ $(document).ready(function(){
                   <td><a href="${pageContext.request.contextPath}/company/company">회사소개</a></td>
                   <td><a href="${pageContext.request.contextPath}/ms/list">재료 판매</a></td>
                   <td><a href="${pageContext.request.contextPath}/buy/material">재료구매</a></td>
-                  <td><a href="#">지역모임</a></td>
+                  <td><a href="${pageContext.request.contextPath}/region/main">지역모임</a></td>
                   <td><a href="${pageContext.request.contextPath}/consumer/myHistory">1:1문의(Q&A)</a></td>
                </tr>
                <tr>
