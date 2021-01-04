@@ -91,7 +91,7 @@ $(function(){
 		var url="${pageContext.request.contextPath}/tip/insertTipLike";
 		var listNum="${dto.listNum}";
 		// var query={num:num};
-		var query="listNum="+listNum;
+		var query="num="+num;
 		
 		var fn = function(data){
 			var state=data.state;

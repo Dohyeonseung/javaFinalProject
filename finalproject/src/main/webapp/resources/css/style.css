@@ -72,20 +72,18 @@ textarea:focus, input:focus{
 	outline: none;
 }
 
+
 .boxTF {
-	border:1px solid #999999;
-	padding:3px 5px 5px;
-	border-radius:4px;
-	background-color:#ffffff;
-	font-family:"Malgun Gothic", "맑은 고딕", NanumGothic, 나눔고딕, 돋움, sans-serif;
-}
-.boxTF[readonly] {
-	background-color:#eeeeee;
-	/* border: none;*/
+   border:1px solid #999999;
+   padding:3px 5px 5px;
+   border-radius:4px;
+   background-color:#ffffff;
+   font-family:"Malgun Gothic", "맑은 고딕", NanumGothic, 나눔고딕, 돋움, sans-serif;
 }
 
 .selectField {
-	border:1px solid #999999;
+	border:none;
+	border-bottom:#999999;
 	padding:2px 5px 4px;
 	border-radius:4px;
 	font-family:"Malgun Gothic", "맑은 고딕", NanumGothic, 나눔고딕, 돋움, sans-serif;

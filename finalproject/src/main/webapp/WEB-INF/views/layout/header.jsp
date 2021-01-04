@@ -12,6 +12,17 @@ $(function() {
       $(".subMenu").hide(200);
    })
 });
+
+$(document).ready(function(){
+		var $header = $('.header');
+		$(window).scroll(function(){
+			if($(this).scrollTop()>0){
+			$header.addClass('sticky');
+			}else{
+				$header.removeClass('sticky');
+			}
+		});
+});
 </script>
 <div id="menuBox">
    <div class="header-top">
@@ -99,7 +110,7 @@ $(function() {
                <tr>
                   <td><a href="#">찾아 오시는길</a></td>
                   <td></td>
-                  <td></td>
+                  <td><a href="${pageContext.request.contextPath}/market/list">D-Market</a></td>
                   <td><a href="${pageContext.request.contextPath}/notice/list">공지사항</a></td>
                   <td><a href="#"></a></td>
                </tr>

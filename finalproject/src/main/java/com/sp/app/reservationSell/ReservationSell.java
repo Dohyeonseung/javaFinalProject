@@ -13,6 +13,7 @@ public class ReservationSell {
 	private String created_date;
 	private String imageFilename;
 	private int division;
+	private String countDate;
 	
 	private MultipartFile upload;
 	
@@ -109,5 +110,11 @@ public class ReservationSell {
 	}
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+	public String getCountDate() {
+		return countDate;
+	}
+	public void setCountDate(String countDate) {
+		this.countDate = countDate;
 	}
 }

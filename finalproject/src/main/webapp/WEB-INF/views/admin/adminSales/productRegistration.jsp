@@ -149,9 +149,16 @@ function check() {
 	    	</tr>
 	    	
 	    	<tr style="border-bottom: 1px solid #cccccc;">
-	    		<td class="category_id">상품가격</td>
+	    		<td class="category_id">매입가격</td>
 	    		<td>
 	    			<input class="short_input" type="text" name="productPrice" value="${dto.productPrice}">
+	    		</td>
+	    	</tr>
+	    	
+	    	<tr style="border-bottom: 1px solid #cccccc;">
+	    		<td class="category_id">판매가격</td>
+	    		<td>
+	    			<input class="short_input" type="text" name="salesPrice" value="${dto.salesPrice}">
 	    		</td>
 	    	</tr>
 	    	
@@ -162,7 +169,7 @@ function check() {
 	    		</td>
 	    	</tr>
 	    	
-	    	<tr style="border-bottom: 1px solid #101010;">
+	    	<tr style="border-bottom: 1px solid #cccccc;">
 	    		<td class="category_id">상세정보</td>
 	    		<td valign="top" style="padding:18px 0 18px 0;">
 	    			<textarea class="hp_content" style="width: 760px; height: 300px; overflow: auto; resize: none;" name="productInfo" id="productInfo">${dto.productInfo}</textarea>
@@ -170,7 +177,20 @@ function check() {
 	    			<input type="hidden" name="userId" value="${dto.userId}">
 	    		</td>
 	    	</tr>
-			
+	    	
+	    	<tr style="border-bottom: 1px solid #101010;">
+					<td class="category_id">
+						파일 첨부
+					</td>
+					<td valign="top" style="padding-top: 18px;">
+						<input name="upload" type="file" multiple="multiple">
+						<p>
+							첨부파일은 최대 5개, 10MB까지 등록 가능하며<br>
+							파일 형식은 jpg, gif, psd, png, tif, zip, ms, office, 아래한글(hwp), pdf 만 가능합니다.
+						</p>
+					</td>
+			</tr>
+	    	
 	    </table>
 	    
 		<div id="table_button">
