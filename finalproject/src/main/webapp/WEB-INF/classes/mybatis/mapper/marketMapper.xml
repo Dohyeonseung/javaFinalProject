@@ -30,7 +30,7 @@
 	
 	<!-- 판매상품 리스트 -->
 	<select id="listSales" parameterType="map" resultType="com.sp.app.market.Market">
-		SELECT productName, imageFileName, salesPrice, registrationDate, statement
+		SELECT p.productCode, productName, imageFileName, salesPrice, registrationDate, statement
 		FROM CorpProduct p
 		JOIN member m ON m.memberIdx = p.memberIdx
 		<where>
@@ -40,5 +40,13 @@
 		</where>
 		ORDER BY registrationDate DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<!-- 판매글 보기 -->
+	<select id="readSales" parameterType="String" resultType="com.sp.app.market.Market">
+		SELECT p.productCode, imageFileName, productName, salesPrice, productCount, productInfo
+		FROM CorpProduct p
+		JOIN member m ON m.memberIdx = p.memberIdx
+		WHERE p.productCode = #{productCode}
 	</select>
 </mapper>

@@ -67,9 +67,15 @@ public class MarketServiceImpl implements MarketService{
 	}
 
 	@Override
-	public Market readSales(int salesNum) {
-		// TODO Auto-generated method stub
-		return null;
+	public Market readSales(String productCode) {
+		Market dto = null;
+		try {
+			dto = dao.selectOne("market.readSales", productCode);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
 	}
 	
 }

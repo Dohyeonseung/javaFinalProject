@@ -64,7 +64,7 @@
 	
 	<!-- 상품상세정보 -->
 	<select id="readProduct" parameterType="String" resultType="com.sp.app.admin.sales.Sales">
-		SELECT p.productCode, productName, productPrice, salesPrice, productCount, registrationDate, productInfo, c.categoryName, statement, o.productOrderDate
+		SELECT p.productCode, productName, productPrice, salesPrice, productCount, registrationDate, c.categoryName, statement, o.productOrderDate
 			FROM CorpProduct p
 			JOIN CorpCategory c ON c.categoryNum = p.categoryNum
 			LEFT OUTER JOIN ProductOrder o ON o.productCode = p.productCode

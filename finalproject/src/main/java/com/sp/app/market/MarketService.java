@@ -16,7 +16,7 @@ public interface MarketService {
 	public List<Market> listSales(Map<String, Object> map);
 	public List<Market> listProductReview(Map<String, Object> map);
 	
-	public Market readSales(int salesNum);
+	public Market readSales(String productCode);
 	
 	
 }

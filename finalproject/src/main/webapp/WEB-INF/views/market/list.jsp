@@ -58,8 +58,8 @@ function searchList() {
 		f.submit();
 }
 
-function article(num) {
-	var url="${articleUrl}&num="+num;
+function article(productCode) {
+	var url="${pageContext.request.contextPath}/market/product?productCode="+productCode"&page="+page;
 	location.href=url;
 }
 </script>
@@ -94,13 +94,14 @@ function article(num) {
 			     <td width="210" align="center">
 			        <div class="imgLayout">
 			             <img src="${pageContext.request.contextPath}/uploads/product/${dto.imageFileName}" width="180"
-			                   height="180" border="0" onclick="javascript:article('${dto.productCode}');">
-			             <span class="subject" onclick="javascript:article('${dto.productCode}');" >
+			                   height="180" border="0" onclick="location.href='${pageContext.request.contextPath}/market/product?productCode=${dto.productCode}&page=${page}';">
+			             <span class="subject" onclick="location.href='${pageContext.request.contextPath}/market/product?productCode=${dto.productCode}&page=${page}';">
 			                   ${dto.productName}
 			             </span>
-			             <span class="price" onclick="javascript:article('${dto.productCode}');" >
+			             <span class="price" onclick="location.href='${pageContext.request.contextPath}/market/product?productCode=${dto.productCode}&page=${page}';">
 			                   ${dto.salesPrice}원
 			             </span>
+			             <input type="hidden" name="productCode" value="${dto.productCode}">
 			         </div>
 			     </td>
 				</c:if>

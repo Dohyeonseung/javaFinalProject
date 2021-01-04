@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sp.app.common.MyUtil;
@@ -71,7 +72,6 @@ public class MarketController {
 
         String query = "";
         String listUrl = cp+"/market/list";
-        String articleUrl = cp+"/market/article?page=" + current_page;
         if(keyword.length()!=0) {
         	query = "condition=" +condition + 
         	           "&keyword=" + URLEncoder.encode(keyword, "utf-8");	
@@ -79,7 +79,6 @@ public class MarketController {
         
         if(query.length()!=0) {
         	listUrl = cp+"/market/list?" + query;
-        	articleUrl = cp+"/market/article?page=" + current_page + "&"+ query;
         }
 		
         String paging = myUtil.paging(current_page, total_page, listUrl);
@@ -87,7 +86,6 @@ public class MarketController {
 		model.addAttribute("list", list);
 		model.addAttribute("dataCount", dataCount);
 		model.addAttribute("total_page", total_page);
-		model.addAttribute("articleUrl", articleUrl);
 		model.addAttribute("page", current_page);
 		model.addAttribute("paging", paging);
 		
@@ -96,5 +94,21 @@ public class MarketController {
 		
 		return ".market.list";
 	}
-
+	
+	
+	@RequestMapping(value = "product", method = RequestMethod.GET)
+	public String article(@RequestParam String productCode, @RequestParam String page, Model model) throws Exception {
+		
+		String query = "page="+page;
+		
+		Market dto =service.readSales(productCode);
+		if(dto == null)
+			return "redirect:/market/list";
+		
+		model.addAttribute("dto", dto);
+		model.addAttribute("page", page);
+		model.addAttribute("query", query);
+		
+		return ".market.product";
+	}
 }
