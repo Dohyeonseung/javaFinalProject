@@ -269,9 +269,16 @@ function orderOk() {
 	    	</tr>
 	    	
 	    	<tr style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-				<th class="category_name">판매가격</th>
+				<th class="category_name">매입가격</th>
 	    		<td class="info_value">
 					<span>${dto.productPrice}</span>
+	    		</td>
+	    	</tr>
+	    	
+	    	<tr style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
+				<th class="category_name">판매가격</th>
+	    		<td class="info_value">
+					<span>${dto.salesPrice}</span>
 	    		</td>
 	    	</tr>
 	    	
@@ -302,19 +309,13 @@ function orderOk() {
 	    		</td>
 	    	</tr>
 	    	
-	    	<tr style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-	    		<th class="category_name">재고개수</th>
+	    	<tr style="border-top: 1px solid #cccccc; border-bottom: 1px solid #1e1e1e;">
+	    		<th class="category_name">상품수량</th>
 	    		<td class="info_value">
 					<span>${dto.productCount}EA</span>
 	    		</td>
 	    	</tr>
 	    		
-	    	<tr style="border-top: 1px solid #cccccc; border-bottom: 1px solid #1e1e1e;">
-	    		<th class="category_name">상세정보</th>
-	    		<td class="info_value">
-					<span>${dto.productInfo}</span>
-	    		</td>
-	    	</tr>
 	    	
 	    	</table>
 	    	

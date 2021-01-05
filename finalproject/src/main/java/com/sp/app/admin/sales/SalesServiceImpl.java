@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sp.app.common.FileManager;
 import com.sp.app.common.dao.CommonDAO;
 
 @Service("sales.salesService")
@@ -14,20 +15,22 @@ public class SalesServiceImpl implements SalesService {
 	@Autowired
 	private CommonDAO dao;
 	
+	@Autowired
+	private FileManager fileManager;
+	
 	@Override
-	public void insertProduct(Sales dto) throws Exception {
+	public void insertProduct(Sales dto, String pathname) throws Exception {
 		try {
-			dao.insertData("sales.insertProduct", dto);
+			String saveFileName = fileManager.doFileUpload(dto.getUpload(), pathname);
+			if(saveFileName != null) {
+				dto.setImageFileName(saveFileName);
+
+				dao.insertData("sales.insertProduct", dto);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
 		}
-	}
-
-	@Override
-	public void insertSales(Sales dto, String pathname) throws Exception {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -38,12 +41,6 @@ public class SalesServiceImpl implements SalesService {
 			e.printStackTrace();
 			throw e;
 		}
-	}
-
-	@Override
-	public void deleteSales(Sales dto) throws Exception {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -69,12 +66,6 @@ public class SalesServiceImpl implements SalesService {
 	}
 
 	@Override
-	public List<Sales> listSales(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Sales readProduct(String productCode) {
 		Sales dto = null;
 		
@@ -85,18 +76,6 @@ public class SalesServiceImpl implements SalesService {
 		}
 		
 		return dto;
-	}
-
-	@Override
-	public Sales readSales(int salesNum) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void updateHitCount(int salesNum) throws Exception {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

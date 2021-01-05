@@ -1,5 +1,6 @@
 package com.sp.app.admin.sales;
 
+import java.io.File;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -91,7 +92,7 @@ public class SalesController {
 	        
 	        String query = "";
 	        String listUrl = cp+"/admin/adminSales/productlist";
-	        String articleUrl = cp+"/bbs/article?page=" + current_page;
+	        String articleUrl = cp+"/admin/adminSales/article?page=" + current_page;
 	        if(keyword.length()!=0) {
 	        	query = "condition=" +condition + 
 	        	         "&keyword=" + URLEncoder.encode(keyword, "utf-8");	
@@ -119,15 +120,23 @@ public class SalesController {
 		return ".admin.adminSales.productList";
 	}
 	
+	@RequestMapping(value="registration", method=RequestMethod.GET)
+	public String productCrated() {
+		return ".admin.adminSales.productRegistration";
+	}
 
 	// 상품 등록
 	@RequestMapping(value = "registration", method = RequestMethod.POST)
 	public String productCreatedSubmit(Sales dto, HttpSession session) throws Exception {
+		
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root+"uploads"+File.separator+"product";
+		
 		SessionInfo info=(SessionInfo) session.getAttribute("member");
 		try {
 			dto.setMemberIdx(info.getMemberIdx());
 			dto.setUserId(info.getUserId());
-			service.insertProduct(dto);
+			service.insertProduct(dto ,pathname);
 		} catch (Exception e) {
 		}
 		return "redirect:/admin/adminSales/productlist";
@@ -238,10 +247,6 @@ public class SalesController {
 		return ".admin.adminSales.orderList";
 	}
 	
-	@RequestMapping(value="registration", method=RequestMethod.GET)
-	public String productCrated() {
-		return ".admin.adminSales.productRegistration";
-	}
 	
 	
 }

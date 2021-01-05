@@ -4,8 +4,8 @@
 <mapper namespace="sales">
 	<!-- 상품등록 -->
 	<insert id="insertProduct" parameterType="com.sp.app.admin.sales.Sales">
-		INSERT INTO CorpProduct(productCode, productName, productInfo, productPrice, registrationDate, categoryNum, memberIdx, statement)
-			VALUES (#{productCode}, #{productName}, #{productInfo}, #{productPrice}, SYSDATE, #{categoryNum}, #{memberIdx}, 0)
+		INSERT INTO CorpProduct(productCode, productName, productInfo, productPrice, salesPrice, registrationDate, categoryNum, memberIdx, statement, imageFileName)
+			VALUES (#{productCode}, #{productName}, #{productInfo}, #{productPrice}, #{salesPrice}, SYSDATE, #{categoryNum}, #{memberIdx}, 0, #{imageFileName})
 	</insert>
 
 	
@@ -47,7 +47,7 @@
 	
 	<!-- 상품리스트출력 -->
 	<select id="listProduct" parameterType="map" resultType="com.sp.app.admin.sales.Sales">
-		SELECT p.productCode, statement, c.categoryName, productName, TO_CHAR(registrationDate, 'YYYY-MM-DD')registrationDate, productPrice, productCount
+		SELECT p.productCode, statement, c.categoryName, productName, TO_CHAR(registrationDate, 'YYYY-MM-DD')registrationDate, productPrice, salesPrice, productCount
 		FROM CorpProduct p
 		JOIN CorpCategory c ON c.categoryNum = p.categoryNum
 		<where>
@@ -64,7 +64,7 @@
 	
 	<!-- 상품상세정보 -->
 	<select id="readProduct" parameterType="String" resultType="com.sp.app.admin.sales.Sales">
-		SELECT p.productCode, productName, productPrice, productCount, registrationDate, productInfo, c.categoryName, statement, o.productOrderDate
+		SELECT p.productCode, productName, productPrice, salesPrice, productCount, registrationDate, c.categoryName, statement, o.productOrderDate
 			FROM CorpProduct p
 			JOIN CorpCategory c ON c.categoryNum = p.categoryNum
 			LEFT OUTER JOIN ProductOrder o ON o.productCode = p.productCode
