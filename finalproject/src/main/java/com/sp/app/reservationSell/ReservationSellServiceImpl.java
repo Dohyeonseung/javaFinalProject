@@ -47,7 +47,7 @@ public class ReservationSellServiceImpl implements ReservationSellService {
 		int result =0;
 		
 		try {
-			result=dao.selectOne("rv.dataCount");
+			result=dao.selectOne("rv.dataCount", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

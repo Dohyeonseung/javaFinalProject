@@ -3,6 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/se/js/HuskyEZCreator.js" charset="utf-8"></script><!-- 네이버거 넣어놓은것 -->
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" type="text/css">
+<script type="text/javascript" src="http://code.jquery.com/ui/1.8.8/i18n/jquery.ui.datepicker-ko.js"></script>
+
 <script type="text/javascript">
     function check() {
         var f = document.boardForm;
@@ -33,6 +36,24 @@
 			
         return true;
     }
+    
+
+    $(function(){
+    	$("#date3").datepicker({
+    		showOn:"button"
+    		,buttonImage:"http://jqueryui.com/resources/demos/datepicker/images/calendar.gif"
+    		,buttonImageOnly:true
+    		,showMonthAfterYear:true
+    		,monthNames:["1월","2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"]
+    		,monthNamesShort:["1월","2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"]
+    	});
+    	$(".ui-datepicker-trigger").css({position:"relative",top:"3px"});
+    });
+    
+	$( ".selector" ).datepicker({
+	   
+	});
+
 </script>
 
 <div class="body-container" style="width: 830px;">
@@ -75,8 +96,15 @@
 			        <input type="number" name="stock" maxlength="100" class="boxTF" style="width: 95%;" value="${dto.stock}">
 			      </td>
 		        </tr>
-	 
-			  <tr align="left" height="40" style="border-bottom: 1px solid #cccccc;"> 
+
+					<tr align="left" height="40"
+						style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
+						<td width="40" bgcolor="#eeeeee" style="text-align: center;">예약날짜</td>
+						<td style="padding-left: 10px;" colspan="3"> 
+						<input type="text" name="countDate" readonly="readonly" id="date3" style="margin-right: 5px;" value="${dto.countDate}"></td>
+					</tr>
+
+					<tr align="left" height="40" style="border-bottom: 1px solid #cccccc;"> 
 			      <td width="100" bgcolor="#eeeeee" style="text-align: center;">작성자</td>
 			      <td style="padding-left:10px;" colspan="3"> 
 			          ${sessionScope.member.userName}

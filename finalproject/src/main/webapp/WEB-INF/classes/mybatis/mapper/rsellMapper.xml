@@ -4,8 +4,8 @@
 <mapper namespace="rv">
 	
 	<insert id="insertReservationSell" parameterType="com.sp.app.reservationSell.ReservationSell">
-		INSERT INTO product(productNum,  productName, price, stock,
-		content, reserves, imageFilename, categoryNum, userId, division, created_date,countDate) VALUES(
+		INSERT INTO product(productNum,  productName, price, stock, 
+		content, reserves, imageFilename, categoryNum, userId, division, created_date, countDate) VALUES(
 		product_seq.NEXTVAL, #{productName}, #{price}, #{stock},
 		#{content}, #{reserves, jdbcType=VARCHAR}, #{imageFilename, jdbcType=VARCHAR}, #{categoryNum},#{userId}, #{division}, SYSDATE, #{countDate})
 	</insert>
@@ -30,16 +30,15 @@
 
 <select id="listReservationSell" parameterType="map" resultType="com.sp.app.reservationSell.ReservationSell">
 	 	SELECT productNum, productName, price, stock, p.userId,
-	     imageFileName, c.categoryNum, c.categoryName, division, TO_CHAR(p.countDate,'YYYY-MM-DD') countDate,
-	 	 TO_CHAR(p.created_date,'YYYY-MM-DD') created_date
+	     imageFileName, c.categoryNum, c.categoryName, division,
+	 	 TO_CHAR(p.created_date,'YYYY-MM-DD') created_date, TO_CHAR(p.countDate,'YYYY-MM-DD') countDate
 	 	FROM product p
 	 	JOIN category c ON p.categoryNum=c.categoryNum
 	 	where division=2 and p.userId=#{userId}
-	  	<where>
 	  		<if test="keyword!=null and keyword!=''">
-	  			<include refid="where-list"/>
+	  		and	<include refid="where-list"/>
 	  		</if>
-	  	</where>
+
 	 	ORDER BY productNum 
 	 	OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	 </select>
@@ -47,12 +46,10 @@
 	 	SELECT NVL(COUNT(*),0)
 	 	FROM product p
 	 	JOIN member1 m ON p.userId = m.userId
-	 	<where>
+	 	where division=2 and p.userId=#{userId}
 	 		<if test="keyword!=null and keyword!=''">
-	 			<include refid="where-list"/>
-	 		</if>
-	 	
-	 	</where>	
+	 		and	<include refid="where-list"/>
+	 		</if>	
 	 </select>
 	 
 	  <select id="readReservationSell" parameterType="Integer"

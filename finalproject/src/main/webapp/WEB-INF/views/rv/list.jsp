@@ -138,7 +138,7 @@ f.submit();
 						<br>
 						
 						<span style="font-weight: bold;">가격 : ${dto.price}</span>
-						<span>재고 : ${dto.stock }</span>
+						<span>재고 :${dto.countDate} ${dto.stock }</span>
 						<span>분류 : ${dto.categoryName }</span> <span>등록일 : ${dto.created_date}</span>
 						</a>
 						
@@ -150,7 +150,7 @@ f.submit();
 						 <button type="button" class="btnSet" onclick="deleteCompleteSell('${dto.productNum}');" style="margin: 2px;">삭제</button>
 					</div>
 					<div class="dday" style="line-height: 150px;">
-						<span>D-Day 7</span>
+						<span id="demo"></span>
 					</div>
 					</div>
 				</div>	

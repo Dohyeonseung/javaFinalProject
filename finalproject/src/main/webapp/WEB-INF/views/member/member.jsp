@@ -220,11 +220,6 @@ function userIdCheck() {
         <h3><i class="fas fa-user"></i> ${mode=="member"?"회원 가입":"회원 정보 수정"} </h3>
     </div>
     
-    		<div class="body-container" style="width: 700px;">
-    <div class="body-title">
-        <h3><i class="fas fa-user"></i> ${mode=="member"?"회원 가입":"회원 정보 수정"} </h3>
-    </div>
-    
         <div>
 			<form name="memberForm" method="post">
 			  <table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">

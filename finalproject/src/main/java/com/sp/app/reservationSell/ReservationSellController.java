@@ -41,7 +41,7 @@ public class ReservationSellController {
 			 HttpSession session,
 			Model model) throws Exception{
 		
-		int rows= 10;
+		int rows= 4;
 		int total_page = 0;
 		int dataCount = 0;
 		
@@ -82,8 +82,8 @@ public class ReservationSellController {
 			   
 			   String cp=req.getContextPath();//현제페이지의 뿌리주소
 			   String query=""; //?
-			   String listUrl=cp+"/cp/list"; //현재페이지의 주소설정
-			   String articleUrl=cp+"/cp/article?page="+current_page;//아티클 페이지 주소설정
+			   String listUrl=cp+"/rv/list"; //현재페이지의 주소설정
+			   String articleUrl=cp+"/rv/article?page="+current_page;//아티클 페이지 주소설정
 			   if(keyword.length()!=0) {//키워드가 값이 잇으면 쿼리 값에 검색값과 키워드 값을 넣어줘라
 				   query="keyword="+URLEncoder.encode(keyword, "utf-8");
 			   }
