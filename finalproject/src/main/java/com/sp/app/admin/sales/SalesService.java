@@ -12,7 +12,9 @@ public interface SalesService {
 	public void deleteProduct(String productCode) throws Exception; // 상품삭제
 	
 	public int dataCount(Map<String, Object> map); // 데이터갯수
+	public int dataOrderCount(Map<String, Object> map);
 	public List<Sales> listProduct(Map<String, Object> map); // 상품리스트
+	public List<Sales> orderList(Map<String, Object> map); // 주문리스트
 	public List<Sales> listProductState(String productCode); // 상품상태리스트
 	public List<Sales> listProductOrder(String productCode); // 발주리스트
 	

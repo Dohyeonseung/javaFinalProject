@@ -44,17 +44,41 @@ public class Sales {
 	private int productCount; // 상품개수
 	private int statement; // 상품상태
 	
-	// 주문정보
-	private int orderState; // 주문상태
-	private int totalPrice; // 총 주문가격
-	private String orderDate; // 주문일자
-	
 	// 상세주문정보
 	private String order_productName; // 주문상품이름
 	private int detailPrice; // 각 상품 가격
 	private int count; // 주문수량
 	
+	// 주문테이블
+	private String orderer; // 주문자
+	private int orderState; // 주문상태
+	private int zip; // 우편번호
+	private String orderAddress; //주소
+	private String addr1;
+	private String addr2;
+	private String orderTel; //주문자 연락처
+	private String tel1;
+	private String tel2;
+	private String tel3;
+	private String orderTel2; // 예비번호
+	private String sTel1;
+	private String sTel2;
+	private String sTel3;
+	private String orderDate; // 주문날짜
+	private String reqMessage; // 요청사항
+	private int amountPrice; // 결제금액
 	
+	// 계산
+	private int cost;
+	private int buyCount;
+	private int totalPrice;
+	
+	public MultipartFile getUpload() {
+		return upload;
+	}
+	public void setUpload(MultipartFile upload) {
+		this.upload = upload;
+	}
 	public int getNum() {
 		return num;
 	}
@@ -175,11 +199,23 @@ public class Sales {
 	public void setRegistrationDate(String registrationDate) {
 		this.registrationDate = registrationDate;
 	}
+	public String getImageFileName() {
+		return imageFileName;
+	}
+	public void setImageFileName(String imageFileName) {
+		this.imageFileName = imageFileName;
+	}
 	public int getProductPrice() {
 		return productPrice;
 	}
 	public void setProductPrice(int productPrice) {
 		this.productPrice = productPrice;
+	}
+	public int getSalesPrice() {
+		return salesPrice;
+	}
+	public void setSalesPrice(int salesPrice) {
+		this.salesPrice = salesPrice;
 	}
 	public int getProductCount() {
 		return productCount;
@@ -192,24 +228,6 @@ public class Sales {
 	}
 	public void setStatement(int statement) {
 		this.statement = statement;
-	}
-	public int getOrderState() {
-		return orderState;
-	}
-	public void setOrderState(int orderState) {
-		this.orderState = orderState;
-	}
-	public int getTotalPrice() {
-		return totalPrice;
-	}
-	public void setTotalPrice(int totalPrice) {
-		this.totalPrice = totalPrice;
-	}
-	public String getOrderDate() {
-		return orderDate;
-	}
-	public void setOrderDate(String orderDate) {
-		this.orderDate = orderDate;
 	}
 	public String getOrder_productName() {
 		return order_productName;
@@ -229,24 +247,126 @@ public class Sales {
 	public void setCount(int count) {
 		this.count = count;
 	}
-	public int getSalesPrice() {
-		return salesPrice;
+	public String getOrderer() {
+		return orderer;
 	}
-	public void setSalesPrice(int salesPrice) {
-		this.salesPrice = salesPrice;
+	public void setOrderer(String orderer) {
+		this.orderer = orderer;
 	}
-	public String getImageFileName() {
-		return imageFileName;
+	public int getOrderState() {
+		return orderState;
 	}
-	public void setImageFileName(String imageFileName) {
-		this.imageFileName = imageFileName;
+	public void setOrderState(int orderState) {
+		this.orderState = orderState;
 	}
-	public MultipartFile getUpload() {
-		return upload;
+	public int getZip() {
+		return zip;
 	}
-	public void setUpload(MultipartFile upload) {
-		this.upload = upload;
+	public void setZip(int zip) {
+		this.zip = zip;
 	}
-		
+	public String getOrderAddress() {
+		return orderAddress;
+	}
+	public void setOrderAddress(String orderAddress) {
+		this.orderAddress = orderAddress;
+	}
+	public String getAddr1() {
+		return addr1;
+	}
+	public void setAddr1(String addr1) {
+		this.addr1 = addr1;
+	}
+	public String getAddr2() {
+		return addr2;
+	}
+	public void setAddr2(String addr2) {
+		this.addr2 = addr2;
+	}
+	public String getOrderTel() {
+		return orderTel;
+	}
+	public void setOrderTel(String orderTel) {
+		this.orderTel = orderTel;
+	}
+	public String getTel1() {
+		return tel1;
+	}
+	public void setTel1(String tel1) {
+		this.tel1 = tel1;
+	}
+	public String getTel2() {
+		return tel2;
+	}
+	public void setTel2(String tel2) {
+		this.tel2 = tel2;
+	}
+	public String getTel3() {
+		return tel3;
+	}
+	public void setTel3(String tel3) {
+		this.tel3 = tel3;
+	}
+	public String getOrderTel2() {
+		return orderTel2;
+	}
+	public void setOrderTel2(String orderTel2) {
+		this.orderTel2 = orderTel2;
+	}
+	public String getsTel1() {
+		return sTel1;
+	}
+	public void setsTel1(String sTel1) {
+		this.sTel1 = sTel1;
+	}
+	public String getsTel2() {
+		return sTel2;
+	}
+	public void setsTel2(String sTel2) {
+		this.sTel2 = sTel2;
+	}
+	public String getsTel3() {
+		return sTel3;
+	}
+	public void setsTel3(String sTel3) {
+		this.sTel3 = sTel3;
+	}
+	public String getOrderDate() {
+		return orderDate;
+	}
+	public void setOrderDate(String orderDate) {
+		this.orderDate = orderDate;
+	}
+	public String getReqMessage() {
+		return reqMessage;
+	}
+	public void setReqMessage(String reqMessage) {
+		this.reqMessage = reqMessage;
+	}
+	public int getAmountPrice() {
+		return amountPrice;
+	}
+	public void setAmountPrice(int amountPrice) {
+		this.amountPrice = amountPrice;
+	}
+	public int getCost() {
+		return cost;
+	}
+	public void setCost(int cost) {
+		this.cost = cost;
+	}
+	public int getBuyCount() {
+		return buyCount;
+	}
+	public void setBuyCount(int buyCount) {
+		this.buyCount = buyCount;
+	}
+	public int getTotalPrice() {
+		return totalPrice;
+	}
+	public void setTotalPrice(int totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+	
 	
 }

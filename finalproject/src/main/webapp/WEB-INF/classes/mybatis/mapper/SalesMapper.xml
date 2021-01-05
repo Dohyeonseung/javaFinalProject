@@ -30,6 +30,27 @@
 		</choose>
 	</sql>
 	
+		<sql id="orderSearch-list">
+		<choose>
+			<when test="condition == 'all'">
+				( INSTR(productName, #{keyword}) &gt; 0
+					OR INSTR(productInfo, #{keyword}) &gt; 0 )
+			</when>
+			<when test="condition == 'orderNum'">
+				 INSTR(orderNum, #{keyword})  &gt; 0
+			</when>
+			<when test="condition == 'productName'">
+				 INSTR(productName, #{keyword})  &gt; 0
+			</when>
+			<when test="condition == 'registrationDate'">
+				 INSTR(TO_CHAR(orderDate, 'YYYY-MM-DD'), #{keyword}) &gt; 0
+			</when>
+			<otherwise>
+				INSTR(${condition}, #{keyword}) &gt; 0
+			</otherwise>
+		</choose>
+	</sql>
+	
 	<!-- 상품개수  -->
 	<select id="dataCount" parameterType="map" resultType="Integer">
 		SELECT NVL(COUNT(*), 0)
@@ -118,6 +139,35 @@
 		WHERE p.productCode = #{productCode}
 		ORDER BY productOrderNum DESC
 		OFFSET 0 ROWS FETCH FIRST 10 ROWS ONLY
+	</select>
+	
+	<!-- 주문개수 -->
+	<select id="dataOrderCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM CorpOrderInfo o
+		JOIN member m ON m.memberIdx = o.memberIdx
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				AND <include refid="search-list"/>
+			</if>
+		</where>
+	</select>
+	
+	<!-- 주문리스트 -->
+	<select id="salesOrderList" parameterType="map" resultType="com.sp.app.admin.sales.Sales">
+        SELECT o.productCode, o.orderNum, p.productCode, o.orderDate , p.productName, amountPrice, buyCount, o.orderState, o.orderer
+		FROM CorpOrderInfo o
+		JOIN CorpProduct p ON p.productCode = o.productCode
+		<where>
+			<if test="productCode != 0">
+				o.productCode = #{productCode}
+			</if>
+			<if test="keyword != null and keyword != ''">
+				AND <include refid="orderSearch-list"/>
+			</if>
+		</where>
+		ORDER BY o.orderNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	</select>
 	
 </mapper>

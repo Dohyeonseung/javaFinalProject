@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.Map;
 
 public interface MarketService {
+	public void insertProductOrder(Market dto) throws Exception;
 	public void insertProductReview(Market dto) throws Exception;
 	
 	public void deleteProductReview(int reviewNum, int memberIdx, String pathname) throws Exception;
 	
 	public void updateHitCount(int salesNum) throws Exception;
+	public void updateProductCount(Map<String, Object> map) throws Exception;
 	
 	public int dataCount(Map<String, Object> map);
 	public int reviewDataCount(Map<String, Object> map);
@@ -17,6 +19,7 @@ public interface MarketService {
 	public List<Market> listProductReview(Map<String, Object> map);
 	
 	public Market readSales(String productCode);
+	public Market readOrder(String productCode, int buyCount);
 	
 	
 }

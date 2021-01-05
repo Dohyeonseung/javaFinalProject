@@ -49,7 +49,7 @@ public class SalesController {
 			HttpServletRequest req,
 			Model model) throws Exception {
 		
-		 String cp = req.getContextPath();
+		 	String cp = req.getContextPath();
 	   	    
 			int rows = 10; // 한 화면에 보여주는 게시물 수
 			int total_page = 0;
@@ -118,6 +118,82 @@ public class SalesController {
 			
 		
 		return ".admin.adminSales.productList";
+	}
+	
+	@RequestMapping(value="orderlist")
+	public String orderList(@RequestParam(value="page", defaultValue="1") int current_page,
+			@RequestParam(defaultValue="all") String condition,
+			@RequestParam(defaultValue="") String keyword,
+			@RequestParam(defaultValue = "") String productCode,
+			HttpServletRequest req,
+			Model model) throws Exception {
+		
+		 	String cp = req.getContextPath();
+	   	    
+			int rows = 10; // 한 화면에 보여주는 게시물 수
+			int total_page = 0;
+			int dataCount = 0;
+	   	    
+			if(req.getMethod().equalsIgnoreCase("GET")) { // GET 방식인 경우
+				keyword = URLDecoder.decode(keyword, "utf-8");
+			}
+			
+	        // 전체 페이지 수
+	        Map<String, Object> map = new HashMap<String, Object>();
+	        map.put("productCode", productCode);
+	        map.put("condition", condition);
+	        map.put("keyword", keyword);
+
+	        dataCount = service.dataOrderCount(map);
+	        if(dataCount != 0)
+	            total_page = myUtil.pageCount(rows, dataCount) ;
+
+	        // 다른 사람이 자료를 삭제하여 전체 페이지수가 변화 된 경우
+	        if(total_page < current_page) 
+	            current_page = total_page;
+
+	        // 리스트에 출력할 데이터를 가져오기
+	        int offset = (current_page-1) * rows;
+			if(offset < 0) offset = 0;
+	        map.put("offset", offset);
+	        map.put("rows", rows);
+
+	        // 글 리스트
+	        List<Sales> olist = service.orderList(map);
+
+	        // 리스트의 번호
+	        int listNum, n = 0;
+	        for(Sales dto : olist) {
+	            listNum = dataCount - (offset + n);
+	            dto.setListNum(listNum);
+	            n++;
+	        }
+	        
+	        String query = "";
+	        String listUrl = cp+"/admin/adminSales/orderlist";
+	        if(keyword.length()!=0) {
+	        	query = "condition=" +condition + 
+	        	         "&keyword=" + URLEncoder.encode(keyword, "utf-8");	
+	        }
+	        
+	        if(query.length()!=0) {
+	        	listUrl = cp+"/admin/adminSales/orderlist?" + query;
+	        }
+	        
+	        String paging = myUtil.paging(current_page, total_page, listUrl);
+
+	        model.addAttribute("olist", olist);
+	        model.addAttribute("page", current_page);
+	        model.addAttribute("dataCount", dataCount);
+	        model.addAttribute("total_page", total_page);
+	        model.addAttribute("paging", paging);
+	        
+			model.addAttribute("condition", condition);
+			model.addAttribute("keyword", keyword);
+			model.addAttribute("productCode", productCode);
+			
+		
+		return ".admin.adminSales.orderList";
 	}
 	
 	@RequestMapping(value="registration", method=RequestMethod.GET)
@@ -241,12 +317,6 @@ public class SalesController {
 		
 		return "redirect:/admin/adminSales/productinfo";
 	}
-	
-	@RequestMapping(value="orderlist", method=RequestMethod.GET)
-	public String orderList() {
-		return ".admin.adminSales.orderList";
-	}
-	
 	
 	
 }

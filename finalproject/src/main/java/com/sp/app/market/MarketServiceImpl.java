@@ -15,6 +15,16 @@ public class MarketServiceImpl implements MarketService{
 	private CommonDAO dao;
 	
 	@Override
+	public void insertProductOrder(Market dto) throws Exception {
+		try {
+			dao.insertData("market.insertProductOrder", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	@Override
 	public void insertProductReview(Market dto) throws Exception {
 		// TODO Auto-generated method stub
 		
@@ -77,5 +87,29 @@ public class MarketServiceImpl implements MarketService{
 		
 		return dto;
 	}
+
+	@Override
+	public Market readOrder(String productCode, int buyCount) {
+		Market dto = null;
+		try {
+			dto  = dao.selectOne("market.readSales", productCode);
+			dto.setBuyCount(buyCount);
+			dto.setTotalPrice(dto.getSalesPrice()*dto.getBuyCount());
+			dto.setAmountPrice(dto.getTotalPrice()+dto.getCost());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
+	}
+
+	@Override
+	public void updateProductCount(Map<String, Object> map) throws Exception {
+		try {
+			dao.updateData("market.productCountUpdate", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	
 }

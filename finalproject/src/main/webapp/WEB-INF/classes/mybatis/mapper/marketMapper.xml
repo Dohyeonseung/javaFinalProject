@@ -30,7 +30,7 @@
 	
 	<!-- 판매상품 리스트 -->
 	<select id="listSales" parameterType="map" resultType="com.sp.app.market.Market">
-		SELECT p.productCode, productName, imageFileName, salesPrice, registrationDate, statement
+		SELECT p.productCode, productName, imageFileName, salesPrice, registrationDate, statement, productCount
 		FROM CorpProduct p
 		JOIN member m ON m.memberIdx = p.memberIdx
 		<where>
@@ -49,4 +49,23 @@
 		JOIN member m ON m.memberIdx = p.memberIdx
 		WHERE p.productCode = #{productCode}
 	</select>
+	
+	<!-- 주문입력페이지 주문정보 넘기는 용도 -->
+	<select id="readOrder" parameterType="String" resultType="com.sp.app.market.Market">
+		SELECT imageFileName, productName, p.productCode, salesPrice
+		FROM CorpProduct p
+		JOIN member m ON m.memberIdx = p.memberIdx
+		WHERE p.productCode = #{productCode}
+	</select>
+	
+	<!-- 주문  -->
+	<insert id="insertProductOrder" parameterType="com.sp.app.market.Market">
+		INSERT INTO CorpOrderInfo(orderNum, productCode, memberIdx, orderer, orderState, zip, orderAddress, orderTel, orderDate, amountPrice, reqMessage, buyCount)
+			VALUES(ProductOrder_seq.NEXTVAL, #{productCode}, #{memberIdx}, #{orderer}, 0, #{zip}, #{orderAddress}, #{orderTel}, SYSDATE, #{amountPrice}, #{reqMessage}, #{buyCount})
+	</insert>
+	
+	<!-- 주문에 의한 재고 수량 갱신  -->
+	<update id="productCountUpdate" parameterType="map">
+		UPDATE CorpProduct SET productCount = productCount-#{buyCount} WHERE productCode = #{productCode}
+	</update>
 </mapper>

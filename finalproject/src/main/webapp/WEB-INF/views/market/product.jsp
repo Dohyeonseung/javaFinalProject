@@ -174,6 +174,13 @@ ul.center {
 	margin: auto;
 }
 </style>
+<script type="text/javascript">
+function test() {
+	var buyCount = $("#buyCount").val();
+	
+	location.href="${pageContext.request.contextPath}/market/order?productCode=${dto.productCode}&memberIdx=${dto.memberIdx}&page=${page}&buyCount="+buyCount;
+}
+</script>
 
 <div id="wrap">
 	<div class="simple_infowrap">
@@ -202,14 +209,14 @@ ul.center {
 					
 					<div class="info_title">구매수량</div>
 					<div class="info_content">
-						<input type="number" id="count" name="count" min="1" max="${dto.productCount}">
+						<input type="number" id="buyCount" name="buyCount" min="1" max="${dto.productCount}" value="1">
 					</div>
 				</div>
 			</div>
 			<div class="cart_purchase">
+				<button type="button" class="cart" style="float: right" onclick="location.href='${pageContext.request.contextPath}/market/list';">리스트</button>
 				<button type="button" class="cart">장바구니</button>
-				<button type="button" class="cart">찜하기</button>
-				<button type="button" class="purchase">구매하기</button>
+				<button type="button" class="purchase" onclick="test();">구매하기</button>
 			</div>
 		</form>
 

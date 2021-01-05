@@ -85,27 +85,46 @@ a {
 		<table style="width: 100%; margin: 0px auto; border-spacing: 0px; border-collapse: collapse;">
 		  <tr align="center" bgcolor="#FFFFFF" height="35" style="border-top: 2px solid #1e1e1e; border-bottom: 1px solid #1e1e1e;"> 
 		      <th width="50" style="color: #1e1e1e;">주문번호</th>
-		      <th width="50" style="color: #1e1e1e;">식별코드</th>
+		      <th width="50" style="color: #1e1e1e;">주문자</th>
+		      <th width="50" style="color: #1e1e1e;">상품코드</th>
 		      <th width="50" style="color: #1e1e1e;">상품주문일</th>
 		      <th width="100" style="color: #1e1e1e;">상품명</th>
-		      <th width="50" style="color: #1e1e1e;">가격</th>
+		      <th width="50" style="color: #1e1e1e;">결제금액</th>
 		      <th width="50" style="color: #1e1e1e;">주문수량</th>
-		      <th width="30" style="color: #1e1e1e;">상태</th>
+		      <th width="30" style="color: #1e1e1e;">처리상태</th>
 		      <th width="20" style="color: #1e1e1e;"></th>
 		  </tr>
 		 
+		 <c:forEach var="dto" items="${olist}">
 		  <tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
-		      <td width="50">1</td>
-		      <td width="50">DIY34578</td>
-		      <td width="50">2020-12-20</td>
-		      <td width="100">초보자도 따라만드는 DIY 책상키트</td>
-		      <td width="50">137,600원</td>
-		      <td width="50">1EA</td>
-		      <td width="50">주문완료</td>
+		      <td width="50">${dto.orderNum}</td>
+		      <td width="50">${dto.orderer}</td>
+		      <td width="50">${dto.productCode}</td>
+		      <td width="50">${dto.orderDate}</td>
+		      <td width="100">${dto.productName}</td>
+		      <td width="50">${dto.amountPrice}</td>
+		      <td width="50">${dto.buyCount}</td>
+		      <td width="50">
+		      	<c:choose>
+			    	<c:when test="${dto.orderState == 0}">
+			    		<span>발송대기</span>
+			    	</c:when>
+			    	<c:when test="${dto.statement == 1}">
+			    		<span>발송완료</span>
+			    	</c:when>
+			    	<c:when test="${dto.statement == 2}">
+			    		<span>발송지연</span>
+			    	</c:when>
+			    	<c:when test="${dto.statement == 3}">
+			    		<span>주문취소</span>
+			    	</c:when>
+			    </c:choose>
+		      </td>
 		      <td width="30">
 		      <a href="#" class="orderList_a"><i class="fas fa-toggle-on" style="color: #1e1e1e;"></i></a>
 		      </td>
 		  </tr>
+		 </c:forEach>
 
 		</table>
 		 

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sp.app.common.MyUtil;
+import com.sp.app.member.SessionInfo;
 
 @Controller("market.marketController")
 @RequestMapping("/market/**")
@@ -99,7 +101,6 @@ public class MarketController {
 	@RequestMapping(value = "product", method = RequestMethod.GET)
 	public String article(@RequestParam String productCode, @RequestParam String page, Model model) throws Exception {
 		
-		String query = "page="+page;
 		
 		Market dto =service.readSales(productCode);
 		if(dto == null)
@@ -107,8 +108,47 @@ public class MarketController {
 		
 		model.addAttribute("dto", dto);
 		model.addAttribute("page", page);
-		model.addAttribute("query", query);
 		
 		return ".market.product";
 	}
+	
+	@RequestMapping(value = "order", method = RequestMethod.GET)
+	public String orderProduct(@RequestParam String productCode, @RequestParam long memberIdx, @RequestParam int buyCount, @RequestParam String page, Model model, HttpSession session) throws Exception {
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		
+		Market dto = service.readOrder(productCode, buyCount);
+		memberIdx = info.getMemberIdx();
+		if(dto == null)
+			return "redirect:/market/list";
+		
+		model.addAttribute("dto", dto);
+		model.addAttribute("memberIdx", memberIdx);
+		model.addAttribute("page", page);
+		
+		return ".market.orderProduct";
+	}
+	
+	
+	@RequestMapping(value = "order", method = RequestMethod.POST)
+	public String orderProductSubmit(Market dto, HttpSession session) throws Exception {
+		
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+			dto.setMemberIdx(info.getMemberIdx());
+			dto.setOrderAddress(dto.getAddr1()+dto.getAddr2());
+			dto.setOrderTel(dto.getTel1()+dto.getTel2()+dto.getTel3());
+			dto.setOrderTel2(dto.getsTel1()+dto.getsTel2()+dto.getsTel3());
+			dto.setAmountPrice(dto.getTotalPrice()+dto.getCost());
+			map.put("buyCount", dto.getBuyCount());
+			map.put("productCode", dto.getProductCode());
+			service.insertProductOrder(dto);
+			service.updateProductCount(map);
+		} catch (Exception e) {
+		}
+		
+		return ".market.orderComplete";
+	}
+
 }

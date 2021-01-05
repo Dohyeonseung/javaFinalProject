@@ -143,5 +143,29 @@ public class SalesServiceImpl implements SalesService {
 		return list;
 	}
 
+	@Override
+	public List<Sales> orderList(Map<String, Object> map) {
+		List<Sales> list = null;
+		try {
+			list = dao.selectList("sales.salesOrderList", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
+	@Override
+	public int dataOrderCount(Map<String, Object> map) {
+		int result = 0;
+		try {
+			result = dao.selectOne("sales.dataOrderCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
 
 }

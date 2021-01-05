@@ -2,11 +2,54 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-
-
-
 <style type="text/css">
+div, body {
+	margin: 0;
+	padding: 0;
+}
+
+#mainContainer {
+	width: 100%;
+	height: auto;
+	overflow: hidden;
+}
+
+#contentContainer {
+	width: 1280px;
+	height: 1980px;
+	margin: auto;
+}
+
+#table_box {
+	width: 100%;
+	height: 70%;
+	margin-top: 100px;
+}
+.member_title {
+	width: 100%;
+	height: 50px;
+	border-bottom: 1px solid #1e1e1e;
+}
+
+.btn_style {
+	width: 100px;
+	height: 30px;
+	border-radius: 0;
+	border-top: 0;
+	border-bottom: 0;
+	border-left: 0;
+	border-right: 0;
+	font-family: "맑은 고딕", sans-serif;
+	font-weight: bold;
+	transition: all 0.9s, color 0.3s;
+}
+
+.btn_style:hover {
+    box-shadow: 0 50px 0 0 rgba(0, 0, 0, 0.1) inset, 
+                0 -50px 0 0 rgba(0, 0, 0, 0.1) inset;
+    
+}
+
 #wrap {
 	width: 100%;
 	display: flex;
@@ -35,26 +78,6 @@ input[id^="item"] {
 
 ul li {
 	list-style: none;
-}
-
-.body-container {
-	width: 100%;
-}
-
-.body-header{
-	display: flex;
-	justify-content: space-around;
-	width: 100%;
-	font-size: 24px;
-	font-family: "Malgun Gothic", "맑은 고딕";
-	border-bottom: 1px solid #e6e6e6;
-	text-align: center;
-	padding-bottom: 10px;
-	margin-top: 50px;
-}
-
-.body-header, h3, h6{
-	float: left;
 }
 
 .body-content {
@@ -146,110 +169,95 @@ ul li {
 	width: 90px;
 
 }
-
 </style>
 
-
-
 <script type="text/javascript">
-function orderConfirm() {
-	var f=document.orderSubmit;
-
-	var str = f.Addr1.value;
-    if(!str) {
-        alert("주소를 입력해 주세요. ");
-        f.Addr1.focus();
-        return;
-    }
-
-	str = f.Addr2.value;
-    if(!str) {
-        alert("상세 주소를 입력해 주세요. ");
-        f.Addr2.focus();
-        return;
-    }
+function orderSend() {
+	var f = document.orderForm;
 	
-	f.action="${pageContext.request.contextPath}/buy/orderSubmit";
+	var str = f.addr2.value;
+    if(!str) {
+        alert("상세 주소를 입력해주세요. ");
+        f.addr2.focus();
+        return;
+    }
 
+	str = f.tel1.value;
+    if(!str) {
+        alert("연락처를 입력해주세요. ");
+        f.tel1.focus();
+        return;
+    }
+    
+    str = f.tel2.value;
+    if(!str) {
+        alert("연락처를 입력해주세요. ");
+        f.tel2.focus();
+        return;
+    }
+    
+    str = f.tel3.value;
+    if(!str) {
+        alert("연락처를 입력해주세요. ");
+        f.tel3.focus();
+        return;
+    }
+
+	f.action="${pageContext.request.contextPath}/market/order";
+	
 	f.submit();
 }
 
-function orderCartConfirm() {
-	var f=document.orderSubmit;
+function messageSelect(rm) {
 
-	var str = f.Addr1.value;
-    if(!str) {
-        alert("주소를 입력해 주세요. ");
-        f.Addr1.focus();
-        return;
-    }
-	
-	f.action="${pageContext.request.contextPath}/buy/orderCartsubmit";
+    var reqMessage = rm.selectReqMessage.selectedIndex;
 
-	f.submit();
-}
-
-function message(frm) {
-
-    var content = frm.selectmsg.selectedIndex;
-
-    switch( content ){
+    switch( reqMessage ){
 	   case 0:
-	     frm.content.value = null;
-	     $('#content').attr('readonly', true);
+	     rm.reqMessage.value = null;
+	     $('#reqMessage').attr('readonly', true);
 		 break;
 	   case 1:
-	     frm.content.value = '배송 전 연락 바랍니다.';
-	     $('#content').attr('readonly', true);
+	     rm.reqMessage.value = '배송 전 연락 바랍니다.';
+	     $('#reqMessage').attr('readonly', true);
 		 break;
 	   case 2:
-	     frm.content.value = '부재시 경비실에 맡겨주세요.';
-	     $('#content').attr('readonly', true);
+	     rm.reqMessage.value = '부재시 경비실에 맡겨주세요.';
+	     $('#reqMessage').attr('readonly', true);
 		 break;
 	   case 3:
-	     frm.content.value = '부재시 전화 주시거나 문자 남겨 주세요.';
-	     $('#content').attr('readonly', true);
+	     rm.reqMessage.value = '부재시 전화 주시거나 문자 남겨 주세요.';
+	     $('#reqMessage').attr('readonly', true);
 		 break;
 	   case 4:
-	     frm.content.value = '빠른 배송 부탁드립니다.';
-	     $('#content').attr('readonly', true);
+	     rm.reqMessage.value = '빠른 배송 부탁드립니다.';
+	     $('#reqMessage').attr('readonly', true);
 		 break;
 	   case 5:
-	     frm.content.value = '';
-	     $('#content').attr('readonly', false);
+	     rm.reqMessage.value = '';
+	     $('#reqMessage').attr('readonly', false);
 		 break;
     }
 	
     return true;
 }
-
-/* $(function() {
- 
-    $("#btnDeleteList").click(function(){
-
-        	 var f=document.cartForm;
-        	 f.action="${pageContext.request.contextPath}/buy/deleteCartlist";
-        	 f.submit();
-         
-    });
-}); */
 </script>
-
-	<div id="wrap">
-		<div class="body-container">
-			<div class="body-header">
-				<h3>주문결제</h3>
-				<h6><span style="color: #b3b3b3;">장바구니></span>주문결제<span style="color: #b3b3b3;">>주문완료</span></h6>
-			</div>
-			<form name="orderSubmit" method="post">
+<div id="mainContainer">
+	<div id="contentContainer">
+		<div id="table_box">
+		<div class="member_title">
+				<h2><i class="far fa-address-card"></i> 주문정보 입력</h2>
+		</div>
+		
+		<form name="orderForm" method="post">
 			<div class="body-content">
 			<div class="order-left">
 				<div class="customer-info">
-					<p style="font-size: 24px;">배송지 정보 입력 (kakao 계정 제공)</p>
+					<p style="font-size: 24px;">배송지 정보 입력</p>
 					<div class="delivery">
 					<table>
 						<tr>
-							<th>수령인&nbsp;<span style="color: red;">*</span> </th> <td><input type="text" name="customer"></td>
+							<th>수령인&nbsp;<span style="color: red;">*</span> </th> <td><input type="text" name="orderer"></td>
 						</tr>
 						<tr>
 							<th>배송지&nbsp;<span style="color: red;">*</span> </th> <td><input type="text" name="zip" id="zip"
@@ -257,11 +265,11 @@ function message(frm) {
 			            <button type="button" class="btn" onclick="daumPostcode();">우편번호</button></td>
 						</tr>
 						<tr>
-							<th><td><input type="text" name="Addr1" id="Addr1" maxlength="50" 
+							<th><td><input type="text" name="addr1" id="addr1" maxlength="50" 
 			                       class="boxTF" placeholder="기본 주소" readonly="readonly"></td>
 						</tr>
 						<tr>
-							<th><td><input type="text" name="Addr2" id="Addr2" placeholder="상세주소를 입력하세요" ></td>
+							<th><td><input type="text" name="addr2" id="addr2" placeholder="상세주소를 입력하세요" ></td>
 						</tr>
 						<tr>
 							<th>연락처1&nbsp;<span style="color: red;">*</span> </th>
@@ -279,7 +287,7 @@ function message(frm) {
 						</tr>
 						<tr>
 							<th>연락처2</th> <td><p id="tel">
-								<select class="selectField" id="otehrtel1" name="othertel1" style="line-height: 20px;" >
+								<select class="selectField" id="sTel1" name="sTel1" style="line-height: 20px;" >
 					                <option value="">선 택</option>
 					                <option value="010">010</option>
 					                <option value="011">011</option>
@@ -287,11 +295,10 @@ function message(frm) {
 					                <option value="017">017</option>
 					                <option value="018">018</option>
 					                <option value="019">019</option>
-				           		 </select>_<input type="text" name="othertel2" maxlength="4">_<input type="text" name="othertel3" maxlength="4"> </p></td>
+				           		 </select>_<input type="text" name="sTel2" maxlength="4">_<input type="text" name="sTel3" maxlength="4"> </p></td>
 						</tr>
 					</table>
-					<input type="checkbox" style="zoom:1.5; position: relative; top: 2px;"> <span style="color: #b3b3b3;">배송지 목록에 추가하기</span>
-					<select name="selectmsg" onchange="message(this.form)">
+					<select name="selectReqMessage" onchange="messageSelect(this.form);">
 						<option value="0">배송시 요청사항을 선택해 주세요.</option>
 						<option value="1">배송 전 연락 바랍니다.</option>
 						<option value="2">부재시 경비실에 맡겨주세요.</option>
@@ -299,13 +306,12 @@ function message(frm) {
 						<option value="4">빠른 배송 부탁드립니다.</option>
 						<option value="5">직접 입력</option>
 					</select>
-					<textarea name="content" placeholder="배송시 요청사항을 입력해 주세요." id="content" rows="8" cols="56" style="resize: none; border: 1px solid #d9d9d9;"></textarea>
+					<textarea name="reqMessage" placeholder="배송시 요청사항을 입력해 주세요." id="reqMessage" rows="8" cols="56" style="resize: none; border: 1px solid #d9d9d9;"></textarea>
 					</div>
 				</div>
 			</div>
 			<div class="order-right">
-			
-			    <c:if test="${not empty dto }">
+			    <c:if test="${not empty dto}">
 					<div class="item-info">
 						<div>
 							<div style="padding: 10px;">
@@ -314,18 +320,20 @@ function message(frm) {
 							
 							<div style="display: flex;">
 								<div class="image-box">
-									<img alt="" src="${pageContext.request.contextPath}/resources/img/slider1.jpg">
+									<img alt="" src="${pageContext.request.contextPath}/uploads/product/${dto.imageFileName}">
 								</div>
 								<div class="content-box">
 									<div><span>${dto.productName}</span></div>
-									<input type="hidden" name="productNames" value="${dto.productName}">
-									<input type="hidden" name="productNums" value="${dto.productNum}">
-									<input type="hidden" name="prices" value="${dto.price}">
-									<div><span>${dto.price}원 <input type="text" name="counts" value="${dto.count}"> </span></div>
+									<input type="hidden" name="productName" value="${dto.productName}">
+									<input type="hidden" name="salesPrice" value="${dto.salesPrice}">
+									<input type="hidden" name="buyCount" value="${dto.buyCount}">
+									<input type="hidden" name="productCode" value="${dto.productCode}">
+									<div><span>상품가격 : ${dto.salesPrice} </span></div>
+									<div><span>구매수량 : ${dto.buyCount}EA </span></div>
 								</div>
 							</div>
 							<div style="background: #e5e5e5; height: 25px;">
-							<span style="float: right; font-size: 18px;">롯데쇼핑(주) 미아점</span>
+							<span style="float: right; font-size: 18px;">(주)핸드메이드.</span>
 							</div>	
 						</div>
 					</div>
@@ -334,82 +342,38 @@ function message(frm) {
 						<div>
 							<table style="width: 100%; border-spacing: 5px;">
 								<tr>
-									<th>총 상품금액</th><td style="float: right;">339,000원<input type="hidden" name="total_price" value="${dto.price}"></td>
+									<th>총 상품금액</th>
+									<td style="float: right;">
+										${dto.totalPrice}원
+										<input type="hidden" name="totalPrice" value="${dto.totalPrice}">
+									</td>
 								</tr>
 								<tr>
-									<th>배송비</th><td style="float: right;">2500원</td>
+									<th>배송비</th><td style="float: right;">${dto.cost}원</td>
 								</tr>
 								<tr>
-									<th>적립금</th><td style="float: right;">${dto.reserves}원</td>
+									<th>결제금액</th><td style="float: right;">${dto.amountPrice}원</td>
 								</tr>
 							</table>
 						</div>
 					</div>
 				  </c:if>
 				  
-				  <c:if test="${not empty listCart }">
-						<div class="item-info">
-							<div>
-								<div style="padding: 10px;">
-									<span style="font-size: 24px;">주문상품 정보</span>
-								</div>
-								
-				  				<c:forEach var="vo" items="${listCart}">
-									<div style="display: flex;">
-										<div class="image-box">
-											<img alt="" src="${pageContext.request.contextPath}/resources/img/slider1.jpg">
-										</div>
-										<div class="content-box">
-											<div><span>${vo.cName}</span></div>
-											<input type="hidden" name="cIds" value="${vo.cId}">
-											<input type="hidden" name="productNames" value="${vo.cName}">
-											<input type="hidden" name="productNums" value="${vo.productNum}">
-											<input type="hidden" name="prices" value="${vo.cPrice}">
-											<div><span>${vo.cPrice}원 <input type="text" name="counts" value="${vo.count}"> </span></div>
-										</div>
-									</div>
-									<div style="background: #e5e5e5; height: 25px;">
-									<span style="float: right; font-size: 18px;">롯데쇼핑(주) 미아점</span>
-									</div>	
-				  				</c:forEach>
-							</div>
-						</div>
-				  	
-						<div style="margin: 20px 0px;">
-							<span style="font-size: 24px;">최종 결제금액</span>
-							<div>
-								<table style="width: 100%; border-spacing: 5px;">
-									<tr>
-										<th>총 상품금액</th><td style="float: right;">${total}<input type="hidden" name="total_price" value="${total}"></td>
-									</tr>
-									<tr>
-										<th>배송비</th><td style="float: right;">2500원</td>
-									</tr>
-									<tr>
-										<th>적립금</th><td style="float: right;">${reserves}원</td>
-									</tr>
-								</table>
-							</div>
-						</div>
-				  	
-				  </c:if>
-					
 					<c:if test="${not empty dto }">
 					<div style="padding: 10px 0px; ">
-						<button type="button" id="btnDeleteList" onclick="orderConfirm();" style="background: #FAE500; width: 100%; border: none; font-size: 24px;">결제하기</button>
+						<button type="button" onclick="orderSend();" id="btnDeleteList" style="background: #FAE500; width: 100%; border: none; font-size: 24px;">결제하기</button>
 					</div>
 					</c:if>
-					
-					<c:if test="${not empty listCart }">
 					<div style="padding: 10px 0px; ">
-						<button type="button" id="btnDeleteList" onclick="orderCartConfirm();" style="background: #FAE500; width: 100%; border: none; font-size: 24px;">결제하기</button>
+						<button type="button" onclick="location.href='${pageContext.request.contextPath}/market/product?productCode=${dto.productCode}&page=${page}';" style="background: #cccccc; width: 100%; border: none; font-size: 24px;">주문취소</button>
 					</div>
-					</c:if>
 				</div>
 		</div>
 				</form>
+		
 		</div>
 	</div>
+</div>
 
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
@@ -447,10 +411,10 @@ function message(frm) {
 
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
                 document.getElementById('zip').value = data.zonecode; //5자리 새우편번호 사용
-                document.getElementById('Addr1').value = fullAddr;
+                document.getElementById('addr1').value = fullAddr;
 
                 // 커서를 상세주소 필드로 이동한다.
-                document.getElementById('Addr2').focus();
+                document.getElementById('addr2').focus();
             }
         }).open();
     }

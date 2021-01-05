@@ -58,10 +58,11 @@ function searchList() {
 		f.submit();
 }
 
-function article(productCode) {
-	var url="${pageContext.request.contextPath}/market/product?productCode="+productCode"&page="+page;
-	location.href=url;
+function soldOut() {
+	alert("매진된 상품입니다!!");
+	return false;
 }
+
 </script>
 <div class="base-container">
 
@@ -93,8 +94,16 @@ function article(productCode) {
 				<c:if test="${dto.statement==1}">
 			     <td width="210" align="center">
 			        <div class="imgLayout">
-			             <img src="${pageContext.request.contextPath}/uploads/product/${dto.imageFileName}" width="180"
-			                   height="180" border="0" onclick="location.href='${pageContext.request.contextPath}/market/product?productCode=${dto.productCode}&page=${page}';">
+			        <c:choose>
+			        	<c:when test="${dto.productCount == 0}">
+			        		<img src="${pageContext.request.contextPath}/resources/images/soldout.png" width="180"
+			                   	height="180" border="0" onclick="soldOut();">
+			        	</c:when>
+			        	<c:when test="${dto.productCount != 0}">
+			        		<img src="${pageContext.request.contextPath}/uploads/product/${dto.imageFileName}" width="180"
+			                   	height="180" border="0" onclick="location.href='${pageContext.request.contextPath}/market/product?productCode=${dto.productCode}&page=${page}';">
+			        	</c:when>
+			        </c:choose>
 			             <span class="subject" onclick="location.href='${pageContext.request.contextPath}/market/product?productCode=${dto.productCode}&page=${page}';">
 			                   ${dto.productName}
 			             </span>
