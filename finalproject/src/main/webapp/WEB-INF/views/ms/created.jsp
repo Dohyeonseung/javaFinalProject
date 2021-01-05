@@ -55,6 +55,7 @@
 		      	<td width="100" bgcolor="#eeeeee" style="text-align: center;" >가&nbsp;&nbsp;&nbsp;&nbsp;격</td>
 			      <td style="padding-left:10px;"> 
 			        <input type="text" name="price" maxlength="100" class="boxTF" style="width: 95%;"  value="${dto.price}">
+			     	<input type="hidden" name="reserves" value="${dto.reserves}">
 			      </td>
 		         <td width="100" bgcolor="#eeeeee" style="text-align: center;">구&nbsp;&nbsp;&nbsp;&nbsp;분</td>
 			      <td style="padding-left:10px;"> 

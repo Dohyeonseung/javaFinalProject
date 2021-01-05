@@ -138,6 +138,7 @@ public class MaterialSellController {
 	   
 	   @PostMapping("created") //포스트 방식 크리에티드
 	   public String createdSubmit(MaterialSell dto, 
+			   @RequestParam String price,
 			   HttpServletRequest req,
 			   HttpSession session) throws Exception {
 	      
@@ -148,7 +149,9 @@ public class MaterialSellController {
 	      
 	      try {
 	         dto.setUserId(info.getUserId());//세션에 등록되있는 아이디를가져와 dto에 UserId에 배치
-	         service.insertMaterialSell(dto, pathname);//db에 등록
+	         dto.setReserves(Long.toString((Long.parseLong(price)/20)));
+	         service.insertMaterialSell(dto, pathname);//db에 등록\
+	         
 	         
 	       } catch (Exception e) {
 	      }
