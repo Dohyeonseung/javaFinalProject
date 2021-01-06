@@ -23,12 +23,13 @@
 	width:100%;
 	display: flex;
 	justify-content: center;
+	margin-bottom: 120px;
 }
 
 .main-frame{
 	width: 70%;
 	height:390px;
-	margin:2.5%;
+	margin:1%;
 	background: none;
 	text-align: center;
 	display: flex;
@@ -42,15 +43,15 @@
 .imgBackbox{
 	width:280px;
 	height:390px;
-
-	margin: 0 10px;
+	margin: 10px;
+	
 }
 
 
 .swiper-container {
 	width:80%;
 	height:420px;
-	margin-top: 70px;
+	margin-top: 20px;
 	
 	}
 .swiper-slide {
@@ -65,8 +66,17 @@
 	/* 이 예제에서 필요해서 설정했습니다. 상황에따라 다를 수 있습니다. */
 }
 
-
-
+#box2-1{
+		width: 160px;
+		height: 70px;
+		background-image: url('${pageContext.request.contextPath}/resources/img/titleBackground.jpg');
+		background-position: center;
+		background-size: cover;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin: 30px auto;
+}
 </style>
 
 <div class="body-container">
@@ -108,7 +118,7 @@
 		</div>
 	 </div>
 	 
-	 <div class="gifBox" style="width:100%; height:340px; display: flex; justify-content: center; margin-top: 100px;">
+	 <div class="gifBox" style="width:100%; height:340px; display: flex; justify-content: center; margin-top: 100px; margin-bottom: 50px;">
 	 	<img width="340" height="340" src="${pageContext.request.contextPath}/resources/img/diy5.gif">
 	 	<img width="540" height="340" src="${pageContext.request.contextPath}/resources/img/diy3.gif">
 	 	<img width="340" height="340" src="${pageContext.request.contextPath}/resources/img/diy8.gif">
@@ -117,8 +127,10 @@
 	 
 	 
 	 
-    <p style="font-size: 18px; text-align: center; margin-top: 60px;">인기상품</p>
-    
+
+    <div id="box2-1"><span style="font-size: 20px; font-weight: bold;">인기상품</span></div>
+      
+      
       <div id="bbs-img">
       
       <!-- foreach -->
@@ -171,7 +183,7 @@
 	 
 	 
 	 		
-		<div style="text-align:center; font-size: 18px; margin:100px;">재료구매</div>
+		 <div id="box2-1"><span style="font-size: 20px; font-weight: bold;">재료구매</span></div>
 		<div class="swiper-container">
 	<div class="swiper-wrapper">
 		<c:forEach var="dto" items="${list1}">
@@ -191,7 +203,7 @@
 		
 		
 		
-<div style="text-align:center; font-size: 18px; margin-top: 100px;">예약구매</div>
+ <div id="box2-1"><span style="font-size: 20px; font-weight: bold;">예약구매</span></div>
 <div class="swiper-container">
 	<div class="swiper-wrapper">
 		<c:forEach var="dto" items="${list2}">
@@ -210,7 +222,7 @@
 </div>
 
 
-	<div style="text-align:center; font-size: 18px; margin:100px;">완제품 구매</div>
+	 <div id="box2-1"><span style="font-size: 20px; font-weight: bold;">완제품구매</span></div>
 		<div class="swiper-container">
 	<div class="swiper-wrapper">
 		<c:forEach var="dto" items="${list3}">
