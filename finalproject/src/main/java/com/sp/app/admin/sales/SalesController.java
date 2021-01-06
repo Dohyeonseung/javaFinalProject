@@ -36,7 +36,7 @@ public class SalesController {
 		return ".admin.adminSales.adminSalesHome";
 	}
 	
-	@RequestMapping(value="salesChart")
+	@RequestMapping(value="chart")
 	public String statistics() {
 		return ".admin.adminSales.sales_statistics";
 	}

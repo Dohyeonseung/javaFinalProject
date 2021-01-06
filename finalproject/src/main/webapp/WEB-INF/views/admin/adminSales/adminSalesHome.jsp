@@ -100,10 +100,10 @@ div, body {
 							<span style="display: inline-block; padding-top: 40px;">처리지연현황<a href="" class="sales_refrash_a"><i class="fas fa-sync-alt refrash_icon_sales"></i></a></span>
 						</h1>
 						<div class="sales_info_values">
-							<span class="sales_info_span line_bottom">발송지연</span><span class="line_bottom" style="font-size: 20px; padding-bottom: 20px;">0건</span><br>
+							<span class="sales_info_span line_bottom">발송지연</span><span class="line_bottom" style="font-size: 20px; padding-bottom: 20px;">4건</span><br>
 							<span class="sales_info_span line_bottom">취소지연</span><span class="line_bottom" style="font-size: 20px; padding-bottom: 20px;">0건</span><br>
 							<span class="sales_info_span line_bottom">반품지연</span><span class="line_bottom" style="font-size: 20px; padding-bottom: 20px;">0건</span><br>
-							<span class="sales_info_span line_bottom">교환지연</span><span class="line_bottom" style="font-size: 20px; padding-bottom: 20px;">0건</span><br>
+							<span class="sales_info_span line_bottom">교환지연</span><span class="line_bottom" style="font-size: 20px; padding-bottom: 20px;">3건</span><br>
 						</div>
 						</td>
 					</tr>
@@ -119,9 +119,9 @@ div, body {
 							<span style="display: inline-block; padding-top: 40px;">취소/반품/교환 현황<a href="" class="sales_refrash_a"><i class="fas fa-sync-alt refrash_icon_sales"></i></a></span>
 						</h1>
 						<div class="sales_info_values">
-							<span class="sales_info_span line_bottom">취소요청</span><span class="line_bottom" style="font-size: 20px; padding-bottom: 20px;">0건</span><br>
+							<span class="sales_info_span line_bottom">취소요청</span><span class="line_bottom" style="font-size: 20px; padding-bottom: 20px;">2건</span><br>
 							<span class="sales_info_span line_bottom">반품요청</span><span class="line_bottom" style="font-size: 20px; padding-bottom: 20px;">0건</span><br>
-							<span class="sales_info_span line_bottom">교환요청</span><span class="line_bottom" style="font-size: 20px; padding-bottom: 20px;">0건</span><br>
+							<span class="sales_info_span line_bottom">교환요청</span><span class="line_bottom" style="font-size: 20px; padding-bottom: 20px;">7건</span><br>
 						</div>
 						</td>
 					</tr>
@@ -137,11 +137,11 @@ div, body {
 							<span style="display: inline-block; padding-top: 40px;">판매현황<a href="" class="sales_refrash_a"><i class="fas fa-sync-alt refrash_icon_sales"></i></a></span>
 						</h1>
 						<div class="sales_info_values">
-							<span class="sales_info_span line_bottom">신규주문</span><span class="line_bottom" style="font-size: 20px; padding-bottom: 20px;">0건</span><br>
-							<span class="sales_info_span line_bottom">배송준비</span><span class="line_bottom" style="font-size: 20px; padding-bottom: 20px;">0건</span><br>
-							<span class="sales_info_span line_bottom">배송중</span><span class="line_bottom" style="font-size: 20px; padding-bottom: 20px;">0건</span><br>
-							<span class="sales_info_span line_bottom">배송완료</span><span class="line_bottom" style="font-size: 20px; padding-bottom: 20px;">0건</span><br>
-							<span class="sales_info_span line_bottom">최근일주일 거래</span><span class="line_bottom" style="font-size: 20px; padding-bottom: 20px;">0건</span><br>
+							<span class="sales_info_span line_bottom">신규주문</span><span class="line_bottom" style="font-size: 20px; padding-bottom: 20px;">42건</span><br>
+							<span class="sales_info_span line_bottom">배송준비</span><span class="line_bottom" style="font-size: 20px; padding-bottom: 20px;">38건</span><br>
+							<span class="sales_info_span line_bottom">배송중</span><span class="line_bottom" style="font-size: 20px; padding-bottom: 20px;">64건</span><br>
+							<span class="sales_info_span line_bottom">배송완료</span><span class="line_bottom" style="font-size: 20px; padding-bottom: 20px;">82건</span><br>
+							<span class="sales_info_span line_bottom">최근일주일 거래</span><span class="line_bottom" style="font-size: 20px; padding-bottom: 20px;">1472건</span><br>
 						</div>
 						</td>
 					</tr>
@@ -157,10 +157,10 @@ div, body {
 							<span style="display: inline-block; padding-top: 40px;">상품현황<a href="" class="sales_refrash_a"><i class="fas fa-sync-alt refrash_icon_sales"></i></a></span>
 						</h1>
 						<div class="sales_info_values">
-							<span class="sales_info_span line_bottom">판매중인 상품</span><span class="line_bottom" style="font-size: 20px; padding-bottom: 20px;">0건</span><br>
-							<span class="sales_info_span line_bottom">판매종료 상품</span><span class="line_bottom" style="font-size: 20px; padding-bottom: 20px;">0건</span><br>
-							<span class="sales_info_span line_bottom">재고 10개 이하</span><span class="line_bottom" style="font-size: 20px; padding-bottom: 20px;">0건</span><br>
-							<span class="sales_info_span line_bottom">재고 50개 이상</span><span class="line_bottom" style="font-size: 20px; padding-bottom: 20px;">0건</span><br>
+							<span class="sales_info_span line_bottom">판매중인 상품</span><span class="line_bottom" style="font-size: 20px; padding-bottom: 20px;">128건</span><br>
+							<span class="sales_info_span line_bottom">판매종료 상품</span><span class="line_bottom" style="font-size: 20px; padding-bottom: 20px;">62건</span><br>
+							<span class="sales_info_span line_bottom">재고 10개 이하</span><span class="line_bottom" style="font-size: 20px; padding-bottom: 20px;">17건</span><br>
+							<span class="sales_info_span line_bottom">재고 50개 이상</span><span class="line_bottom" style="font-size: 20px; padding-bottom: 20px;">68건</span><br>
 						</div>
 						</td>
 					</tr>
