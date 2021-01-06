@@ -378,7 +378,7 @@ $(function(){
 		<div style="width: 100%; height: 15px; background: #f4f4f4;" ></div>
 		
 		<span id="toc-toggle" onclick="openCloseToc()"><i class="far fa-hand-point-up"></i> &nbsp; 상품상세 원본보기</span>
-		<div id="toc-content" style=" margin-top: 20px; display: none;">${dto.content}</div>
+		<div id="toc-content" style=" margin-top: 20px; display:block;">${dto.content}</div>
 	</div>	          
 
 </div>

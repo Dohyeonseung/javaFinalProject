@@ -13,6 +13,12 @@
     
     font-size: 40px;
 }
+
+.title_name{
+ background: linear-gradient(to right, #f00, #00f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
 #bbs-img{
 	width:100%;
 	display: flex;
@@ -30,6 +36,13 @@
 .img-box{
 	width: 100%;
 	height : 100%;
+	
+}
+
+.imgBackbox{
+	width:280px;
+	height:390px;
+
 	margin: 0 10px;
 }
 
@@ -74,48 +87,98 @@
 		</div>
 	 <div class="intoContent">
 		<div class="intoWritten">
-			<span style="font-size: 17px; color: #555; font-weight: bold;"  >DIY란?</span><br><br>
+			<span style="font-size: 22px; color: #555; font-weight: bold;"  >DIY란?</span><br><br>
 			
 			<span style="font-weight: bold; font-size: 16px; font-family:serif;">명사(noun [naun] )</span><br>
-			<span>기성품을 사는 대신 재료만 사다가 물건을 자기 손으로 직접 만들거나, 직업적으로 일하는 사람을 시키지 않고 자신이 직접 수리하거나 작업하는 활동. 또는, 어떤 상품이 그렇게 할 수 있도록 생산된 상태인 것.</span>
+			<span>기성품을 사는 대신 재료만 사다가 물건을 자기 손으로 직접 만들거나, 직업적으로 일하는 사람을 시키지 않고 자신이 직접 수리하거나 작업하는 활동. 
+			<br>또는, 어떤 상품이 그렇게 할 수 있도록 생산된 상태인 것.</span>
 		 	<br>
-		 	<span>
-		 		서로에게 만든 페이지를 
+		 	<br>
+		 	<span style="font-size: 20px;">
+		 		내가 만드는 것이 곧 <span style="font-size: 21px; text-shadow: -1px 0 #FAE500, 0 1px #FAE500, 1px 0 #FAE500, 0 -1px #FAE500; ">Brand!</span> <br>
+		 		손수 만든 제품을 사고 팔수 있다.<br>
+		 	        창의적이면서 매매에 관한 다양한 정보를 필요로하는 사람들을 위한 전문매매사이트 <span class="title_name" style="font-size: 19px; font-weight: bold;">핸드메이드</span> 입니다.
 		 	</span>
 		 
 		 </div>
 		
 		 <div class="linkBtn">
-		 	<button type="button" class="btn btn-default">Default button</button>
+		 	<button type="button" class="btn btn-default">Introduce</button>
 		 </div>
 		</div>
 	 </div>
-	 <p style="font-size: 18px; text-align: center;">새상품</p>
-		<div id="bbs-img">
-		
-		<!-- foreach -->
-		
-		 <div class="main-frame">
-				<div class="img-box" style="background: url('${pageContext.request.contextPath}/resources/img/bag.JPG');background-position: center;background-size:cover;background-position:center;"></div>
-				<div class="img-box" style="background: url('${pageContext.request.contextPath}/resources/img/bag.JPG');background-position: center;background-size:cover;background-position:center;"></div>
-				<div class="img-box" style="background: url('${pageContext.request.contextPath}/resources/img/bag.JPG');background-position: center;background-size:cover;background-position:center;"></div>	
-				<div class="img-box" style="background: url('${pageContext.request.contextPath}/resources/img/bag.JPG');background-position: center;background-size:cover;background-position:center;"></div>	
-				<p class="title-style">상품이름 </p>
-			</div>
-		<!---->
-		</div>
-		
-		<div style="text-align:center; font-size: 18px; margin:100px;">신상품</div>
+	 
+	 <div class="gifBox" style="width:100%; height:340px; display: flex; justify-content: center; margin-top: 100px;">
+	 	<img width="340" height="340" src="${pageContext.request.contextPath}/resources/img/diy5.gif">
+	 	<img width="540" height="340" src="${pageContext.request.contextPath}/resources/img/diy3.gif">
+	 	<img width="340" height="340" src="${pageContext.request.contextPath}/resources/img/diy8.gif">
+	 	<img width="340" height="340" src="${pageContext.request.contextPath}/resources/img/diy7.gif">
+	 </div>
+	 
+	 
+	 
+    <p style="font-size: 18px; text-align: center; margin-top: 60px;">인기상품</p>
+    
+      <div id="bbs-img">
+      
+      <!-- foreach -->
+      
+       <div class="main-frame">
+       <div class="imgBackbox" style="width:100%; height: 390px; ">
+            <div class="img-box" style="background: url('${pageContext.request.contextPath}/resources/img/나무의자4.JPG');background-position: center;background-size:cover;background-position:center;"></div>
+            	<div>
+            		<div style="border-bottom: 1px solid #e5e5e5; margin-top: 10px;"></div>
+            		<p>이름: 원목 원형 벤딩스툴 3colors</p>
+            		<p>가격 : 8000원</p>
+            		<p>구분 : 완제품-가구
+            	</div>
+         </div>
+         <div class="imgBackbox" style="width:100%; height: 390px; ">
+            <div class="img-box" style="background: url('${pageContext.request.contextPath}/resources/img/디퓨저1.JPG');background-position: center;background-size:cover;background-position:center;"></div>
+            	<div>
+            		<div style="border-bottom: 1px solid #e5e5e5; margin-top: 10px;"></div>
+            		<p>이름: 디퓨저 섬유스틱</p>
+            		<p>가격 : 800원</p>
+            		<p>구분 : 재료-기타
+            	</div>
+         </div>   
+
+         <div class="imgBackbox" style="width:100%; height: 390px; ">
+            <div class="img-box" style="background: url('${pageContext.request.contextPath}/resources/img/수세미1.JPG');background-position: center;background-size:cover;background-position:center;"></div>
+            	<div>
+            		<div style="border-bottom: 1px solid #e5e5e5; margin-top: 10px;"></div>
+            		<p>이름: 수제 식빵수세미</p>
+            		<p>가격 : 2000원</p>
+            		<p>구분 : 완제품-생활용품
+            	</div>
+         </div>   
+         <div class="imgBackbox" style="width:100%; height: 390px; ">
+            <div class="img-box" style="background: url('${pageContext.request.contextPath}/resources/img/원목1.JPG');background-position: center;background-size:cover;background-position:center;"></div>
+            	<div>
+            		<div style="border-bottom: 1px solid #e5e5e5; margin-top: 10px;"></div>
+            		<p>원목자재</p>
+            		<p>가격 : 3000원</p>
+            		<p>구분 : 재료-가구
+            	</div>
+         </div>      
+            
+               
+               
+         
+         </div>
+      <!---->
+      </div>
+	 
+	 
+	 		
+		<div style="text-align:center; font-size: 18px; margin:100px;">재료구매</div>
 		<div class="swiper-container">
 	<div class="swiper-wrapper">
-		<div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/bag.JPG"></div>
-		<div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/bag.JPG"></div>
-		<div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/bag.JPG"></div>
-		<div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/bag.JPG"></div>
-		<div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/bag.JPG"></div>
-		<div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/bag.JPG"></div>
-		<div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/bag.JPG"></div>
-		<div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/bag.JPG"></div>
+		<c:forEach var="dto" items="${list1}">
+			<div class="swiper-slide"><img alt="" src="${pageContext.request.contextPath}/uploads/ms/${dto.imageFilename}"></div>
+			<p>${dto.productName}<p>
+			<p>${dto.price}<p>
+		</c:forEach>  
 	</div>
 
 	<!-- 네비게이션 -->
@@ -128,26 +191,33 @@
 		
 		
 		
-		
-		<div style="text-align:center; font-size: 18px; margin-top: 100px;">인기 상품</div>
+<div style="text-align:center; font-size: 18px; margin-top: 100px;">예약구매</div>
+<div class="swiper-container">
+	<div class="swiper-wrapper">
+		<c:forEach var="dto" items="${list2}">
+			<div class="swiper-slide"><img alt="" src="${pageContext.request.contextPath}/uploads/cp/${dto.imageFilename}"></div>
+			<p>${dto.productName}<p>
+			<p>${dto.price}<p>
+		</c:forEach>  
+	</div>
+
+	<!-- 네비게이션 -->
+	<div class="swiper-button-next" style="background-image:url('${pageContext.request.contextPath}/resources/img/slider_right.JPG')"></div><!-- 다음 버튼 (오른쪽에 있는 버튼) -->
+	<div class="swiper-button-prev" style="background-image:url('${pageContext.request.contextPath}/resources/img/slider_left.JPG')"></div><!-- 이전 버튼 -->
+
+	<!-- 페이징 -->
+	<div class="swiper-pagination"></div>
+</div>
+
+
+	<div style="text-align:center; font-size: 18px; margin:100px;">완제품 구매</div>
 		<div class="swiper-container">
 	<div class="swiper-wrapper">
-		<div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/goodoo.JPG"></div>
-		<div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/goodoo.JPG"></div>
-		<div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/goodoo.JPG"></div>
-		<div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/goodoo.JPG"></div>
-		<div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/goodoo.JPG"></div>
-		<div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/goodoo.JPG"></div>
-		<div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/goodoo.JPG"></div>
-		<div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/goodoo.JPG"></div>
-		<div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/goodoo.JPG"></div>
-		<div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/goodoo.JPG"></div>
-		<div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/goodoo.JPG"></div>
-		<div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/goodoo.JPG"></div>
-		<div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/goodoo.JPG"></div>
-		<div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/goodoo.JPG"></div>
-		<div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/goodoo.JPG"></div>
-		<div class="swiper-slide"><img src="${pageContext.request.contextPath}/resources/img/goodoo.JPG"></div>
+		<c:forEach var="dto" items="${list3}">
+			<div class="swiper-slide"><img alt="" src="${pageContext.request.contextPath}/uploads/rv/${dto.imageFilename}"></div>
+			<p>${dto.productName}<p>
+			<p>${dto.price}<p>
+		</c:forEach>  
 	</div>
 
 	<!-- 네비게이션 -->
