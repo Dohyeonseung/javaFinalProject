@@ -100,7 +100,7 @@ function check() {
 
 <div class="body-container" style="width: 830px;">
     <div class="body-title">
-        <h3><i class="fas fa-chalkboard"></i> D.I.Y</h3>
+        <h3><i class="fas fa-dolly-flatbed"></i> D.I.Y</h3>
     </div>
     
     <div>
@@ -117,11 +117,12 @@ function check() {
 		      <td width="100" bgcolor="#eeeeee" style="text-align: center;">카테고리</td>
 		      <td style="padding-left:10px;"> 
 		        <select name="categoryNum" class="selectField">
+		        	<option value="0">::선택::</option>
 		        	<c:forEach var="dto" items="${listCategory}">
-		        		<option value="${dto.categoryNum}" ${dto.categoryNum==dto.categoryNum?"selected='selected'":""}>${dto.category}</option>
+		        		<option value="${dto.categoryNum}">${dto.category}</option>
 		        	</c:forEach>
 		        </select>
-		        <c:if test="${dto.userId=='admin'}">
+		        <c:if test="${sessionScope.member.userId=='admin'}">
 		        <button type="button" class="btn" onclick="javascript:location.href='${pageContext.request.contextPath}/tip/listAllCategory';"> 변경 </button>
 		        </c:if>
 		      </td>

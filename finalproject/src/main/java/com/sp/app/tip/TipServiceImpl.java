@@ -222,26 +222,5 @@ public class TipServiceImpl implements TipService {
 		return result;
 	}
 
-	@Override
-	public void insertReplyLike(Map<String, Object> map) throws Exception {
-		try {
-			dao.insertData("tip.insertReplyLike", map);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw e;
-		}
-		
-	}
 
-	@Override
-	public Map<String, Object> replyLikeCount(Map<String, Object> map) {
-		Map<String, Object> countMap=null;
-		try {
-			countMap=dao.selectOne("tip.replyLikeCount", map);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return countMap;
-	}
-	
 }

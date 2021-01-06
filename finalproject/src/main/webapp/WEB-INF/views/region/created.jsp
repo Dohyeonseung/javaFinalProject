@@ -100,7 +100,7 @@ function check() {
 
 <div class="body-container" style="width: 830px;">
     <div class="body-title">
-        <h3><i class="fas fa-chalkboard"></i> D.I.Y</h3>
+        <h3><i class="far fa-building"></i>지역 게시물 올리기</h3>
     </div>
     
     <div>
@@ -114,7 +114,7 @@ function check() {
 			  </tr>
 			  
 			  <tr align="left" height="40" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
-		      <td width="100" bgcolor="#eeeeee" style="text-align: center;">카테고리</td>
+		      <td width="100" bgcolor="#eeeeee" style="text-align: center;">지역</td>
 		      <td style="padding-left:10px;"> 
 		        <select name="region" class="selectField">
 		        		<option value="1">서울</option>
@@ -124,9 +124,6 @@ function check() {
 		        		<option value="5">경상</option>
 		        		<option value="6">전라</option>
 		        </select>
-		        <c:if test="${dto.userId=='admin'}">
-		        <button type="button" class="btn" onclick="javascript:location.href='${pageContext.request.contextPath}/tip/listAllCategory';"> 변경 </button>
-		        </c:if>
 		      </td>
 		  </tr>
 			
@@ -158,7 +155,7 @@ function check() {
 			      <td align="center" >
 			        <button type="submit" class="btn">${mode=='update'?'수정완료':'등록하기'}</button>
 			        <button type="reset" class="btn">다시입력</button>
-			        <button type="button" class="btn" onclick="javascript:location.href='${pageContext.request.contextPath}/tip/main';">${mode=='update'?'수정취소':'등록취소'}</button>
+			        <button type="button" class="btn" onclick="javascript:location.href='${pageContext.request.contextPath}/region/main';">${mode=='update'?'수정취소':'등록취소'}</button>
 			         <c:if test="${mode=='update'}">
 			         	 <input type="hidden" name="listNum" value="${dto.listNum}">
 			         	 <input type="hidden" name="saveFilename" value="${dto.saveFilename}">

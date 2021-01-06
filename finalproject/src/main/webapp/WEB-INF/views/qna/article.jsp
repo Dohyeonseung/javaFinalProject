@@ -37,8 +37,9 @@ function qnaReply() {
 </head>
 
 <div class="body-container" style="width: 700px;">
+	<div style="height: 50px;"></div>
     <div class="body-title">
-        <h3><i class="fas fa-chalkboard-teacher"></i> 답변형 게시판 </h3>
+        <h3><i class="far fa-hand-peace"></i> 답변형 게시판 </h3>
     </div>
     
     <div>

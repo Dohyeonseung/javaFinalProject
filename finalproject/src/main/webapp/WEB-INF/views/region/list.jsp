@@ -29,6 +29,22 @@ justify-content: center;
      text-overflow:ellipsis;
      cursor: pointer;
 }
+
+.category{
+	padding:5px;
+	margin-right: 1px;
+	margin-left: 1px;
+}
+
+.category h3{
+	border: 3px solid #eee;
+}
+
+.category ul {
+	margin: 0;
+	padding: 0;
+	list-style: none; 
+}
 </style>
 
 <script type="text/javascript">
@@ -43,9 +59,8 @@ function article(listNum) {
 }
 </script>
 <div class="bigbox">
-<div style="width: 200px; margin-left: 50px;">
-		<p>카테고리</p>
-
+<div class="category" style="width: 200px; margin-left: 50px; margin-top: 150px; font-size: 30px;">
+		<h3 align="center">지역</h3>
 		<ul style="list-style: none;">
 		<li><a href="${pageContext.request.contextPath}/region/main">모두보기</a></li>
 		<li><a href="${pageContext.request.contextPath}/region/main?region=1">서울</a></li>
@@ -57,6 +72,7 @@ function article(listNum) {
 		</ul>         
 		 </div>
 <div class="body-container" style="width: 800px; margin: 0px;">
+	<div style="height: 50px;"></div>
 	<div>
 		<ul style="list-style: none;">
 		 <li style="float: left; margin-right: 8px;">
@@ -73,14 +89,14 @@ function article(listNum) {
 		</ul>
 	</div>
     <div class="body-title">
-        <h3><i class="far fa-image"></i>지역 게시판</h3>
+        <h3><i class="far fa-building"></i>지역 게시판</h3>
     </div>
     
     
     <div>
 		<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
 		   <tr height="35">
-		      <td align="left" width="50%">
+		      <td align="left" width="50%" style="font-size: 15px; padding-left: 10px;">
 		          ${dataCount}개(${page}/${total_page} 페이지)
 		      </td>
 		      <td align="right">
@@ -101,7 +117,7 @@ function article(listNum) {
 			     <td width="210" align="center" style="padding-bottom: 30px">
 			        <div class="imgLayout">
 			        	<c:if test="${dto.saveFilename==null}">	
-			             <img src="${pageContext.request.contextPath}/resources/img/no-image.png" width="180"
+			             <img src="${pageContext.request.contextPath}/resources/images/noimageicon.PNG" width="180"
 			                   height="180" border="0" onclick="javascript:article('${dto.listNum}');">
 			             <span class="subject" onclick="javascript:article('${dto.listNum}');" >
 			             
@@ -109,7 +125,7 @@ function article(listNum) {
 			             </span>
 			             </c:if>
 			             <c:if test="${dto.saveFilename!=null}">	
-			             <img src="${pageContext.request.contextPath}/uploads/tip/${dto.saveFilename}" width="180"
+			             <img src="${pageContext.request.contextPath}/uploads/region/${dto.saveFilename}" width="180"
 			                   height="180" border="0" onclick="javascript:article('${dto.listNum}');">
 			             <span class="subject" onclick="javascript:article('${dto.listNum}');" >
 			             

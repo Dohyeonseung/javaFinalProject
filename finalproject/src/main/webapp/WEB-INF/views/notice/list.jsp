@@ -11,6 +11,7 @@
 </script>
 
 <div class="body-container" style="width: 800px;">
+	<div style="height: 50px;"></div>
 	<div>
 		<ul style="list-style: none;">
 		 <li style="float: left; margin-right: 8px;">
@@ -27,7 +28,7 @@
 		</ul>
 	</div>
     <div class="body-title" align="center">
-        <h3><i class="far fa-question-circle"></i> 공지사항 </h3>
+        <h3><i class="fas fa-bullhorn"></i> 공지사항 </h3>
     </div>
     
     <div>
@@ -43,7 +44,7 @@
 		</table>
 		
 		<table style="width: 100%; margin: 0px auto; border-spacing: 0px; border-collapse: collapse;">
-		  <tr align="center" height="35" style="border-top: 2px solid black; border-bottom: 1px solid #cccccc;"> 
+		  <tr align="center" height="35" style="border-top: 2px solid black; border-bottom: 1px solid #cccccc; bgcolor="#ffffff"> 
 		      <th style="color: #787878;">내용</th>
 		      <th width="100" style="color: #787878;">작성자</th>
 		      <th width="100" style="color: #787878;">작성일</th>

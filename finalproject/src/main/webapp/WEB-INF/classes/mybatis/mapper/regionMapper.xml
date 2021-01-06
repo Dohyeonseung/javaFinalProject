@@ -14,7 +14,7 @@
 			<when test="condition == 'all' ">
 			   ( INSTR(subject, #{keyword}) &gt; 0
 		          OR DBMS_LOB.INSTR(content, #{keyword}) &gt; 0 
-		          OR INSTR(LOWER(category), LOWER(#{keyword})) &gt; 0 )
+		          )
 			</when>
 			<when test="condition == 'created' ">
 			   ( TO_CHAR(created, 'YYYYMMDD') = #{keyword}

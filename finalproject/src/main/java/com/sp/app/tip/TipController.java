@@ -1,7 +1,6 @@
 package com.sp.app.tip;
 
 import java.io.File;
-import java.math.BigDecimal;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -162,13 +161,8 @@ public class TipController {
 			map.put("condition", condition);
 			map.put("keyword", keyword);
 			map.put("num", listNum);
-
-			//Tip preReadDto = service.preReadTip(map);
-			//Tip nextReadDto = service.nextReadTip(map);
 	        
 			model.addAttribute("dto", dto);
-			//model.addAttribute("preReadDto", preReadDto);
-			//model.addAttribute("nextReadDto", nextReadDto);
 			model.addAttribute("page", page);
 			model.addAttribute("query", query);
 
@@ -348,7 +342,6 @@ public class TipController {
 			return model;
 		}
 		
-		// 댓글 및 댓글의 답글 삭제 : AJAX-JSON
 		@RequestMapping(value="deleteReply", method=RequestMethod.POST)
 		@ResponseBody
 		public Map<String, Object> deleteReply(
@@ -367,7 +360,6 @@ public class TipController {
 			return map;
 		}
 		
-		 // 댓글의 답글 리스트 : AJAX-TEXT
 		@RequestMapping(value="listReplyAnswer")
 		public String listReplyAnswer(
 				@RequestParam int answer,
@@ -396,54 +388,6 @@ public class TipController {
 			return model;
 		}
 		
-		@RequestMapping(value="insertReplyLike", method=RequestMethod.POST)
-		@ResponseBody
-		public Map<String, Object> insertReplyLike(
-				@RequestParam Map<String, Object> paramMap,
-				HttpSession session
-				) {
-			String state="true";
-			
-			SessionInfo info=(SessionInfo)session.getAttribute("member");
-			Map<String, Object> model=new HashMap<>();
-			
-			try {
-				paramMap.put("userId", info.getUserId());
-				service.insertReplyLike(paramMap);
-			} catch (Exception e) {
-				state="false";
-			}
-			
-			Map<String, Object> countMap=service.replyLikeCount(paramMap);
-					
-			int likeCount=((BigDecimal)countMap.get("LIKECOUNT")).intValue();
-			int disLikeCount=((BigDecimal)countMap.get("DISLIKECOUNT")).intValue();
-			
-			model.put("likeCount", likeCount);
-			model.put("disLikeCount", disLikeCount);
-			model.put("state", state);
-			return model;
-		}
-
-		@RequestMapping(value="countReplyLike", method=RequestMethod.POST)
-		@ResponseBody
-		public Map<String, Object> countReplyLike(
-				@RequestParam Map<String, Object> paramMap,
-				HttpSession session
-				) {
-			
-			Map<String, Object> countMap=service.replyLikeCount(paramMap);
-			int likeCount=((BigDecimal)countMap.get("LIKECOUNT")).intValue();
-			int disLikeCount=((BigDecimal)countMap.get("DISLIKECOUNT")).intValue();
-			
-			Map<String, Object> model=new HashMap<>();
-			model.put("likeCount", likeCount);
-			model.put("disLikeCount", disLikeCount);
-				
-			return model;
-		}
-		
-		// 게시글 좋아요 추가 :  : AJAX-JSON
 		@RequestMapping(value="insertTipLike", method=RequestMethod.POST)
 		@ResponseBody
 		public Map<String, Object> insertTipLike(

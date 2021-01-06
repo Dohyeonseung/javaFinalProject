@@ -81,7 +81,6 @@ function ajaxHTML(url, method, query, selector) {
 	});
 }
 
-// 게시글 조아요 여부
 $(function(){
 	$(".btnSendRegionLike").click(function(){
 		if(! confirm("게시물에 공감 하십니까 ? ")) {
@@ -118,7 +117,6 @@ function listPage(page) {
 	ajaxHTML(url, "get", query, selector);
 }
 
-// 리플 등록
 $(function(){
 	$(".btnSendReply").click(function(){
 		var listNum="${dto.listNum}";
@@ -149,7 +147,6 @@ $(function(){
 });
 
 
-// 댓글 삭제
 $(function(){
 	$("body").on("click", ".deleteReply", function(){
 		if(! confirm("게시물을 삭제하시겠습니까 ? ")) {
@@ -163,7 +160,6 @@ $(function(){
 		var query="replyNum="+replyNum+"&mode=reply";
 		
 		var fn = function(data){
-			// var state=data.state;
 			listPage(page);
 		};
 		
@@ -171,7 +167,6 @@ $(function(){
 	});
 });
 
-// 댓글별 답글 리스트
 function listReplyAnswer(answer) {
 	var url="${pageContext.request.contextPath}/region/listReplyAnswer";
 	var query="answer="+answer;
@@ -180,7 +175,6 @@ function listReplyAnswer(answer) {
 	ajaxHTML(url, "get", query, selector);
 }
 
-// 댓글별 답글 개수
 function countReplyAnswer(answer) {
 	var url="${pageContext.request.contextPath}/region/countReplyAnswer";
 	var query="answer="+answer;
@@ -194,13 +188,9 @@ function countReplyAnswer(answer) {
 	ajaxJSON(url, "post", query, fn);
 }
 
-// 답글 버튼(댓글별 답글 등록폼 및 답글리스트)
 $(function(){
 	$("body").on("click", ".btnReplyAnswerLayout", function(){
 		var $trReplyAnswer = $(this).closest("tr").next();
-		// var $trReplyAnswer = $(this).parent().parent().next();
-		// var $answerList = $trReplyAnswer.children().children().eq(0);
-		
 		var isVisible = $trReplyAnswer.is(':visible');
 		var replyNum = $(this).attr("data-replyNum");
 			
@@ -209,17 +199,14 @@ $(function(){
 		} else {
 			$trReplyAnswer.show();
             
-			// 답글 리스트
 			listReplyAnswer(replyNum);
 			
-			// 답글 개수
 			countReplyAnswer(replyNum);
 		}
 	});
 	
 });
 
-// 댓글별 답글 등록
 $(function(){
 	$("body").on("click", ".btnSendReplyAnswer", function(){
 		var listNum="${dto.listNum}";
@@ -251,7 +238,6 @@ $(function(){
 	});
 });
 
-// 댓글별 답글 삭제
 $(function(){
 	$("body").on("click", ".deleteReplyAnswer", function(){
 		if(! confirm("게시물을 삭제하시겠습니까 ? ")) {
@@ -276,7 +262,7 @@ $(function(){
 </script>
 <div class="body-container" style="width: 700px;">
     <div class="body-title">
-        <h3><i class="far fa-image"></i> D.I.Y </h3>
+        <h3><i class="far fa-building"></i> 지역 게시물 </h3>
     </div>
     
     <div>
@@ -334,7 +320,7 @@ $(function(){
 		<table style='width: 100%; margin: 15px auto 0px; border-spacing: 0px;'>
 			<tr height='30'> 
 				 <td align='left' >
-				 	<span style='font-weight: bold;' >댓글쓰기</span><span> - 타인을 비방하거나 개인정보를 유출하는 글의 게시를 삼가 주세요.</span>
+				 	<span style='font-weight: bold;' >댓글쓰기</span>
 				 </td>
 			</tr>
 			<tr>

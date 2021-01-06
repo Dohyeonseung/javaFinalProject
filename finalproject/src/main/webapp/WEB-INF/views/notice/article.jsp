@@ -32,8 +32,9 @@ function deleteBoard() {
 </script>
 
 <div class="body-container" style="width: 800px;">
+	<div style="height: 50px;"></div>
     <div class="body-title" align="center">
-        <h3><i class="far fa-question-circle"></i> 공지사항 </h3>
+        <h3><i class="fas fa-bullhorn"></i> 공지사항 </h3>
     </div>
     
     <div>

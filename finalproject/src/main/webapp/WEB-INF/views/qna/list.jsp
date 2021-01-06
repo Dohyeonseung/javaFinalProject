@@ -17,6 +17,7 @@
 </script>
 
 <div class="body-container" style="width: 700px;">
+	<div style="height: 50px;"></div>
 	<div>
 		<ul style="list-style: none;">
 		 <li style="float: left; margin-right: 8px;">
@@ -33,7 +34,7 @@
 		</ul>
 	</div>
     <div class="body-title">
-        <h3><i class="fas fa-chalkboard-teacher"></i> 뭐든 물어봐 </h3>
+        <h3><i class="far fa-hand-peace"></i> 뭐든 물어봐 </h3>
     </div>
     
 	<div>

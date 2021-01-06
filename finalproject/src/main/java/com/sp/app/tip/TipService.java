@@ -26,8 +26,7 @@ public interface TipService {
 	public List<Reply> listReplyAnswer(int answer);
 	public int replyAnswerCount(int answer);
 	
-	public void insertReplyLike(Map<String, Object> map) throws Exception;
-	public Map<String, Object> replyLikeCount(Map<String, Object> map);
+
 }
 
 
