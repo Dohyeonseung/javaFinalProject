@@ -68,6 +68,12 @@ public class Sales {
 	private String reqMessage; // 요청사항
 	private int amountPrice; // 결제금액
 	
+	// 주문처리상태
+	private int orderCode; // 처리상태코드
+	private int p_num; // 처리번호
+	private String orderSendDate; // 처리날짜
+	private String o_memo; // 처리 내용
+	
 	// 계산
 	private int cost;
 	private int buyCount;
@@ -348,6 +354,30 @@ public class Sales {
 	}
 	public void setAmountPrice(int amountPrice) {
 		this.amountPrice = amountPrice;
+	}
+	public int getOrderCode() {
+		return orderCode;
+	}
+	public void setOrderCode(int orderCode) {
+		this.orderCode = orderCode;
+	}
+	public int getP_num() {
+		return p_num;
+	}
+	public void setP_num(int p_num) {
+		this.p_num = p_num;
+	}
+	public String getOrderSendDate() {
+		return orderSendDate;
+	}
+	public void setOrderSendDate(String orderSendDate) {
+		this.orderSendDate = orderSendDate;
+	}
+	public String getO_memo() {
+		return o_memo;
+	}
+	public void setO_memo(String o_memo) {
+		this.o_memo = o_memo;
 	}
 	public int getCost() {
 		return cost;

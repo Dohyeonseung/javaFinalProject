@@ -23,7 +23,7 @@ div, body {
 #home_table {
 	width: 100%;
 	height: 85%;
-	margin-top: 150px;
+	margin-top: 70px;
 }
 
 .sales_home_title {
@@ -88,7 +88,7 @@ div, body {
 	<div id="contentContainer">
 		<div id="home_table">
 			<div class="sales_home_title">
-					<h2><i class="fas fa-shopping-cart"></i> 판매상황</h2>
+					<h1><i class="fas fa-shopping-cart"></i> 판매상황</h1>
 			</div>
 			
 			<table class="sales_info_table" style="border-right: 1px solid #e5e5e5;">
@@ -100,7 +100,6 @@ div, body {
 							<span style="display: inline-block; padding-top: 40px;">처리지연현황<a href="" class="sales_refrash_a"><i class="fas fa-sync-alt refrash_icon_sales"></i></a></span>
 						</h1>
 						<div class="sales_info_values">
-							<span class="sales_info_span line_bottom">발주지연</span><span class="line_bottom" style="font-size: 20px; padding-bottom: 20px;">0건</span><br>
 							<span class="sales_info_span line_bottom">발송지연</span><span class="line_bottom" style="font-size: 20px; padding-bottom: 20px;">0건</span><br>
 							<span class="sales_info_span line_bottom">취소지연</span><span class="line_bottom" style="font-size: 20px; padding-bottom: 20px;">0건</span><br>
 							<span class="sales_info_span line_bottom">반품지연</span><span class="line_bottom" style="font-size: 20px; padding-bottom: 20px;">0건</span><br>

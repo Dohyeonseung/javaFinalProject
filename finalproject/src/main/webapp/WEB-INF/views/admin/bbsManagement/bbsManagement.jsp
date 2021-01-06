@@ -156,6 +156,7 @@ table {
 												<li class="bbs_li"><a href="#" class="bbs_a">└ 재료구매</a></li>
 												<li class="bbs_li"><a href="#" class="bbs_a">└ 예약구매</a></li>
 												<li class="bbs_li"><a href="#" class="bbs_a">└ 완제품구매</a></li>
+												<li class="bbs_li"><a href="#" class="bbs_a">└ D-Market</a></li>
 											</ol>
 										</li>										
 									</ol>

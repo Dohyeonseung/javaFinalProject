@@ -23,8 +23,9 @@ body {
 
 #categori_box {
 	width: 1280px;
-	height: 45px;
+	height: 35px;
 	margin: auto;
+	padding-top: 10px;
 	font-size: 16px;
 	font-family: "맑은 고딕", sans-serif;
 }
@@ -130,9 +131,9 @@ a:active {
 		<div id="content_corp">
 			<h2 id="title_corp">Do It YourSelf</h2>
 			<p id="text_corp">
-				나의 생각이 그대로 반영된 물건이 없나요? <br> 나의 관점, 생각하는 기능, 지향하는 목표까지 DIY는 <br>
+				나의 생각이 그대로 반영된 물건이 없나요? <br> 나의 관점, 생각하는 기능, 지향하는 목표까지 핸드메이드는 <br>
 				우리가 원하는 방향을 나아가는데 있어서 가장 좋은 습관이자 문화 입니다. <br> 내가 생각하는 나만의 생활공간.
-				<strong>DIY입니다.</strong>
+				<strong>핸드메이드입니다.</strong>
 			</p>
 			
 			<div class="card_box">
@@ -150,11 +151,11 @@ a:active {
 					우리는 개선보다 혁신의 길을 가는 사람들입니다.<br>
 					문제 자체를 다시 정의하고<br>
 					새로운 해답을 찾는것에 집중합니다.<br>
-					<strong>도전을 통한 DIY.</strong>
+					<strong>도전을 통한 핸드메이드.</strong>
 					</p>
 				</div>
 				<div class="card_content_right">
-					<img class="img_corp" src="루시드냥.jpg">
+					<video class="img_corp" muted="muted" loop="loop" autoplay="autoplay" src="https://t1.kakaocdn.net/kakaocorp/main/kakao10/img/culture-card-1a.mp4" poster="https://t1.kakaocdn.net/kakaocorp/main/kakao10/img/culture-card-1a.png"></video>
 				</div>
 			</div>
 			
@@ -177,7 +178,7 @@ a:active {
 					</p>
 				</div>
 				<div class="card_content_right">
-					<img class="img_corp" src="루시드냥.jpg">
+					<video class="img_corp" muted="muted" loop="loop" autoplay="autoplay" src="https://t1.kakaocdn.net/kakaocorp/main/kakao10/img/culture-card-2a.mp4" poster="https://t1.kakaocdn.net/kakaocorp/main/kakao10/img/culture-card-2a.png"></video>
 				</div>
 			</div>
 			
@@ -191,14 +192,14 @@ a:active {
 				
 					<p class="card_content">
 					"왜 이걸 만들까?"<br>
-					DIY Crew라면 가장 먼저 해야 하는 질문입니다.<br>
+					핸드메이드 Crew라면 가장 먼저 해야 하는 질문입니다.<br>
 					우리는 DIY의 원동력을 스스로 만들어냅니다.<br>
 					내가 원해서 만드는 나의 DIY인거죠<br>
 					<strong>언제나 내가 먼저 생각하고, 질문하고, 움직입니다.</strong>
 					</p>
 				</div>
 				<div class="card_content_right">
-					<img class="img_corp" src="루시드냥.jpg">
+					<video class="img_corp" loop="loop" muted="muted" autoplay="autoplay" src="https://t1.kakaocdn.net/kakaocorp/main/kakao10/img/culture-card-4a.mp4" poster="https://t1.kakaocdn.net/kakaocorp/main/kakao10/img/culture-card-4a.png"></video>
 				</div>
 			</div>
 			
@@ -223,7 +224,7 @@ a:active {
 					</p>
 				</div>
 				<div class="card_content_right">
-					<img class="img_corp" src="루시드냥.jpg">
+					<video class="img_corp" muted="muted" loop="loop" autoplay="autoplay" src="https://t1.kakaocdn.net/kakaocorp/main/kakao10/img/culture-card-3a.mp4" poster="https://t1.kakaocdn.net/kakaocorp/main/kakao10/img/culture-card-3a.png"></video>
 				</div>
 			</div>
 			
@@ -245,7 +246,7 @@ a:active {
 					</p>
 				</div>
 				<div class="card_content_right">
-					<img class="img_corp" src="루시드냥.jpg">
+					<video muted="muted" loop="loop" autoplay="autoplay" src="https://t1.kakaocdn.net/kakaocorp/main/kakao10/img/culture-card-5a.mp4" poster="https://t1.kakaocdn.net/kakaocorp/main/kakao10/img/culture-card-5a.png"></video>
 				</div>
 				</div>
 			</div>

@@ -36,10 +36,23 @@ public class SalesController {
 		return ".admin.adminSales.adminSalesHome";
 	}
 	
-	@RequestMapping(value="chart", method=RequestMethod.GET)
+	@RequestMapping(value="salesChart")
 	public String statistics() {
 		return ".admin.adminSales.sales_statistics";
 	}
+	
+	/*
+	// 시간대별 판매 : AJAX-JSON 응답
+	@RequestMapping("salesChart")
+	@ResponseBody
+	public Map<String, Object> listAgeSection() throws Exception {
+		Map<String, Object> model = new HashMap<String, Object>();
+		
+		// 시간대별 판매
+		
+		return model;
+	}	
+	*/
 	
 	@RequestMapping(value="productlist")
 	public String productList(@RequestParam(value="page", defaultValue="1") int current_page,
@@ -316,6 +329,65 @@ public class SalesController {
 		}
 		
 		return "redirect:/admin/adminSales/productinfo";
+	}
+	
+	@RequestMapping(value="infoOrder", method=RequestMethod.GET)
+	public String articleOrderInfo(@RequestParam int orderNum,
+			@RequestParam String page, Model model) throws Exception {
+		
+		String query="page="+page;
+		// 해당 레코드 가져 오기
+		Sales dto = service.readOrderInfo(orderNum);
+		if(dto==null)
+			return "redirect:/admin/adminSales/orderList?"+query;
+		
+		List<Sales> olistState = service.orderProcessingList(orderNum);
+		
+		// 스마트 에디터에서는 주석 처리
+        // dto.setContent(myUtil.htmlSymbols(dto.getContent()));
+        
+        
+		model.addAttribute("dto", dto);
+		model.addAttribute("page", page);
+		model.addAttribute("query", query);
+		model.addAttribute("olistState", olistState);
+
+		return ".admin.adminSales.orderInfo";
+	}
+	
+	@RequestMapping(value = "controll")
+	public String orderControll(@RequestParam int orderNum, Model model) throws Exception {
+		
+		Sales dto = service.readOrderInfo(orderNum);
+		
+		model.addAttribute("dto", dto);
+		
+		return "admin/adminSales/orderControll";
+	}
+	
+	@RequestMapping(value = "updateOrderProcessing", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> updateOrderProcessing(Sales dto) throws Exception {
+		
+		String state = "true";
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("orderNum", dto.getOrderNum());
+			map.put("productCode", dto.getProductCode());
+			map.put("orderState", dto.getOrderCode());
+
+			// 상태변경
+			service.updateOrderProcessing(map);
+			
+			// 변경내용저장
+			service.insertOrderProcessing(dto);
+		} catch (Exception e) {
+			state = "false";
+		}
+		
+		Map<String, Object> model = new HashMap<String, Object>();
+		model.put("state", state);
+		return model;
 	}
 	
 	
