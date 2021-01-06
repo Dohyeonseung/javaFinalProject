@@ -279,6 +279,48 @@ $(function(){
 	});
 });
 
+
+$(function(){
+	var tid=null;
+	var strDate = "${dto.countDate}";
+	if(strDate=="") {
+		return false;		
+	}
+	
+	diffDayTime(strDate);
+	tid = setInterval(function(){
+		diffDayTime(strDate);
+	}, 1000*60)
+
+	function diffDayTime(strDate) {
+	    var sy = parseInt(strDate.substr(0, 4));
+	    var sm = parseInt(strDate.substr(5, 2));
+	    var sd = parseInt(strDate.substr(8, 2));
+
+	    var date1=new Date();
+	    var date2=new Date(sy, sm-1, sd, 24, 0, 0, 0);
+	    
+	    var sn=date1.getTime();
+	    var en=date2.getTime();
+	    var count=Math.floor((en-sn)/1000);
+	    if(count<=0 && tid!=null) {
+	    	clearInterval(tid);
+	    	tid=null;
+	    }
+	    
+	    var d=Math.floor(count/(24*3600));
+	    var h=Math.floor((count/3600)%24);
+	    var m=Math.floor((count/60)%60);
+	    // var s=count%60;
+	  
+	    var str = d + "일 " + h +"시간 " + m + "분 남음"
+	    $("#countDateLayout").html(str);
+	}
+});
+
+
+
+
 </script>
 
 <div id="msellBody">
@@ -296,12 +338,17 @@ $(function(){
         				<li><a href="#"><img src="${vo}"></a></li>
         		    </c:forEach>
         		    <c:if test="${listImage.size()==0}">
-        				<li><a href="#"><img src="${pageContext.request.contextPath}/resources/img/no-image.png"></a></li>
+        				<li><a href="#"><img src="${pageContext.request.contextPath}/resources/img/no-image.png">
+        					<p>${dto.countDate}</p>
+        				</a></li>
         		    </c:if>
         		</ul>
         	</div>
 		</div>
 		
+		<div>
+			<p>판매시간: <span id="countDateLayout"></span><p>
+		</div>
 		<div class="reviewLink"><a href="#">★★★★ 리뷰96건</a></div>
 	
 		<div class="iteminfo">

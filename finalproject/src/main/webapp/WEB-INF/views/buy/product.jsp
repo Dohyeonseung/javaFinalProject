@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/tabs.css" type="text/css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/bxslider/js/jquery.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/bxslider/js/jquery.bxslider.min.js"></script>
 
@@ -44,6 +46,167 @@ function orderSubmit(productNum) {
 
 }
 
+function openCloseToc() {
+	  if(document.getElementById('toc-content').style.display === 'block') {
+	    document.getElementById('toc-content').style.display = 'none';
+	  } else {
+	    document.getElementById('toc-content').style.display = 'block';
+	  }
+	}
+
+
+
+	$(function(){
+		
+		var menu = "${menuItem}"; 
+		$("#tab-"+menu).addClass("active");
+
+		listPage(1);
+		
+		$("ul.tabs li").click(function() {
+			tab = $(this).attr("data-tab");
+			
+			$("ul.tabs li").each(function(){ 
+				$(this).removeClass("active"); 
+			});
+			
+			$("#tab-"+tab).addClass("active"); 
+			
+			listPage(1);
+		});
+	});
+
+	function login() {
+		location.href="${pageContext.request.contextPath}/member/login";
+	}
+
+	function ajaxHTML(url, method, query, selector) {
+		$.ajax({
+			type:method
+			,url:url
+			,data:query
+			,success:function(data) {
+				$(selector).html(data);
+			}
+			,beforeSend:function(jqXHR) {
+		        jqXHR.setRequestHeader("AJAX", true);
+		    }
+		    ,error:function(jqXHR) {
+		    	if(jqXHR.status===403) {
+		    		login();
+		    		return false;
+		    	}
+		    	console.log(jqXHR.responseText);
+		    }
+		});
+	}
+
+	function ajaxJSON(url, method, query, fn) { 
+		$.ajax({
+			type:method
+			,url:url
+			,data:query
+			,dataType:"json"
+			,success:function(data) {
+				fn(data);
+			}
+			,beforeSend:function(jqXHR) {
+		        jqXHR.setRequestHeader("AJAX", true);
+		    }
+		    ,error:function(jqXHR) {
+		    	if(jqXHR.status===403) {
+		    		login();
+		    		return false;
+		    	}
+		    	
+		    	console.log(jqXHR.responseText);
+		    }
+		});
+	}
+
+	function listPage(page) {
+		var $tab = $(".tabs .active");
+		var tab = $tab.attr("data-tab");
+		
+		var url="${pageContext.request.contextPath}/buytab/information/"+tab;
+		var query="pageNo="+page+"&productNum=${dto.productNum}"; 
+		var selector = "#tab-content";
+		
+		ajaxHTML(url, "get", query, selector); 
+	}
+
+	$(function(){
+		$(".btnSendReply").click(function(){
+			var num="${dto.productNum}";
+			var $tb = $(this).closest("table");
+			var content=$tb.find("textarea").val().trim();
+			if(! content) {
+				$tb.find("textarea").focus();
+				return false;
+			}
+			content = encodeURIComponent(content);
+			
+			var url="${pageContext.request.contextPath}/buytab/information/insertReview";
+			var query="num="+num+"&content="+content+"&answer=0";
+			
+			var fn = function(data){
+				$tb.find("textarea").val("");
+				
+				var state=data.state;
+				if(state==="true") {
+					listPage(1);
+				} else if(state==="false") {
+					alert("댓글을 추가 하지 못했습니다.");
+				}
+			};
+			
+			ajaxJSON(url, "post", query, fn);
+		});
+	});
+	
+	$(function(){
+		 $(".star a").click(function(){
+			 var b= $(this).hasClass("on"); //해당되는 클래스가 존재한지 존재하지 않는지 on이존재하면 true/x-false
+			 $(this).parent().children("a").removeClass("on");
+			 $(this).addClass("on").prevAll("a").addClass("on"); //prevAll이전에 있는 모든것
+			 if(b){
+				 $(this).removeClass("on");//on이 존재하면 on을 없애라
+			 }
+			 var s=$(".star .on").length;//별의 갯수
+			 $("input[name=score]").val(s);
+		 });
+	 });
+	
+	//댓글별 답글 등록
+	$(function(){
+		$("body").on("click", ".btnSendReplyAnswer", function(){
+			var num=$(this).attr("data-num");
+			var $td=$(this).closest("td");
+			var $tr=$(this).closest("tr");
+			
+			var answer=$td.find("textarea").val().trim();
+			if(! answer) {
+				$td.find("textarea").focus();
+				return false;
+			}
+			answer = encodeURIComponent(answer);
+			
+			var url="${pageContext.request.contextPath}/selltab/information/questionsQna";
+			var query="num="+num+"&answer="+answer;
+			
+			var fn = function(data){
+				$td.find("textarea").val("");
+				
+				var state=data.state;
+				if(state==="true") {
+					listPage(1);
+				}
+			};
+			
+			ajaxJSON(url, "post", query, fn);
+			
+		});
+	});
 </script>
 
 
@@ -51,196 +214,182 @@ function orderSubmit(productNum) {
 
 <style type="text/css">
 
-#wrap {
-	width: 100%;
+#msellBody{
+	width:100%;
+	height:100%;
 	display: flex;
+	justify-content: center;
+}
+
+#materialSell_AT {
+	width: 970px;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 ul li {
 	list-style: none;
 }
 
-img {
-	width: 100%;
-	height: 100%;
+.slider li img {
+	height: 600px;
 }
 
-.simple_infowrap {
-	width: 1200px;
-	margin: auto;
+img {
+ max-width: 100%; 
+ height: auto; 
 }
 
 .thumbnail {
-	width: 50%;
-	height: 700px;
+	width: 70%;
+	height: 80%;
 	float: left;
+	max-width: 960px;
 }
 
 .thumbnail_main {
 	border: 1px solid #e4e4e4;
-	width: 500px;
-	height: 400px;
 	background: #3e3e3e;
 	margin: auto;
-}
-
-.thumbnail_others {
-	margin: 50px;
-	width: 500px;
-	height: 130px;
-}
-
-ul.center {
-  width:100%;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-
-.thumbnail_others > ul > li {
-	border: 1px solid #e4e4e4;
-	float: left;
-	width: 130px;
-	height: 130px;
+	width: 100%; 
+	height: 600px;
+	overflow: hidden;
 }
 
 .iteminfo {
-	width: 50%;
-	height: 650px;
+	width: 500px;
+	height: 100px;
 	position: relative;
-	float: left;
+	
 }
 
-.iteminfo_head {
-	border-bottom: 1px solid #404040;
-	padding-bottom: 10px;
-	min-height: 40px;
+.reviewLink{
+	width: 100%;
+	height: 2px;
+	text-align: center;
+	margin-top: 30px;
+	position: relative;
 }
 
-.itemname{
-	font-size: 28px;
-	font-weight: 500;
+.reviewLink a{
+	 color: #4684e9;
+	 text-decoration: none;
 }
-
-.itemprice{
-	font-size: 34px;
+.iteminfo{
+	font-size: 20px;
+	text-align: center;
 	font-weight: bold;
-	color: tomato;
+	margin-top: 25px;
 }
-
-.iteminfo_body {
-	border-bottom: 1px solid #d9d9d9;
+.priceBtn{
+	color: #000;
+	width: 100px;
+	height: 45px;
+	border: none;
+    border-radius: 30px 30px 30px 30px;
 }
-
-.info_title {
-	width: 30%;
-	float: left;
-	padding-bottom: 10px;
-	height: 29px;
-}
-
-.info_content {
-	width: 70%;
-	float: left;
-	padding-bottom: 10px;
-	height: 29px;
-}
-
-.cart_purchase {
+.likeBox{
+	height:56px;
+	width: 100%; 
 	display: flex;
 	justify-content: space-around;
-	height: 50px;
-	width: 50%;
-	float: left;
-	margin: auto;
+	
+	border-width:1px 0px 1px 0px;
+  	border-color:#e5e5e5;
+  	border-style:solid;
 }
 
-.add {
-	width: 180px;
-	height: 50px;
-	background: #e5e5e5;
-	border: 1px solid #e4e4e4;
-	font-size: 18px;
-	font-weight: bold;
+.likeBox button{
+	border: none;
+	font-size: 20px;
+	background: white;
+	color: #333;
+	width: 100%;
+	height: 51px;
+}
+#toc-toggle{
+margin-top:20px; 
+width: 96%; 
+height: 45px;
+ border-radius: 5px 5px 5px 5px; 
+ background: #fafafa; 
+ font-size: 16px; 
+ display: flex; 
+ justify-content: center; 
+align-items: center; 
+cursor: pointer;
 }
 
-.purchase {
-	width: 180px;
-	height: 50px;
-	background: #FAE500;
-	border: 1px solid #e4e4e4;
-	font-size: 18px;
-	font-weight: bold;
-}
 
-.cart {
-	width: 180px;
-	height: 50px;
-	background: #1e1e1e;
-	color: white;
-	border: 1px solid #e4e4e4;
-	font-size: 18px;
-	font-weight: bold;
-}
 
 
 </style>
+
+
+<div id="msellBody">
 	
-<div id="wrap">
-		<div class="simple_infowrap">
-				<form name="orderForm" method="post">
-			<div class="thumbnail">
-				<div class="thumbnail_main">
-					<img alt="" src="${pageContext.request.contextPath}/uploads/ms/${dto.imageFilename}">
-				</div>
-				<div class="thumbnail_others">
-					<ul class="center">
-						<c:forEach var="vo" items="${listImage}">
+<div id="materialSell_AT">
+		<div class="thumbnail">
+		<!--
+			<div class="thumbnail_main">
+				<img alt="" src="${pageContext.request.contextPath}/uploads/ms/${dto.imageFilename}">
+			</div>
+			  -->
+			<div class="thumbnail_main">
+        		<ul class="slider">
+        		    <c:forEach var="vo" items="${listImage}">
         				<li><a href="#"><img src="${vo}"></a></li>
         		    </c:forEach>
-					</ul>
-				</div>
-			</div>
-			<div class="iteminfo">
-				<div class="iteminfo_head"> 
-					<span class="itemname">${dto.productName}</span>
-				</div>
-				<div class="iteminfo_body">
-					<div class="info_title" style="line-height: 45px;">
-						<span style="margin: auto;">판매가</span>
-					</div>
-					<div class="info_content">
-						<span class="itemprice"> ${dto.price}</span><span style="font-size: 34px">원</span>
-					</div>
-					<div class="info_title">적립금</div>
-				<div class="info_content" style="height: 29px;">
-					<span style="color: #4d94ff;">	
-						${dto.reserves}
-					</span>
-				</div>
-				<div class="info_title">판매자</div>
-					<div class="info_content">
-						${dto.userName}
-					</div>
-			<div class="info_title">수량</div>
-					<div class="info_content">
-						<input type="number" id="count" name="count">
-					</div>
-				</div>
-			</div>
-			<div class="cart_purchase">
-				<button type="button" class="cart" onclick="cartSubmit()">장바구니</button>
-				<button type="button" class="cart" onclick="javascript:location.href='${pageContext.request.contextPath}';">찜하기</button>
-
-				<input type="hidden" name="productNum" value="${dto.productNum}">
-				<input type="hidden" name="cName" value="${dto.productName}">
-				<input type="hidden" name="seller" value="${dto.userName}">
-				<input type="hidden" name="cPrice" value="${dto.price}">
-				<button type="button" class="purchase" onclick="javascript:orderSubmit('${dto.productNum}');">구매하기</button>
-			</div>
-				</form>
+        		    <c:if test="${listImage.size()==0}">
+        				<li><a href="#"><img src="${pageContext.request.contextPath}/resources/img/no-image.png">
+        					<p>${dto.countDate}</p>
+        				</a></li>
+        		    </c:if>
+        		</ul>
+        	</div>
+		</div>
+		
+		<div>
+			<p>판매자:${dto.userName}<p>
+		</div>
+		<div class="reviewLink"><a href="#">★★★★ 리뷰96건</a></div>
+	
+		<div class="iteminfo">
+			${dto.productName}
+			<div style="margin-top: 16px;">
+				<button type="button" style="background-color: #1e1e1e; color: white;" class="priceBtn" onclick="">${dto.reserves}원</button>
+				<button type="button" style="background-color: #ffeb00;" class="priceBtn" onclick="">${dto.price}원</button>
 			</div>
 		</div>
-</body>
+					<div class="info_content" style="margin-bottom: 40px;">
+					수량	<input type="number" id="count" name="count">
+					</div>
+	
+		
+		<div class="likeBox">
+			
+			<button type="button" class="cart" onclick="javascript:location.href='${pageContext.request.contextPath}';"><span style="font-size: 18px">♡ </span>찜</button>
+			<button type="button" class="cart" onclick="cartSubmit()">장바구니</button>
+			<button type="button" class="purchase" onclick="javascript:orderSubmit('${dto.productNum}');">구매하기</button>
+		</div>
+		<div style="width: 100%; height: 15px; background: #f4f4f4;" ></div>
+
+		<div style="clear: both; width: 100%;">
+	        <div style="clear: both;">
+	          	<ul class="tabs">
+			       <li id="tab-main" data-tab="main">상세정보</li>
+			       <li id="tab-review" data-tab="review">리뷰</li>
+			       <li id="tab-qna" data-tab="qna">질문답변</li>
+		   		</ul>
+	   		</div>
+	   		<div id="tab-content" style="clear:both; padding: 20px 10px 0px;"></div>
+		</div>
+		<div style="width: 100%; height: 15px; background: #f4f4f4;" ></div>
+		
+		<span id="toc-toggle" onclick="openCloseToc()"><i class="far fa-hand-point-up"></i> &nbsp; 상품상세 원본보기</span>
+		<div id="toc-content" style=" margin-top: 20px; display: none;">${dto.content}</div>
+	</div>	          
+
+</div>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="buytab">
+
+
+<insert id="insertReview" parameterType="com.sp.app.buytab.infor.Review">
+		INSERT INTO review(listNum, userId, orderId, content, created , starScore, productNum, answer)
+			VALUES (review_seq.NEXTVAL, #{userId}, #{userId}, #{orderId}, #{content}, SYSDATE ,#{starScore}, #{productNum}, #{answer})
+	</insert>
+
+
+<select id="dataCountReview" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*),0)
+	 	FROM review r
+	 	JOIN member1 m ON r.userId = m.userId
+	 	WHERE r.productNum = #{productNum}
+	</select>
+	
+	<select id="listReview" parameterType="map" resultType="com.sp.app.buytab.infor.Review">
+		SELECT r.productNum, r.listNum, m.userName, r.userId, content, starScore, created
+		FROM review r
+		JOIN member1 m ON r.userId = m.userId
+		WHERE r.productNum = #{productNum}
+		ORDER BY listNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<select id="dataCountQna" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) FROM sellerQna q
+		JOIN member1 m ON q.userId = m.userId
+	 	WHERE q.productNum = #{productNum}
+	</select>
+	
+	<select id="listQna" parameterType="map" resultType="com.sp.app.buytab.infor.Qna">
+		SELECT num, q.userId, m.userName, question, questionCreated, sellerId, answer, answerCreated
+		FROM sellerQna q
+		JOIN member1 m ON q.userId = m.userId
+		WHERE productNum=#{productNum}
+		ORDER BY num DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<insert id="questionsQna" parameterType="com.sp.app.buytab.infor.Qna">
+		INSERT INTO sellerQna(num, productNum, userId, question, questionCreated, orderId)
+			VALUES (sellerQna.NEXTVAL, #{productNum}, #{userId}, #{question}, #{questionCreated}, SYSDATE, #{orderId,  jdbcType=VARCHAR})
+	</insert>
+</mapper>

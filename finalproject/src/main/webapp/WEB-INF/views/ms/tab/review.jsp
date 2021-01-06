@@ -7,6 +7,9 @@
 <table style="width: 100%; margin: 15px auto 5px; table-layout:fixed; word-break:break-all; border-spacing: 0; border-collapse: collapse;">
 
 	<tbody id="listReviewBody">
+	
+	
+	
 	<c:forEach var="dto" items="${list}">	
 		  <tr>
 		  	<c:choose>

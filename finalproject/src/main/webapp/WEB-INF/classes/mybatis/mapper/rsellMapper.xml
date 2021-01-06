@@ -56,7 +56,7 @@
 	   resultType="com.sp.app.reservationSell.ReservationSell">
 	   SELECT productNum, productName, p.userId, m.userName, stock,
 	   price, imageFileName, c.categoryNum, division, p.categoryNum,c.categoryName,
-	   TO_CHAR(p.created_date,'YYYY-MM-DD') created_date, content
+	   TO_CHAR(p.created_date,'YYYY-MM-DD') created_date, content, TO_CHAR(p.countDate,'YYYY-MM-DD') countDate
 	   FROM product p
 	 	JOIN member1 m ON p.userId=m.userId
 	 	JOIN category c ON p.categoryNum=c.categoryNum

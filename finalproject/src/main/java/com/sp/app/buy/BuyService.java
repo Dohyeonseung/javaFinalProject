@@ -13,4 +13,5 @@ public interface BuyService {
 	public void deleteCart(int cId) throws Exception; // 장바구니 목록 하나 삭제
 	public void deleteCart(List<String> cIds) throws Exception; // 장바구니 목록 여러 개 삭제
 	public List<Cart> listCart(List<String> list); // 주문에 장바구니 목록 여러 개 띄우기
+	
 }

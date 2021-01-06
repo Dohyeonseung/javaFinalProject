@@ -27,7 +27,7 @@
 	 </select>
 	 
 	 <select id="listMaterialSell" parameterType="map" resultType="com.sp.app.materialSell.MaterialSell">
-	 	SELECT productNum, productName, price, stock, p.userId,
+	 	SELECT productNum, productName, price, stock, p.userId, 
 	       imageFileName, c.categoryNum, c.categoryName, division,
 	 	   TO_CHAR(p.created_date,'YYYY-MM-DD') created_date
 	 	FROM product p
@@ -50,7 +50,7 @@
 	 
 	 <select id="readMaterialSell" parameterType="Integer"
 	   resultType="com.sp.app.materialSell.MaterialSell">
-	   SELECT productNum, productName, p.userId, m.userName, stock,
+	   SELECT productNum, productName, p.userId, m.userName, stock, reserves,
 	   price, imageFileName, c.categoryNum, division, p.categoryNum,c.categoryName,
 	   TO_CHAR(p.created_date,'YYYY-MM-DD') created_date, content
 	   FROM product p

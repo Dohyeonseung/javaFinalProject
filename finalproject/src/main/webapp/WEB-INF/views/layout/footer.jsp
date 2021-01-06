@@ -48,10 +48,12 @@
 
 .info{
  	text-align: left;
+ 	height: 100%;
 	
 }
 .instar{
 	text-align: left;
+	height: 100%;
 }
 </style>
 
@@ -102,15 +104,15 @@
 		<div class="instar">
 			<h3 style="color: #666;"><i class="fab fa-instagram"></i>  INSTAGRAM  # 미니멀</h3>
 			<div class="imgBackBox">
-				<a href="#" style="text-decoration: none;height: 100%; "> <img src="${pageContext.request.contextPath}/resources/img/instar1.jpg" width="100"
+				<a href="#" style="text-decoration: none; "> <img src="${pageContext.request.contextPath}/resources/img/instar1.jpg" width="100"
 			                   height="100" border="0"></a>
-				<a href="#" style="text-decoration: none;height: 100%; "> <img src="${pageContext.request.contextPath}/resources/img/instar2.jpg" width="100"
+				<a href="#" style="text-decoration: none; "> <img src="${pageContext.request.contextPath}/resources/img/instar2.jpg" width="100"
 			                   height="100" border="0"></a>
-				<a href="#" style="text-decoration: none;height: 100%; "> <img src="${pageContext.request.contextPath}/resources/img/instar3.jpg" width="100"
+				<a href="#" style="text-decoration: none;"> <img src="${pageContext.request.contextPath}/resources/img/instar3.jpg" width="100"
 			                   height="100" border="0"></a>
-				<a href="#" style="text-decoration: none;height: 100%; "> <img src="${pageContext.request.contextPath}/resources/img/instar4.jpg" width="100"
+				<a href="#" style="text-decoration: none;"> <img src="${pageContext.request.contextPath}/resources/img/instar4.jpg" width="100"
 			                   height="100" border="0"></a>
-				<a href="#" style="text-decoration: none;height: 100%; "> <img src="${pageContext.request.contextPath}/resources/img/instar5.jpg" width="100"
+				<a href="#" style="text-decoration: none; "> <img src="${pageContext.request.contextPath}/resources/img/instar5.jpg" width="100"
 			                   height="100" border="0"></a>
 
 			</div>

@@ -1,4 +1,4 @@
-package com.sp.app.selltab.infor;
+package com.sp.app.buytab.infor;
 
 import java.util.List;
 import java.util.Map;
@@ -8,42 +8,19 @@ import org.springframework.stereotype.Service;
 
 import com.sp.app.common.dao.CommonDAO;
 
-@Service("selltab.informationService")
+@Service("buytab.informationService")
 public class InformationServiceImpl implements InformationService {
 	
 	@Autowired
 	private CommonDAO dao;
-
-	@Override
-	public int dataCount(Map<String, Object> map) {
-		int result=0;
-		try {
-			result=dao.selectOne("infor.dataCountInformation", map);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
-
-	@Override
-	public List<Information> listInformation(Map<String, Object> map) {
-	List<Information> list =null;
-		
-		try {
-			list=dao.selectList("infor.listInformation", map);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return list;
-	}
-
+	
 	
 	@Override
 	public int dataCountReview(Map<String, Object> map) {
 		int result =0;
 		
 		try {
-			result=dao.selectOne("infor.dataCountReview");
+			result=dao.selectOne("buytab.dataCountReview");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -55,7 +32,7 @@ public class InformationServiceImpl implements InformationService {
 		List<Review> list =null;
 		
 		try {
-			list=dao.selectList("infor.listReview", map);
+			list=dao.selectList("buytab.listReview", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -66,7 +43,7 @@ public class InformationServiceImpl implements InformationService {
 	public List<Qna> listQna(Map<String, Object> map) {
 		List<Qna> list=null;
 		try {
-			list=dao.selectList("infor.listQna", map);
+			list=dao.selectList("buytab.listQna", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -77,7 +54,7 @@ public class InformationServiceImpl implements InformationService {
 	public int QnaCount(Map<String, Object> map) {
 		int result=0;
 		try {
-			result=dao.selectOne("infor.dataCountQna", map);
+			result=dao.selectOne("buytab.dataCountQna", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -85,9 +62,19 @@ public class InformationServiceImpl implements InformationService {
 	}
 
 	@Override
-	public void answerQna(Qna dto) throws Exception {
+	public void insertReview(Review dto) throws Exception {
 		try {
-			dao.updateData("infor.answerQna", dto);
+			dao.insertData("buytab.insertReview", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	@Override
+	public void questionsQna(Qna dto) throws Exception {
+		try {
+			dao.insertData("buytab.questionsQna", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;

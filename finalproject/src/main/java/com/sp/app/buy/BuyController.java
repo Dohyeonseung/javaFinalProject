@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.mongodb.DuplicateKeyException;
 import com.sp.app.common.MyUtil;
 import com.sp.app.member.SessionInfo;
 
@@ -110,7 +109,7 @@ public class BuyController {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("productNum", productNum);
-		
+
 		// dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
 		
 		model.addAttribute("dto", dto);

@@ -307,7 +307,7 @@ $(function(){
 		<div class="iteminfo">
 			${dto.productName}
 			<div style="margin-top: 16px;">
-				<button type="button" style="background-color: #1e1e1e; color: white;" class="priceBtn" onclick="">${dto.price}원</button>
+				<button type="button" style="background-color: #1e1e1e; color: white;" class="priceBtn" onclick="">${dto.reserves}원</button>
 				<button type="button" style="background-color: #ffeb00;" class="priceBtn" onclick="">${dto.price}원</button>
 			</div>
 		</div>
