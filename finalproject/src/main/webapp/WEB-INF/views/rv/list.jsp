@@ -60,20 +60,7 @@ input:focus {
 	box-shadow: -1px 0 #FAE500, 0 1px #FAE500, 1px 0 #FAE500, 0 -1px #FAE500;
 }
 
-.dday {
-	font-size: 30px;
-	color: #666; opacity : 0;
-	transform: scale(2, 2);
-	transition: all 0.25s linear 0.2s;
-	opacity: 0;
-	font-weight: bold;
-	font-family: sans-serif;
-}
-
-.imgLayout:hover .dday {
-	opacity: 1;
-	transform: scale(1, 1);
-}
+.gradient-border { --borderWidth: 6px; background: white; position: relative; border-radius: var(--borderWidth); } .gradient-border:after { content: ''; position: absolute; top: calc(-1 * var(--borderWidth)); left: calc(-1 * var(--borderWidth)); height: calc(100% + var(--borderWidth) * 2); width: calc(100% + var(--borderWidth) * 2); background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82); border-radius: calc(1.5 * var(--borderWidth)); z-index: -1; animation: animatedgradient 2s ease alternate infinite; background-size: 300% 300%; } @keyframes animatedgradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 </style>
 <script type="text/javascript">
 function deleteCompleteSell(productNum) {
@@ -131,7 +118,7 @@ function diffDayTime(date1, date2){
 <div class="bigBox">
 <div class="body-container" style="width: 1000px;">
 	<div class="body-title">
-		<h4>홈 > Sell > 완제품 판매 </h4>
+		<h4>홈 > Sell > 예약판매 </h4>
 	</div>
 	<div style="float: left;">
 		<form name="searchForm" action="${pageContext.request.contextPath}/rv/list" method="post"><!-- 서치폼을 만들고 모든정보를 ms action주소로 보낸다. -->
@@ -180,9 +167,10 @@ function diffDayTime(date1, date2){
 						<button type="button" class="btnSet" onclick="updateCompleteSell('${dto.productNum}');" style="margin: 2px;">수정</button>
 						 <button type="button" class="btnSet" onclick="deleteCompleteSell('${dto.productNum}');" style="margin: 2px;">삭제</button>
 					</div>
-					<div class="dday" style="line-height: 150px;">
-						<span id="demo"> ${ dto.countDate}</span>
-					</div>
+				
+						<div class="gradient-border" id="box" style="margin-top: 50px;"><p style="font-size: 20px; font-weight: bold;">D-Day 7일</p></div>
+						
+		
 					</div>
 				</div>	
 			</div>

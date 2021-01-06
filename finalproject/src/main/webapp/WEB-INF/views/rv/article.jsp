@@ -112,6 +112,8 @@ height: 45px;
 align-items: center; 
 cursor: pointer;
 }
+.gradient-border { --borderWidth: 6px; background: white; position: relative; border-radius: var(--borderWidth); } .gradient-border:after { content: ''; position: absolute; top: calc(-1 * var(--borderWidth)); left: calc(-1 * var(--borderWidth)); height: calc(100% + var(--borderWidth) * 2); width: calc(100% + var(--borderWidth) * 2); background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82); border-radius: calc(1.5 * var(--borderWidth)); z-index: -1; animation: animatedgradient 2s ease alternate infinite; background-size: 300% 300%; } @keyframes animatedgradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
 
 
 @media screen and (max-width: 786px){
@@ -346,9 +348,8 @@ $(function(){
         	</div>
 		</div>
 		
-		<div>
-			<p>판매시간: <span id="countDateLayout"></span><p>
-		</div>
+		<div class="gradient-border" id="box" style="margin-top: 20px;"><p style="font-size: 17px; font-weight: bold;">마감임박: <span id="countDateLayout"></span><p></div>
+		
 		<div class="reviewLink"><a href="#">★★★★ 리뷰96건</a></div>
 	
 		<div class="iteminfo">

@@ -97,7 +97,7 @@
 		</div>
 	 <div class="intoContent">
 		<div class="intoWritten">
-			<span style="font-size: 22px; color: #555; font-weight: bold;"  >DIY란?</span><br><br>
+			<span style="font-size: 22px; color: #555; font-weight: bold;" >DIY란?</span><br><br>
 			
 			<span style="font-weight: bold; font-size: 16px; font-family:serif;">명사(noun [naun] )</span><br>
 			<span>기성품을 사는 대신 재료만 사다가 물건을 자기 손으로 직접 만들거나, 직업적으로 일하는 사람을 시키지 않고 자신이 직접 수리하거나 작업하는 활동. 
@@ -109,12 +109,12 @@
 		 		손수 만든 제품을 사고 팔수 있다.<br>
 		 	        창의적이면서 매매에 관한 다양한 정보를 필요로하는 사람들을 위한 전문매매사이트 <span class="title_name" style="font-size: 19px; font-weight: bold;">핸드메이드</span> 입니다.
 		 	</span>
-		 
+		  
+		 </div>
+		<div class="linkBtn" >
+		 	<button type="button" class="btn btn-default" style="margin-bottom: 40px;">Introduce</button>
 		 </div>
 		
-		 <div class="linkBtn">
-		 	<button type="button" class="btn btn-default">Introduce</button>
-		 </div>
 		</div>
 	 </div>
 	 
