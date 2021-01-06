@@ -63,7 +63,7 @@ $(document).ready(function(){
                    <a href="${pageContext.request.contextPath}/">정보수정</a>
                    <c:if test="${not empty sessionScope.member and sessionScope.member.userId!='admin'}">
                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                   <a href=""><i class="fas fa-user" style="font-size: 32px; "></i></a>
+                   <a href="${pageContext.request.contextPath}/buy/orderCheck"><i class="fas fa-user" style="font-size: 32px; "></i></a>
                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                    <a href="${pageContext.request.contextPath}/buy/cart"><i class="fas fa-shopping-cart" style="font-size: 32px;"></i></a>
                    </c:if>
