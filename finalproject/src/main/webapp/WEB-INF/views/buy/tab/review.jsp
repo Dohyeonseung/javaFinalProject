@@ -12,28 +12,30 @@
 	font-size: 22px;
 	letter-spacing: 0;
 	display: inline-block;
-	margin-left: 3px;
+	margin: 3px 0px;
 	color: #ccc;
 	text-decoration: none;
 }
+
 .star a:first-child{
 	margin-left: 0;
 }
 </style>
 
+
 	<div style="display: flex;">
-		<span>별점주기</span>
+		<span style="padding-top: 8px;">별점주기</span>
 		<p class="star">
-			<a href="#">★</a>
-			<a href="#">★</a>
-			<a href="#">★</a>
-			<a href="#">★</a>
-			<a href="#">★</a>
+			<a class="on">★</a>
+			<a>★</a>
+			<a>★</a>
+			<a>★</a>
+			<a>★</a>
 		</p>
 	</div>
 	
 	<div style="margin: 10px;">
-		<input type="text" name="score" value="0" readonly="readonly">
+		<input type="hidden" name="starScore" value="0" readonly="readonly">
 	</div>
 
 <table style='width: 100%; margin: 15px auto 0px; border-spacing: 0px;'>

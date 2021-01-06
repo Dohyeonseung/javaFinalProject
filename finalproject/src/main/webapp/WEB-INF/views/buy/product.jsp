@@ -9,6 +9,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/bxslider/js/jquery.bxslider.min.js"></script>
 
 <script type="text/javascript">
+// 장바구니
 function cartSubmit() {
 	var f=document.orderForm;
 
@@ -19,13 +20,14 @@ function cartSubmit() {
         return;
     }
 	
+	
 	f.action="${pageContext.request.contextPath}/buy/addcart";
 
 	f.submit();
-	
+	alert("상품을 장바구니에 담았습니다.");
 }
 
-
+// 구매
 function orderSubmit(productNum) {
 	
 	var f=document.orderForm;
@@ -42,6 +44,7 @@ function orderSubmit(productNum) {
 	var url="orderForm?productNum="+productNum+"&count="+count;
 	location.href=url;
 }
+
 
 function openCloseToc() {
 	  if(document.getElementById('toc-content').style.display === 'block') {
@@ -135,15 +138,17 @@ $(function(){
 	$("body").on("click", ".btnSendReply", function(){
 			var productNum="${dto.productNum}";
 			var $tb = $(this).closest("table");
+			var starScore = $("input[name=starScore]").val()
 			var content=$tb.find("textarea").val().trim();
 			if(! content) {
 				$tb.find("textarea").focus();
 				return false;
 			}
+			
 			content = encodeURIComponent(content);
 			
 			var url="${pageContext.request.contextPath}/buytab/information/insertReview";
-			var query="productNum="+productNum+"&content="+content+"&answer=0";
+			var query="productNum="+productNum+"&content="+content+"&starScore="+starScore+"&answer=0";
 			
 			var fn = function(data){
 				$tb.find("textarea").val("");
@@ -191,26 +196,87 @@ $(function(){
 });
 
 
-
-$(function(){
-		 $(".star a").click(function(){
-			 var b= $(this).hasClass("on"); //해당되는 클래스가 존재한지 존재하지 않는지 on이존재하면 true/x-false
-			 $(this).parent().children("a").removeClass("on");
-			 $(this).addClass("on").prevAll("a").addClass("on"); //prevAll이전에 있는 모든것
-			 if(b){
-				 $(this).removeClass("on");//on이 존재하면 on을 없애라
-			 }
-			 var s=$(".star .on").length;//별의 갯수
-			 $("input[name=score]").val(s);
-		 });
-});
-
+// 작은 이미지 hover시 큰 이미지 변경
 $(function (str) {
-	$(".images").hover(function () {
+	$(".image-list").click(function () {
 		var image = jQuery(this).attr("src");
-		$("#thumbnail_main").attr("src", image)
+		$("#thumbnail_in").attr("src", image);
+		$(".image-list").css("border", 'none');
+		$(this).css("border", '1px solid black');
+		
 	})
 })
+
+$(function(){
+	Number.prototype.format = function(){
+	    if(this==0) return 0;
+
+	    var reg = /(^[+-]?\d+)(\d{3})/;
+	    var n = (this + '');
+
+	    while (reg.test(n)) n = n.replace(reg, '$1' + ',' + '$2');
+
+	    return n;
+	};
+
+	// 문자열 타입에서 쓸 수 있도록 format() 함수 추가
+	String.prototype.format = function(){
+	    var num = parseFloat(this);
+	    if( isNaN(num) ) return "0";
+
+	    return num.format();
+	};
+	
+	jQuery('.format-money').text(function() {
+	    jQuery(this).text(
+	        jQuery(this).text().format()
+	    );
+	});
+});
+
+$(function() {
+	  $(".plus").click(function(){
+		   var num = $(this).parent().find("input").val();
+		   var plusNum = Number(num) + 1;
+		   
+		   if(plusNum >= 99) {
+			   $(this).parent().find("input").val(num);
+		   } else {
+			   $(this).parent().find("input").val(plusNum);          
+		   }
+	  });
+		  
+	  $(".minus").click(function(){
+		   var num = $(this).parent().find("input").val();
+		   var minusNum = Number(num) - 1;
+		   
+		   if(minusNum <= 0) {
+			   $(this).parent().find("input").val(num);
+		   } else {
+			   $(this).parent().find("input").val(minusNum);          
+		   }
+	  });
+})
+
+$(document).on("click", ".star a", function() {
+
+         var b= $(this).hasClass("on"); //해당되는 클래스가 존재한지 존재하지 않는지 on이존재하면 true/x-false
+         $(this).parent().children("a").removeClass("on");
+         $(this).addClass("on").prevAll("a").addClass("on"); //prevAll이전에 있는 모든것
+
+         $(this).css("color", '#e9be0f');
+         $(this).prevAll("a").css("color", '#e9be0f');
+
+         if(b){
+             $(this).removeClass("on");//on이 존재하면 on을 없애라
+             $(this).css("color", '');
+             $(this).nextAll("a").css("color", '');
+         }
+
+         var s=$(".star .on").length;//별의 갯수
+
+         $("input[name=starScore]").val(s);
+     });
 
 </script>
 
@@ -252,12 +318,38 @@ img {
 }
 
 .thumbnail_main {
-	border: 1px solid #e4e4e4;
-	background: #3e3e3e;
 	margin: auto;
-	width: 100%; 
-	height: 600px;
+	width: 680px; 
+	height: 500px;
 	overflow: hidden;
+	display: flex;
+	justify-content: space-between;
+}
+
+.thumbnail_in {
+	width: 500px;
+	height: 600px;
+}
+
+.thumbnail_in img {
+	width: 500px;
+	height: 500px;
+}
+
+.image_list {
+	width: 180px;
+	height: 500px;
+	overflow: auto;
+	direction: rtl;
+}
+
+.image_list img {
+	width: 130px;
+	height: 130px;
+}
+
+.image_list li {
+	margin: 25px;
 }
 
 .iteminfo {
@@ -328,70 +420,72 @@ cursor: pointer;
 
 
 </style>
-
-
-<div id="msellBody">
-	
-<div id="materialSell_AT">
-		<div class="thumbnail">
-		<!--
-			<div class="thumbnail_main">
-				<img alt="" src="${pageContext.request.contextPath}/uploads/ms/${dto.imageFilename}">
+<form name="orderForm" method="post">
+			<div style="text-align: center;">
+				<p style="margin: 20px 0px; font-size: 28px;">${dto.userName}<p>
+				<input type="hidden" name="productNum" value="${dto.productNum}">
+				<input type="hidden" name="seller" value="${dto.userName}">
+				<input type="hidden" name="page" value="${page}">
 			</div>
-			  -->
-			<div class="thumbnail_main">
-        		<ul class="slider">
-        		    <c:forEach var="vo" items="${listImage}">
-        				<li><a href="#"><img src="${vo}"></a></li>
-        		    </c:forEach>
-        		    <c:if test="${listImage.size()==0}">
-        				<li><a href="#"><img src="${pageContext.request.contextPath}/resources/img/no-image.png">
-        					<p>${dto.countDate}</p>
-        				</a></li>
-        		    </c:if>
-        		</ul>
-        	</div>
-		</div>
-		
-		<div>
-			<p>판매자:${dto.userName}<p>
-		</div>
-		<div class="reviewLink"><a href="#">★★★★ 리뷰96건</a></div>
-	
-		<div class="iteminfo">
-			${dto.productName}
-			<div style="margin-top: 16px;">
-				<button type="button" style="background-color: #1e1e1e; color: white;" class="priceBtn" onclick="">${dto.reserves}원</button>
-				<button type="button" style="background-color: #ffeb00;" class="priceBtn" onclick="">${dto.price}원</button>
-			</div>
-		</div>
-					<div class="info_content" style="margin-bottom: 40px;">
-					수량	<input type="number" id="count" name="count">
-					</div>
-	
-		
-		<div class="likeBox">
+	<div id="msellBody">
+		<div id="materialSell_AT">
+			<div class="thumbnail">
 			
-			<button type="button" class="cart" onclick="javascript:location.href='${pageContext.request.contextPath}';"><span style="font-size: 18px">♡ </span>찜</button>
-			<button type="button" class="cart" onclick="cartSubmit()">장바구니</button>
-			<button type="button" class="purchase" onclick="javascript:orderSubmit('${dto.productNum}');">구매하기</button>
-		</div>
-		<div style="width: 100%; height: 15px; background: #f4f4f4;" ></div>
-
-		<div style="clear: both; width: 100%;">
-	        <div style="clear: both;">
-	          	<ul class="tabs">
-			       <li id="tab-main" data-tab="main">상세정보</li>
-			       <li id="tab-review" data-tab="review">리뷰</li>
-			       <li id="tab-qna" data-tab="qna">질문답변</li>
-		   		</ul>
-	   		</div>
-	   		<div id="tab-content" style="clear:both; padding: 20px 10px 0px;"></div>
-		</div>
-		<div style="width: 100%; height: 15px; background: #f4f4f4;" ></div>
+				<div class="thumbnail_main">
+	        			<div class="image_list">
+	        				<ul>
+	        					<li><img src="${pageContext.request.contextPath}/uploads/ms/${dto.imageFilename}" class="image-list"></li>
+			        			<c:forEach var="vo" items="${listImage}">
+			        					<li><img src="${vo}" class="image-list"></li>
+			        		    </c:forEach>
+			        		</ul>
+	        			</div>
+	        			<div class="thumbnail_in">
+	        				<img src="${pageContext.request.contextPath}/uploads/ms/${dto.imageFilename}" id="thumbnail_in">
+	        			</div>
+	        	</div>
+			</div>
+			
+			<div class="reviewLink"><a href="#">★★★★ 리뷰96건</a></div>
 		
-		<span id="toc-toggle" onclick="openCloseToc()"><i class="far fa-hand-point-up"></i> &nbsp; 상품상세 원본보기</span>
-		<div id="toc-content" style=" margin-top: 20px; display: block;">${dto.content}</div>
-	</div>	          
-
-</div>
+			<div class="iteminfo">
+				${dto.productName}
+				<input type="hidden" name="cName" value="${dto.productName}">
+				<div style="margin-top: 16px;">
+					<button type="button" style="background-color: #1e1e1e; color: white; border: none; outline: none;" class="priceBtn" onclick="">적립금<br><span class="format-money"> ${dto.reserves} </span>원</button>
+					<button type="button" style="background-color: #ffeb00; border: none; outline: none;" class="priceBtn" onclick="">가격<br><span class="format-money"> ${dto.price} </span>원</button>
+				</div>
+			</div>
+						<div class="info_content" style="margin-bottom: 40px;">
+							수량
+						<button type="button" class="minus" style="width: 20px; height: 20px; background: white; border: 1px solid #a6a6a6; margin-left: 30px;">-</button>
+							<input type="text" id="count" name="count" style="width: 30px; height: 18px; text-align: center; border: 1px solid #a6a6a6;">
+						<button type="button" class="plus" style="width: 20px; height: 20px; background: white; border: 1px solid #a6a6a6;">+</button>
+						</div>
+		
+			
+			<div class="likeBox">
+				
+				<button type="button" class="cart" onclick="javascript:location.href='${pageContext.request.contextPath}';"><span style="font-size: 18px">♡ </span>찜</button>
+				<button type="button" class="cart" onclick="cartSubmit()">장바구니</button>
+				<button type="button" class="purchase" onclick="javascript:orderSubmit('${dto.productNum}');">구매하기</button>
+			</div>
+			<div style="width: 100%; height: 15px; background: #f4f4f4;" ></div>
+	
+			<div style="clear: both; width: 100%;">
+		        <div style="clear: both;">
+		          	<ul class="tabs">
+				       <li id="tab-main" data-tab="main">상세정보</li>
+				       <li id="tab-review" data-tab="review">리뷰</li>
+				       <li id="tab-qna" data-tab="qna">질문답변</li>
+			   		</ul>
+		   		</div>
+		   		<div id="tab-content" style="clear:both; padding: 20px 10px 0px;"></div>
+			</div>
+			<div style="width: 100%; height: 15px; background: #f4f4f4;" ></div>
+			
+			<span id="toc-toggle" onclick="openCloseToc()"><i class="far fa-hand-point-up"></i> &nbsp; 상품상세 원본보기</span>
+			<div id="toc-content" style=" margin-top: 20px; display: block;">${dto.content}</div>
+		</div>	          
+	</div>
+</form>
