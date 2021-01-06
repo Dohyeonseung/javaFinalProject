@@ -98,14 +98,14 @@ $(document).ready(function(){
                <tr>
                   <td><a href="#">이용안내</a></td>
                   <td><a href="${pageContext.request.contextPath}/rv/list">예약 판매</a></td>
-                  <td><a href="#">예약 구매</a></td>
+                  <td><a href="${pageContext.request.contextPath}/buy/rsv">예약 구매</a></td>
                   <td><a href="${pageContext.request.contextPath}/tip/main">DIY Tip</a></td>
                   <td><a href="${pageContext.request.contextPath}/consumer/list">자주하는 질문</a></td>
                </tr>
                <tr>
                   <td><a href="${pageContext.request.contextPath}/company/ethics">윤리규정</a></td>
                   <td><a href="${pageContext.request.contextPath}/cp/list">완제품 판매</a></td>
-                  <td><a href="#">완제품구매</a></td>
+                  <td><a href="${pageContext.request.contextPath}/buy/complete">완제품구매</a></td>
                   <td><a href="${pageContext.request.contextPath}/qna/list">묻고 답하기</a></td>
                   <td><a href="#"></a></td>
                   
