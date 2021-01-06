@@ -3,6 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+
+
+
 <script type="text/javascript">
 $(function() {
    $('#menuBox').hover(function() {
@@ -29,7 +32,7 @@ $(document).ready(function(){
        <div class="header-left">
            <p style="margin: 2px;">
                <a href="${pageContext.request.contextPath}/" style="text-decoration: none;">
-                   <span id="header_logo">SPRING</span>
+                   <span id="header_logo">HANDMADE</span>
                </a>
            </p>
        </div>

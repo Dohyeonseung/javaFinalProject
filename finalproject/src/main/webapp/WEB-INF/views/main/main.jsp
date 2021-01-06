@@ -6,7 +6,13 @@
 
 
 <style>
-
+.intoSubject{
+  background: linear-gradient(to right, #f00, #00f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    
+    font-size: 40px;
+}
 #bbs-img{
 	width:100%;
 	display: flex;
@@ -53,24 +59,30 @@
 <div class="body-container">
         	<div class="photo-gallery">
         		<ul class="slider">
-        				<li><a href="#"><img src="${pageContext.request.contextPath}/resources/img/slider1.jpg"></a></li>
-        				<li><a href="#"><img src="${pageContext.request.contextPath}/resources/img/slider2.JPG"></a></li>
+        				<li><a href="#"><img src="${pageContext.request.contextPath}/resources/img/slider_main1.jpg"></a></li>
+        				<li><a href="#"><img src="${pageContext.request.contextPath}/resources/img/slider_main2.jpg"></a></li>
+        				<li><a href="#"><img src="${pageContext.request.contextPath}/resources/img/slider_main3.jpg"></a></li>
+        				<li><a href="#"><img src="${pageContext.request.contextPath}/resources/img/slider_main4.png"></a></li>
+        				<li><a href="#"><img src="${pageContext.request.contextPath}/resources/img/slider_main5.jpg"></a></li>
         				<li><a href="#"><img src="${pageContext.request.contextPath}/resources/img/slider3.jpg"></a></li>
         		</ul>
         	</div>
 
 	<div class="intro">
 		<div class="intoSubject">
-			<h3>사이트를 소개하기</h3>
+			<h3>HANDMADE</h3>
 		</div>
 	 <div class="intoContent">
 		<div class="intoWritten">
-			<span>Et malesuada fames ac turpis egestas sed. 
-			Sit amet nisl suscipit adipiscing bibendum est ultricies. 
-			Arcu ac tortor dignissim convallis aenean et tortor at.
-			 Pretium viverra suspendisse potenti nullam ac tortor vitae purus. 
-			 Eros donec ac odio tempor orci dapibus ultrices. 
-			 Elementum nibh tellus molestie nunc.</span>
+			<span style="font-size: 17px; color: #555; font-weight: bold;"  >DIY란?</span><br><br>
+			
+			<span style="font-weight: bold; font-size: 16px; font-family:serif;">명사(noun [naun] )</span><br>
+			<span>기성품을 사는 대신 재료만 사다가 물건을 자기 손으로 직접 만들거나, 직업적으로 일하는 사람을 시키지 않고 자신이 직접 수리하거나 작업하는 활동. 또는, 어떤 상품이 그렇게 할 수 있도록 생산된 상태인 것.</span>
+		 	<br>
+		 	<span>
+		 		서로에게 만든 페이지를 
+		 	</span>
+		 
 		 </div>
 		
 		 <div class="linkBtn">

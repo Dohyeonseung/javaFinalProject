@@ -97,11 +97,10 @@
 }
 
 #header_logo{
-	font-size: 24px;
-	color: var(--text-color);
-	font-weight: bold;
-	line-height: 70px;
-	
+	font-size: 34px;
+	  background: linear-gradient(to right, #f00, #00f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 .header-left {
     width: 300px;
