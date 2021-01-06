@@ -94,6 +94,24 @@
 	 margin: 0px;
 	 width: 20px;
 }
+
+#modal {
+  position: relative;
+  width: auto;
+  height: auto;
+  z-index: 3;
+}
+
+#modal .modal_content {
+	position: fixed;
+  width: auto;
+  margin: auto;
+  padding: 20px 10px;
+  background: #fff;
+  border: 2px solid #666;
+}
+
+
 </style>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/dateUtil.js"></script>
 <script type="text/javascript">
@@ -117,11 +135,80 @@ $(function() {
 			$(this).next("tr").hide(200);
 		}
 	});
+	
+	$(document).on("click", ".popul", function() {
+		var faqNum = $(this).attr("data-faqNum");
+		
+		var fn = function(data) {
+			printQNA(data);
+		};
+		
+		ajaxJSON("get", "${pageContext.request.contextPath}/consumer/readPopul", "faqNum=" + faqNum, fn);
+	});
+	
+	$(document).on("click", ".divClose", function() {
+		$(this).parent().parent().empty();
+	});
 });
+
+function ajaxJSON(type, url, query, fn) {
+	$.ajax({
+		type: type,
+		url: url,
+		data: query,
+		dataType: "json",
+		success: function(data) {
+			fn(data);
+		},
+		error: function() {
+			console.log("실패");
+		},
+		beforeSend:function(jqXHR) {
+	        jqXHR.setRequestHeader("AJAX", true);
+	    },
+	    error:function(jqXHR) {
+	    	if(jqXHR.status===403) {
+	    		login();
+	    		return false;
+	    	}
+	    	
+	    	console.log(jqXHR.responseText);
+	    }
+	});
+}
+
+function printQNA(data) {
+	console.log(data);
+	var out = "";
+	var ss = data.dto.questionType=="1"?"DIY":data.dto.questionType=="2"?"계정이용":data.dto.questionType=="3"?"판매신청":"기타";
+	out += "<div class='modal_content'>";
+	out += "<table>";
+	out += "<tr>";
+	out += "<td>구분</td>";
+	out += "<td><input type='text' value='" + ss + "'></td>";
+	out += "<td>제목</td>";
+	out += "<td><input type='text' value='" + data.dto.f_subject + "'></td>";
+	out += "</tr>";
+	out += "<tr>";
+	out += "<td colspan='4'>" + data.dto.f_content + "</td>";
+	out += "</tr>";
+	out += "</table>";
+	out += "<hr>";
+	out += "<button type='button' class='divClose'>창 닫기</button>";
+	out += "</div>";
+	
+	$("#modal").append(out);
+}
+
+
 </script>
 
 <div id="helpCenter">
 	<div id="helpSpace">
+		<div id="modal">
+	
+		</div>
+	
 		<div id="categori">
 			<a href="${pageContext.request.contextPath}">홈</a> > <a href="${pageContext.request.contextPath}/help/main">고객센터</a>
 		</div>
@@ -193,7 +280,7 @@ $(function() {
 			
 			<ol style="list-style: none; width: 1160px;">
 				<c:forEach var="dto" items="${list}">
-					<li><a href="">[${dto.questionType=='1'?'DIY':dto.questionType=='2'?'계정이용':dto.questionType=='3'?'판매신청':'기타'}] ${dto.f_subject}</a></li>
+					<li class="popul" data-faqNum="${dto.faqNum}">[${dto.questionType=='1'?'DIY':dto.questionType=='2'?'계정이용':dto.questionType=='3'?'판매신청':'기타'}] ${dto.f_subject}</li>
 				</c:forEach>
 			</ol>
 		

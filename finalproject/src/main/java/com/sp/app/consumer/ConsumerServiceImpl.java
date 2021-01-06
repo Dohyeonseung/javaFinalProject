@@ -1,5 +1,6 @@
 package com.sp.app.consumer;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -129,6 +130,117 @@ public class ConsumerServiceImpl implements ConsumerService {
 		}
 	}
 
-	
-	
+	@Override
+	public List<ConsumerQNA> listQNA(String userId) throws Exception {
+		List<ConsumerQNA> list = null;
+		
+		try {
+			list = dao.selectList("myQNAList", userId);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+		return list;
+	}
+
+	@Override
+	public ConsumerQNA readQNA(int num) throws Exception {
+		ConsumerQNA dto = null;
+		
+		try {
+			dto = dao.selectOne("myQNAread", num);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+		return dto;
+	}
+
+	@Override
+	public void answerReviewSubmit(Map<String, Object> map) throws Exception {
+		
+		try {
+			dao.updateData("answerReviewSubmit", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+	}
+
+	@Override
+	public ConsumerFAQ populRead(int num) throws Exception {
+		ConsumerFAQ dto = null;
+		
+		try {
+			dto = dao.selectOne("populRead", num);
+		} catch (Exception e) {
+			
+		}
+		
+		return dto;
+	}
+
+	@Override
+	public List<ConsumerQNA> listAdminLoad(Map<String, Object> map) throws Exception {
+		List<ConsumerQNA> list = null;
+		
+		try {
+			list = dao.selectList("qnaList", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+		return list;
+	}
+
+	@Override
+	public int adminQNACount(int questionType) throws Exception {
+		int result = 0;
+		
+		try {
+			result = dao.selectOne("adminQNACount", questionType);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+		return result;
+	}
+
+	@Override
+	public SellerInfo infoLoad(String userId) throws Exception {
+		SellerInfo dto = null;
+		
+		try {
+			dto = dao.selectOne("readInfo", userId);
+			
+//			주소설정
+			dto.setAddr(dto.getAddr1() + " " + dto.getAddr2());
+			
+//			나이설정
+			int year = Integer.parseInt(dto.getBirth().substring(0, 4));
+			Calendar current = Calendar.getInstance();
+	        int currentYear  = current.get(Calendar.YEAR);
+			dto.setAge(currentYear - year);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+		return dto;
+	}
+
+	@Override
+	public void sellerFirst(SellerInfo dto) throws Exception {
+		
+		try {
+			dao.insertData("sellerFirst", dto);
+		} catch (Exception e) {
+
+		}
+	}
 }
