@@ -20,15 +20,33 @@
 
 </style>
 
-<div style='clear: both; padding: 10px 10px;'>
-	<div style='float: left; width: 95%'>
-		<textarea cols='72' rows='12' class='boxTA'
-			style='width: 98%; height: 70px;'></textarea>
+<script type="text/javascript">
+$(function(){
+	$("body").on("click", ".btnReplyAnswerLayout", function(){
+		var $trReplyAnswer = $(this).closest("tr").next();
+		
+		var isVisible = $trReplyAnswer.is(':visible');
+		// var num = $(this).attr("data-num");
+			
+		if(isVisible) {
+			$trReplyAnswer.hide();
+		} else {
+			$trReplyAnswer.show();
+		}
+	});
+});
+</script>
+
+
+<div>
+	<div style='clear: both; padding: 10px 10px;'>
+		<div style='float: left; width: 95%'>
+			<textarea cols='72' rows='12' class='boxTA' style='width: 98%; height: 70px;'></textarea>
+		</div>
 	</div>
-</div>
-<div style='padding: 0px 13px 10px 10px; text-align: right;'>
-	<button type='button' class='btn btnSendReplyAnswer'
-		data-num='${dto.num}'>질문등록</button>
+	<div style='padding: 0px 13px 10px 10px; text-align: right;'>
+		<button type='button' class='btn btnSendQna'>질문등록</button>
+	</div>
 </div>
 
 <table style='width: 100%; margin: 10px auto 30px; border-spacing: 0px;'>
@@ -48,7 +66,7 @@
 	 </tr>
 	 <tr height='30'>
 	 	<td colspan='2' style='padding:5px 5px;' align="right">
-	 	    <i class="fas fa-chevron-down btnReplyAnswerLayout" data-num='${dto.num}'></i>
+	 	    <i class="fas fa-chevron-down btnReplyAnswerLayout" data-num='${dto.productNum}'></i>
 	 	</td>
 	 </tr>
 	 <tr class='replyAnswer' style='display: none;'>
@@ -61,10 +79,7 @@
 			            <div style='float: left; width:95%;'>
 			                <div style='float: left;'><b>판매자</b></div>
 			                <div style='float: right;'>
-			                    <span>${dto.answerCreated}</span> |
-			                    <c:if test="${sessionScope.member.userId==dto.sellerId}">
-			                    	<span class='deleteReplyAnswer' style='cursor: pointer;' data-num='${dto.num}'>삭제</span>
-			                    </c:if>
+			                    <span>${dto.answerCreated}</span>
 			                </div>
 			            </div>
 			        </div>
@@ -74,19 +89,7 @@
 			     </div>			            
             </div>
           	 </c:if>
-		             <c:if test="${empty dto.answer}">
-            <div style='clear: both; padding: 10px 10px;'>
-                <div style='float: left; width: 5%;'>└</div>
-                <div style='float: left; width:95%'>
-                    <textarea cols='72' rows='12' class='boxTA' style='width:98%; height: 70px;'></textarea>
-                 </div>
-            </div>
-             <div style='padding: 0px 13px 10px 10px; text-align: right;'>
-                <button type='button' class='btn btnSendReplyAnswer' data-num='${dto.num}'>답변 등록</button>
-            </div>
-         </c:if>
         </td>
-	 
 	 </tr>
 	 
   </c:forEach>

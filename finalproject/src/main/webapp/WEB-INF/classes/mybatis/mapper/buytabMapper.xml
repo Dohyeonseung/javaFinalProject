@@ -6,9 +6,8 @@
 
 <insert id="insertReview" parameterType="com.sp.app.buytab.infor.Review">
 		INSERT INTO review(listNum, userId, orderId, content, created , starScore, productNum, answer)
-			VALUES (review_seq.NEXTVAL, #{userId}, #{userId}, #{orderId}, #{content}, SYSDATE ,#{starScore}, #{productNum}, #{answer})
-	</insert>
-
+			VALUES (review_seq.NEXTVAL, #{userId}, #{orderId, jdbcType=VARCHAR}, #{content}, SYSDATE ,#{starScore}, #{productNum}, 0)
+</insert>
 
 <select id="dataCountReview" parameterType="map" resultType="Integer">
 		SELECT NVL(COUNT(*),0)
@@ -42,7 +41,7 @@
 	</select>
 	
 	<insert id="questionsQna" parameterType="com.sp.app.buytab.infor.Qna">
-		INSERT INTO sellerQna(num, productNum, userId, question, questionCreated, orderId)
-			VALUES (sellerQna.NEXTVAL, #{productNum}, #{userId}, #{question}, #{questionCreated}, SYSDATE, #{orderId,  jdbcType=VARCHAR})
+		INSERT INTO sellerQna(num, productNum, userId, question, questionCreated)
+			VALUES (sellerQna_seq.NEXTVAL, #{productNum}, #{userId}, #{question}, SYSDATE)
 	</insert>
 </mapper>

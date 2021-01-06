@@ -41,9 +41,6 @@ function orderSubmit(productNum) {
 	count = $('#count').val();
 	var url="orderForm?productNum="+productNum+"&count="+count;
 	location.href=url;
-	
-
-
 }
 
 function openCloseToc() {
@@ -52,12 +49,10 @@ function openCloseToc() {
 	  } else {
 	    document.getElementById('toc-content').style.display = 'block';
 	  }
-	}
+}
 
 
-
-	$(function(){
-		
+$(function(){
 		var menu = "${menuItem}"; 
 		$("#tab-"+menu).addClass("active");
 
@@ -74,13 +69,13 @@ function openCloseToc() {
 			
 			listPage(1);
 		});
-	});
+});
 
-	function login() {
+function login() {
 		location.href="${pageContext.request.contextPath}/member/login";
-	}
+}
 
-	function ajaxHTML(url, method, query, selector) {
+function ajaxHTML(url, method, query, selector) {
 		$.ajax({
 			type:method
 			,url:url
@@ -99,9 +94,9 @@ function openCloseToc() {
 		    	console.log(jqXHR.responseText);
 		    }
 		});
-	}
+}
 
-	function ajaxJSON(url, method, query, fn) { 
+function ajaxJSON(url, method, query, fn) { 
 		$.ajax({
 			type:method
 			,url:url
@@ -122,9 +117,9 @@ function openCloseToc() {
 		    	console.log(jqXHR.responseText);
 		    }
 		});
-	}
+}
 
-	function listPage(page) {
+function listPage(page) {
 		var $tab = $(".tabs .active");
 		var tab = $tab.attr("data-tab");
 		
@@ -133,11 +128,12 @@ function openCloseToc() {
 		var selector = "#tab-content";
 		
 		ajaxHTML(url, "get", query, selector); 
-	}
+}
 
-	$(function(){
-		$(".btnSendReply").click(function(){
-			var num="${dto.productNum}";
+// 리뷰 등록
+$(function(){
+	$("body").on("click", ".btnSendReply", function(){
+			var productNum="${dto.productNum}";
 			var $tb = $(this).closest("table");
 			var content=$tb.find("textarea").val().trim();
 			if(! content) {
@@ -147,7 +143,7 @@ function openCloseToc() {
 			content = encodeURIComponent(content);
 			
 			var url="${pageContext.request.contextPath}/buytab/information/insertReview";
-			var query="num="+num+"&content="+content+"&answer=0";
+			var query="productNum="+productNum+"&content="+content+"&answer=0";
 			
 			var fn = function(data){
 				$tb.find("textarea").val("");
@@ -156,15 +152,47 @@ function openCloseToc() {
 				if(state==="true") {
 					listPage(1);
 				} else if(state==="false") {
-					alert("댓글을 추가 하지 못했습니다.");
+					alert("리뷰를 추가 하지 못했습니다.");
 				}
 			};
 			
 			ajaxJSON(url, "post", query, fn);
 		});
-	});
-	
-	$(function(){
+});
+
+//qna 등록
+$(function(){
+	$("body").on("click", ".btnSendQna", function(){	
+			var productNum="${dto.productNum}";
+			var $tb = $(this).parent().parent().find("textarea");
+			var content=$tb.val().trim();
+			if(! content) {
+				$tb.focus();
+				return false;
+			}
+			content = encodeURIComponent(content);
+			
+			var url="${pageContext.request.contextPath}/buytab/information/questionsQna";
+			var query="productNum="+productNum+"&question="+content;
+			
+			var fn = function(data){
+				$tb.val("");
+				
+				var state=data.state;
+				if(state==="true") {
+					listPage(1);
+				} else if(state==="false") {
+					alert("질문을 추가 하지 못했습니다.");
+				}
+			};
+			
+			ajaxJSON(url, "post", query, fn);
+		});
+});
+
+
+
+$(function(){
 		 $(".star a").click(function(){
 			 var b= $(this).hasClass("on"); //해당되는 클래스가 존재한지 존재하지 않는지 on이존재하면 true/x-false
 			 $(this).parent().children("a").removeClass("on");
@@ -175,42 +203,9 @@ function openCloseToc() {
 			 var s=$(".star .on").length;//별의 갯수
 			 $("input[name=score]").val(s);
 		 });
-	 });
-	
-	//댓글별 답글 등록
-	$(function(){
-		$("body").on("click", ".btnSendReplyAnswer", function(){
-			var num=$(this).attr("data-num");
-			var $td=$(this).closest("td");
-			var $tr=$(this).closest("tr");
-			
-			var answer=$td.find("textarea").val().trim();
-			if(! answer) {
-				$td.find("textarea").focus();
-				return false;
-			}
-			answer = encodeURIComponent(answer);
-			
-			var url="${pageContext.request.contextPath}/selltab/information/questionsQna";
-			var query="num="+num+"&answer="+answer;
-			
-			var fn = function(data){
-				$td.find("textarea").val("");
-				
-				var state=data.state;
-				if(state==="true") {
-					listPage(1);
-				}
-			};
-			
-			ajaxJSON(url, "post", query, fn);
-			
-		});
-	});
+});
+
 </script>
-
-
-
 
 <style type="text/css">
 
@@ -389,7 +384,7 @@ cursor: pointer;
 		<div style="width: 100%; height: 15px; background: #f4f4f4;" ></div>
 		
 		<span id="toc-toggle" onclick="openCloseToc()"><i class="far fa-hand-point-up"></i> &nbsp; 상품상세 원본보기</span>
-		<div id="toc-content" style=" margin-top: 20px; display: none;">${dto.content}</div>
+		<div id="toc-content" style=" margin-top: 20px; display: block;">${dto.content}</div>
 	</div>	          
 
 </div>

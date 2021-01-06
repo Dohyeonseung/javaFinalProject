@@ -113,7 +113,7 @@ public class BuyController {
 		// dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
 		
 		model.addAttribute("dto", dto);
-		
+		model.addAttribute("menuItem", "main");
 		model.addAttribute("mode", "created");
 		return ".buy.product";
 	}

@@ -36,12 +36,12 @@ public class InformationController {
 		
 			return "buy/tab/main";
 				
-			}
+	}
 	
 	
-	//정보
+	// 리뷰 리스트
 	@RequestMapping(value="review")
-	public String main(
+	public String review(
 			@RequestParam(value="pageNo", defaultValue="1") int current_page,
 			@RequestParam int productNum,
 			HttpSession session,
@@ -57,6 +57,7 @@ public class InformationController {
 		Map<String, Object> map=new HashMap<>();
 		map.put("productNum", productNum);
 		map.put("userId", info.getUserId());
+		dataCount = service.dataCountReview(map);
 		
 		if(dataCount !=0)
 			total_page = myUtil.pageCount(rows, dataCount);
@@ -83,9 +84,28 @@ public class InformationController {
 		
 	}
 	
+	@RequestMapping(value="insertReview", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> insertReview(
+			Review dto,
+			HttpSession session
+			) {
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		String state="true";
+		
+		try {
+			dto.setUserId(info.getUserId());
+			service.insertReview(dto);
+		} catch (Exception e) {
+			state="false";
+		}
+		
+		Map<String, Object> model = new HashMap<>();
+		model.put("state", state);
+		return model;
+	}
 	
-	
-	
+	// qna 리스트
 	@RequestMapping(value="qna")
 	public String qna(
 			@RequestParam(value="pageNo", defaultValue="1") int current_page,
@@ -99,7 +119,7 @@ public class InformationController {
 		Map<String, Object> map=new HashMap<>();
 		map.put("productNum", productNum);
 		
-		dataCount=service.dataCountReview(map);
+		dataCount=service.QnaCount(map);
 		total_page = myUtil.pageCount(rows, dataCount);
 		if(current_page>total_page)
 			current_page=total_page;
@@ -126,6 +146,7 @@ public class InformationController {
 		return "buy/tab/qna";
 	}
 		
+	// qna 저장하기
 	@RequestMapping(value="questionsQna", method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> questionsQna(

@@ -20,7 +20,7 @@ public class InformationServiceImpl implements InformationService {
 		int result =0;
 		
 		try {
-			result=dao.selectOne("buytab.dataCountReview");
+			result=dao.selectOne("buytab.dataCountReview", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

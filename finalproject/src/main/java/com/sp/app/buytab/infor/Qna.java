@@ -11,7 +11,7 @@ public class Qna {
 	private String sellerName;
 	private String answer;  // 답변
 	private String answerCreated;
-	
+	private String orderId;
 	
 	public int getNum() {
 		return num;
@@ -72,6 +72,12 @@ public class Qna {
 	}
 	public void setAnswerCreated(String answerCreated) {
 		this.answerCreated = answerCreated;
+	}
+	public String getOrderId() {
+		return orderId;
+	}
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
 	}
 	
 }
