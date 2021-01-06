@@ -3,12 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<style>
-
-</style>
-
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/dateUtil.js"></script>
-<script src="https://kit.fontawesome.com/839eefb84b.js" crossorigin="anonymous"></script>
 <script type="text/javascript">
 $(function(){
 	$(".inputLayout").hide();
@@ -35,7 +30,6 @@ if($("#btnNext").hasClass("last")){
 		$("#btnNext").text("회원가입");
 		$("#btnNext").addClass("last");
 		}
-	});
 });
 
 $(function(){
@@ -159,8 +153,11 @@ function memberOk() {
         f.email2.focus();
         return;
     }
+    
+ 	f.action = "${pageContext.request.contextPath}/member/${mode}";
 
- 	
+    f.submit();
+
 }
 
 function changeEmail() {
