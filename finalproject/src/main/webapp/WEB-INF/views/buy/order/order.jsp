@@ -416,17 +416,9 @@ $(function(){
 				  	
 				  </c:if>
 					
-					<c:if test="${not empty dto }">
 					<div style="padding: 10px 0px; ">
 						<button type="button" id="btnDeleteList" onclick="orderConfirm();" style="background: #FAE500; width: 100%; border: none; font-size: 24px;">결제하기</button>
 					</div>
-					</c:if>
-					
-					<c:if test="${not empty listCart }">
-					<div style="padding: 10px 0px; ">
-						<button type="button" id="btnDeleteList" onclick="orderCartConfirm();" style="background: #FAE500; width: 100%; border: none; font-size: 24px;">결제하기</button>
-					</div>
-					</c:if>
 				</div>
 		</div>
 				</form>

@@ -108,10 +108,10 @@ $(function(){
 <div class="bigBox">
 <div class="body-container" style="width: 1000px;">
 	<div class="body-title" style="border: none;">
-		<h4>홈 > buy > 재료 구매 </h4>
+		<h4>홈 > buy > 완제품 구매 </h4>
 	</div>
 	<div style="display: flex; justify-content: center; margin-bottom: 30px;">
-		<form name="searchForm" action="${pageContext.request.contextPath}/buy/material" method="post">
+		<form name="searchForm" action="${pageContext.request.contextPath}/buy/complete" method="post">
 		              <select name="condition" class="selectField">
 		                  <option value="all" ${condition=="all"?"selected='selected'":""}>모두</option>
 		                  <option value="productName" ${condition=="productName"?"selected='selected'":""}>상품 이름</option>
@@ -123,7 +123,7 @@ $(function(){
 		        </form>
 	</div>
 		<table style="width: 100%; border-spacing: 0px;">
-		<c:forEach var="dto" items="${material}" varStatus="status">
+		<c:forEach var="dto" items="${complete}" varStatus="status">
 			<c:if test="${status.index==0}">
 				<tr>
 			</c:if>

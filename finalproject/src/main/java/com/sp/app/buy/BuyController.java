@@ -30,7 +30,7 @@ public class BuyController {
 	
 
 	@RequestMapping(value = "material")
-	public String product(
+	public String list_material(
 			@RequestParam(value = "page", defaultValue = "1") int current_page,
 			@RequestParam(defaultValue="all") String condition,
 			@RequestParam(defaultValue = "") String keyword,
@@ -50,7 +50,7 @@ public class BuyController {
 		map.put("condition", condition);
         map.put("keyword", keyword);
 		
-		dataCount=service.dataCount(map);
+		dataCount=service.dataCount_mat(map);
 		
 		if(dataCount!=0) {
 			total_page=myUtil.pageCount(rows, dataCount);
@@ -65,7 +65,7 @@ public class BuyController {
 		map.put("offset", offset);
 		map.put("rows", rows);
 		
-		List<Product> list=service.listProduct(map);
+		List<Product> list=service.listProduct_mat(map);
 		
 		for(Product dto:list) {
 			dto.setProductNum(dto.getProductNum());
@@ -81,7 +81,7 @@ public class BuyController {
         }
 		if(query.length()!=0) {
 			listUrl = cp+"/buy/material?" + query;
-			articleUrl = cp+"/buy/material?page=" + current_page + "&"+ query;
+			articleUrl = cp+"/buy/product?page=" + current_page + "&"+ query;
 		}
 		
 		String paging=myUtil.paging(current_page, total_page, listUrl);
@@ -97,9 +97,146 @@ public class BuyController {
 		return ".buy.material";
 	}
 	
+	@RequestMapping(value = "rsv")
+	public String list_rsv(
+			@RequestParam(value = "page", defaultValue = "1") int current_page,
+			@RequestParam(defaultValue="all") String condition,
+			@RequestParam(defaultValue = "") String keyword,
+			HttpServletRequest req,
+			Model model
+			) throws Exception{
+		
+		int rows=10;
+		int total_page=0;
+		int dataCount=0;
+		
+		if(req.getMethod().equalsIgnoreCase("GET")) {
+			keyword=URLDecoder.decode(keyword, "utf-8");
+		}
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("condition", condition);
+        map.put("keyword", keyword);
+		
+		dataCount=service.dataCount_rsv(map);
+		
+		if(dataCount!=0) {
+			total_page=myUtil.pageCount(rows, dataCount);
+		}
+		
+		if(total_page<current_page) {
+			current_page=total_page;
+		}
+		
+		int offset=(current_page-1)*rows;
+		if(offset<0) offset=0;
+		map.put("offset", offset);
+		map.put("rows", rows);
+		
+		List<Product> list=service.listProduct_rsv(map);
+		
+		for(Product dto:list) {
+			dto.setProductNum(dto.getProductNum());
+		}
+		
+		String cp=req.getContextPath();
+		String query="";
+		String listUrl=cp+"/buy/rsv";
+		String articleUrl=cp+"/buy/product?page="+current_page;
+		if(keyword.length()!=0) {
+        	query = "condition=" +condition + 
+        	         "&keyword=" + URLEncoder.encode(keyword, "utf-8");	
+        }
+		if(query.length()!=0) {
+			listUrl = cp+"/buy/rsv?" + query;
+			articleUrl = cp+"/buy/product?page=" + current_page + "&"+ query;
+		}
+		
+		String paging=myUtil.paging(current_page, total_page, listUrl);
+		
+		model.addAttribute("rsv", list);
+		model.addAttribute("articleUrl", articleUrl);
+		model.addAttribute("page", current_page);
+		model.addAttribute("dataCount", dataCount);
+		model.addAttribute("total_page", total_page);
+		model.addAttribute("paging", paging);
+		model.addAttribute("keyword", keyword);
+		
+		return ".buy.rsv";
+	}
+	
+	@RequestMapping(value = "complete")
+	public String list_complete(
+			@RequestParam(value = "page", defaultValue = "1") int current_page,
+			@RequestParam(defaultValue="all") String condition,
+			@RequestParam(defaultValue = "") String keyword,
+			HttpServletRequest req,
+			Model model
+			) throws Exception{
+		
+		int rows=10;
+		int total_page=0;
+		int dataCount=0;
+		
+		if(req.getMethod().equalsIgnoreCase("GET")) {
+			keyword=URLDecoder.decode(keyword, "utf-8");
+		}
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("condition", condition);
+        map.put("keyword", keyword);
+		
+		dataCount=service.dataCount_complete(map);
+		
+		if(dataCount!=0) {
+			total_page=myUtil.pageCount(rows, dataCount);
+		}
+		
+		if(total_page<current_page) {
+			current_page=total_page;
+		}
+		
+		int offset=(current_page-1)*rows;
+		if(offset<0) offset=0;
+		map.put("offset", offset);
+		map.put("rows", rows);
+		
+		List<Product> list=service.listProduct_complete(map);
+		
+		for(Product dto:list) {
+			dto.setProductNum(dto.getProductNum());
+		}
+		
+		String cp=req.getContextPath();
+		String query="";
+		String listUrl=cp+"/buy/complete";
+		String articleUrl=cp+"/buy/product?page="+current_page;
+		if(keyword.length()!=0) {
+        	query = "condition=" +condition + 
+        	         "&keyword=" + URLEncoder.encode(keyword, "utf-8");	
+        }
+		if(query.length()!=0) {
+			listUrl = cp+"/buy/complete?" + query;
+			articleUrl = cp+"/buy/product?page=" + current_page + "&"+ query;
+		}
+		
+		String paging=myUtil.paging(current_page, total_page, listUrl);
+		
+		model.addAttribute("complete", list);
+		model.addAttribute("articleUrl", articleUrl);
+		model.addAttribute("page", current_page);
+		model.addAttribute("dataCount", dataCount);
+		model.addAttribute("total_page", total_page);
+		model.addAttribute("paging", paging);
+		model.addAttribute("keyword", keyword);
+		
+		return ".buy.complete";
+	}
+	
 	@RequestMapping(value = "product", method = RequestMethod.GET)
 	public String product(
 			@RequestParam int productNum,
+			@RequestParam(value = "page", defaultValue = "1") int current_page,
 			@RequestParam String page,
 			@RequestParam(defaultValue = "") String keyword,
 			Model model
@@ -125,6 +262,7 @@ public class BuyController {
 		// dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
 		
 		model.addAttribute("dto", dto);
+		model.addAttribute("page", current_page);
 		model.addAttribute("listImage", listImage);
 		model.addAttribute("menuItem", "main");
 		model.addAttribute("mode", "created");
@@ -135,6 +273,8 @@ public class BuyController {
 	public String cartSubmit(
 			Cart dto,
 			Model model,
+			@RequestParam String page,
+			@RequestParam(defaultValue = "") String keyword,
 			HttpSession session
 			) throws Exception {
 		
@@ -147,7 +287,15 @@ public class BuyController {
 		catch (Exception e) {
 		}
 		
-		return "redirect:/buy/material";
+		keyword = URLDecoder.decode(keyword, "utf-8");
+		int productNum=dto.getProductNum();
+		
+		String query="page="+page+"&productNum="+productNum;
+		if(keyword.length()!=0) {
+			query+="&keyword="+URLEncoder.encode(keyword, "UTF-8");
+		}
+		
+		return "redirect:/buy/product?"+query;
 	}
 	
 	@RequestMapping(value = "cart", method = RequestMethod.GET)

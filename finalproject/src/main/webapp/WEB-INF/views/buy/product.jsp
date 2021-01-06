@@ -278,6 +278,44 @@ $(document).on("click", ".star a", function() {
          $("input[name=starScore]").val(s);
      });
 
+$(function(){
+	var tid=null;
+	var strDate = "${dto.countDate}";
+	if(strDate=="") {
+		return false;		
+	}
+	
+	diffDayTime(strDate);
+	tid = setInterval(function(){
+		diffDayTime(strDate);
+	}, 1000*60)
+
+	function diffDayTime(strDate) {
+	    var sy = parseInt(strDate.substr(0, 4));
+	    var sm = parseInt(strDate.substr(5, 2));
+	    var sd = parseInt(strDate.substr(8, 2));
+
+	    var date1=new Date();
+	    var date2=new Date(sy, sm-1, sd, 24, 0, 0, 0);
+	    
+	    var sn=date1.getTime();
+	    var en=date2.getTime();
+	    var count=Math.floor((en-sn)/1000);
+	    if(count<=0 && tid!=null) {
+	    	clearInterval(tid);
+	    	tid=null;
+	    }
+	    
+	    var d=Math.floor(count/(24*3600));
+	    var h=Math.floor((count/3600)%24);
+	    var m=Math.floor((count/60)%60);
+	    // var s=count%60;
+	  
+	    var str = d + "일 " + h +"시간 " + m + "분 남음"
+	    $("#countDateLayout").html(str);
+	}
+});
+
 </script>
 
 <style type="text/css">
@@ -416,10 +454,17 @@ align-items: center;
 cursor: pointer;
 }
 
+.gradient-border { --borderWidth: 6px; background: white; position: relative; border-radius: var(--borderWidth); } .gradient-border:after { content: ''; position: absolute; top: calc(-1 * var(--borderWidth)); left: calc(-1 * var(--borderWidth)); height: calc(100% + var(--borderWidth) * 2); width: calc(100% + var(--borderWidth) * 2); background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82); border-radius: calc(1.5 * var(--borderWidth)); z-index: -1; animation: animatedgradient 2s ease alternate infinite; background-size: 300% 300%; } @keyframes animatedgradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
+@media screen and (max-width: 786px){
+.thumbnail_main {
+		height: 500px;
+	}
+}
 
 
 </style>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/tabs.css" type="text/css">
 <form name="orderForm" method="post">
 			<div style="text-align: center;">
 				<p style="margin: 20px 0px; font-size: 28px;">${dto.userName}<p>
@@ -445,6 +490,10 @@ cursor: pointer;
 	        			</div>
 	        	</div>
 			</div>
+			
+			<c:if test="${dto.division=='2'}">
+				<div class="gradient-border" id="box" style="margin-top: 20px;"><p style="font-size: 17px; font-weight: bold;">마감임박: <span id="countDateLayout"></span><p></div>
+			</c:if>
 			
 			<div class="reviewLink"><a href="#">★★★★ 리뷰96건</a></div>
 		

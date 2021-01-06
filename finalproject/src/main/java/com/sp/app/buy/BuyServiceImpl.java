@@ -14,10 +14,34 @@ public class BuyServiceImpl implements BuyService {
 	private CommonDAO dao;
 	
 	@Override
-	public List<Product> listProduct(Map<String, Object> map) {
+	public List<Product> listProduct_mat(Map<String, Object> map) {
 		List<Product> list=null;
 		try {
-			list=dao.selectList("buy.listProduct", map);
+			list=dao.selectList("buy.listProduct_mat", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+	
+	@Override
+	public List<Product> listProduct_rsv(Map<String, Object> map) {
+		List<Product> list=null;
+		try {
+			list=dao.selectList("buy.listProduct_rsv", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+	
+	@Override
+	public List<Product> listProduct_complete(Map<String, Object> map) {
+		List<Product> list=null;
+		try {
+			list=dao.selectList("buy.listProduct_complete", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -26,10 +50,34 @@ public class BuyServiceImpl implements BuyService {
 	}
 
 	@Override
-	public int dataCount(Map<String, Object> map) {
+	public int dataCount_mat(Map<String, Object> map) {
 		int result=0;
 		try {
-			result=dao.selectOne("buy.dataCount", map);
+			result=dao.selectOne("buy.dataCount_mat", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	@Override
+	public int dataCount_rsv(Map<String, Object> map) {
+		int result=0;
+		try {
+			result=dao.selectOne("buy.dataCount_rsv", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	@Override
+	public int dataCount_complete(Map<String, Object> map) {
+		int result=0;
+		try {
+			result=dao.selectOne("buy.dataCount_complete", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
