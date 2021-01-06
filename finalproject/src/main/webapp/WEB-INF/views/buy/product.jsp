@@ -205,6 +205,13 @@ $(function(){
 		 });
 });
 
+$(function (str) {
+	$(".images").hover(function () {
+		var image = jQuery(this).attr("src");
+		$("#thumbnail_main").attr("src", image)
+	})
+})
+
 </script>
 
 <style type="text/css">

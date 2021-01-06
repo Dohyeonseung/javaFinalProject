@@ -96,6 +96,17 @@ public class BuyServiceImpl implements BuyService {
 	}
 
 	@Override
+	public List<Orderinfo> listOrder(Map<String, Object> map) {
+		List<Orderinfo> list=null;
+		try {
+			list=dao.selectList("buy.listOrderinfo", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	@Override
 	public void insertCart(Cart dto) throws Exception {
 		try {
 			dao.insertData("buy.insertCart", dto);

@@ -78,11 +78,11 @@ ul li {
 
 .content-box {
 	width: 300px;
-	margin: 20px 0px;
+	margin: 10px 0px;
 	font-size: 18px;
 	display: flex;
 	flex-direction: column;
-	justify-content: space-around;
+	justify-content: space-between;
 	
 }
 
@@ -99,6 +99,9 @@ ul li {
 
 .item-info {
 	border: 1px solid #b6b6b6;
+	width: 450px;
+	height: 197px;
+	overflow: auto;
 }
 
 .delivery{
@@ -174,21 +177,6 @@ function orderConfirm() {
 	f.submit();
 }
 
-function orderCartConfirm() {
-	var f=document.orderSubmit;
-
-	var str = f.Addr1.value;
-    if(!str) {
-        alert("주소를 입력해 주세요. ");
-        f.Addr1.focus();
-        return;
-    }
-	
-	f.action="${pageContext.request.contextPath}/buy/orderCartsubmit";
-
-	f.submit();
-}
-
 function message(frm) {
 
     var content = frm.selectmsg.selectedIndex;
@@ -223,6 +211,33 @@ function message(frm) {
     return true;
 }
 
+$(function(){
+	Number.prototype.format = function(){
+	    if(this==0) return 0;
+
+	    var reg = /(^[+-]?\d+)(\d{3})/;
+	    var n = (this + '');
+
+	    while (reg.test(n)) n = n.replace(reg, '$1' + ',' + '$2');
+
+	    return n;
+	};
+
+	// 문자열 타입에서 쓸 수 있도록 format() 함수 추가
+	String.prototype.format = function(){
+	    var num = parseFloat(this);
+	    if( isNaN(num) ) return "0";
+
+	    return num.format();
+	};
+	
+	jQuery('.format-money').text(function() {
+	    jQuery(this).text(
+	        jQuery(this).text().format()
+	    );
+	});
+});
+
 /* $(function() {
  
     $("#btnDeleteList").click(function(){
@@ -234,7 +249,6 @@ function message(frm) {
     });
 }); */
 </script>
-
 	<div id="wrap">
 		<div class="body-container">
 			<div class="body-header">
@@ -252,7 +266,7 @@ function message(frm) {
 							<th>수령인&nbsp;<span style="color: red;">*</span> </th> <td><input type="text" name="customer"></td>
 						</tr>
 						<tr>
-							<th>배송지&nbsp;<span style="color: red;">*</span> </th> <td><input type="text" name="zip" id="zip"
+							<th>배송지&nbsp;<span style="color: red;">*</span> </th> <td><input type="text" name="zip" id="zip""
 			                       class="boxTF" style="width: 60%;" readonly="readonly">
 			            <button type="button" class="btn" onclick="daumPostcode();">우편번호</button></td>
 						</tr>
@@ -317,11 +331,15 @@ function message(frm) {
 									<img alt="" src="${pageContext.request.contextPath}/resources/img/slider1.jpg">
 								</div>
 								<div class="content-box">
-									<div><span>${dto.productName}</span></div>
+									<div><span style="font-size: 20px; font-weight: bold;">${dto.productName}</span></div>
+									<div>
+										<span style="font-size: 18px;">수량</span><span style="font-size: 18px; margin-left: 40px;"> ${dto.count} 개</span>
+										<input type="hidden" name="counts" value="${dto.count}">
+									</div>
 									<input type="hidden" name="productNames" value="${dto.productName}">
 									<input type="hidden" name="productNums" value="${dto.productNum}">
 									<input type="hidden" name="prices" value="${dto.price}">
-									<div><span>${dto.price}원 <input type="text" name="counts" value="${dto.count}"> </span></div>
+									<div><span style="font-size: 24px; font-weight: bold; font-family: Malgun Gothic, 맑은 고딕;" class="format-money">${dto.price}</span>원</div>
 								</div>
 							</div>
 							<div style="background: #e5e5e5; height: 25px;">
@@ -334,13 +352,13 @@ function message(frm) {
 						<div>
 							<table style="width: 100%; border-spacing: 5px;">
 								<tr>
-									<th>총 상품금액</th><td style="float: right;">339,000원<input type="hidden" name="total_price" value="${dto.price}"></td>
+									<th>총 상품금액</th><td style="float: right;"><span class="format-money">${total}</span>원<input type="hidden" name="total_price" value="${total}"></td>
 								</tr>
 								<tr>
 									<th>배송비</th><td style="float: right;">2500원</td>
 								</tr>
 								<tr>
-									<th>적립금</th><td style="float: right;">${dto.reserves}원</td>
+									<th>적립금</th><td style="float: right;"><span class="format-money">${reserves}</span></td>
 								</tr>
 							</table>
 						</div>
@@ -355,21 +373,25 @@ function message(frm) {
 								</div>
 								
 				  				<c:forEach var="vo" items="${listCart}">
-									<div style="display: flex;">
+									<div style="display: flex; width: 400px;">
 										<div class="image-box">
 											<img alt="" src="${pageContext.request.contextPath}/resources/img/slider1.jpg">
 										</div>
 										<div class="content-box">
-											<div><span>${vo.cName}</span></div>
+											<div><span style="font-size: 20px; font-weight: bold;">${vo.cName}</span></div>
+										<div>
+											<span style="font-size: 18px;">수량</span><span style="font-size: 18px; margin-left: 40px;"> ${vo.count} 개</span>
+											<input type="hidden" name="counts" value="${vo.count}">
+										</div>
 											<input type="hidden" name="cIds" value="${vo.cId}">
 											<input type="hidden" name="productNames" value="${vo.cName}">
 											<input type="hidden" name="productNums" value="${vo.productNum}">
 											<input type="hidden" name="prices" value="${vo.cPrice}">
-											<div><span>${vo.cPrice}원 <input type="text" name="counts" value="${vo.count}"> </span></div>
+											<div><span style="font-size: 24px; font-weight: bold; font-family: Malgun Gothic, 맑은 고딕;" class="format-money">${vo.cPrice}</span> 원</div>
 										</div>
 									</div>
 									<div style="background: #e5e5e5; height: 25px;">
-									<span style="float: right; font-size: 18px;">롯데쇼핑(주) 미아점</span>
+									<span style="float: right; font-size: 18px;">${vo.seller}</span>
 									</div>	
 				  				</c:forEach>
 							</div>
@@ -380,13 +402,13 @@ function message(frm) {
 							<div>
 								<table style="width: 100%; border-spacing: 5px;">
 									<tr>
-										<th>총 상품금액</th><td style="float: right;">${total}<input type="hidden" name="total_price" value="${total}"></td>
+										<th>총 상품금액</th><td style="float: right;"><span class="format-money">${total}</span>원<input type="hidden" name="total_price" value="${total}"></td>
 									</tr>
 									<tr>
-										<th>배송비</th><td style="float: right;">2500원</td>
+										<th>배송비</th><td style="float: right;">2,500원</td>
 									</tr>
 									<tr>
-										<th>적립금</th><td style="float: right;">${reserves}원</td>
+										<th>적립금</th><td style="float: right;"><span class="format-money">${reserves}</span>원</td>
 									</tr>
 								</table>
 							</div>

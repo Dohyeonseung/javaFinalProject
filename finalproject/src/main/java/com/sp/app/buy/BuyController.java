@@ -2,6 +2,7 @@ package com.sp.app.buy;
 
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,15 +28,17 @@ public class BuyController {
 	@Autowired
 	private MyUtil myUtil;
 	
+
 	@RequestMapping(value = "material")
 	public String product(
 			@RequestParam(value = "page", defaultValue = "1") int current_page,
+			@RequestParam(defaultValue="all") String condition,
 			@RequestParam(defaultValue = "") String keyword,
 			HttpServletRequest req,
 			Model model
 			) throws Exception{
 		
-		int rows=8;
+		int rows=10;
 		int total_page=0;
 		int dataCount=0;
 		
@@ -44,6 +47,8 @@ public class BuyController {
 		}
 		
 		Map<String, Object> map = new HashMap<>();
+		map.put("condition", condition);
+        map.put("keyword", keyword);
 		
 		dataCount=service.dataCount(map);
 		
@@ -70,9 +75,13 @@ public class BuyController {
 		String query="";
 		String listUrl=cp+"/buy/material";
 		String articleUrl=cp+"/buy/product?page="+current_page;
+		if(keyword.length()!=0) {
+        	query = "condition=" +condition + 
+        	         "&keyword=" + URLEncoder.encode(keyword, "utf-8");	
+        }
 		if(query.length()!=0) {
-			listUrl+="?"+query;
-			articleUrl+="&"+query;
+			listUrl = cp+"/buy/material?" + query;
+			articleUrl = cp+"/buy/material?page=" + current_page + "&"+ query;
 		}
 		
 		String paging=myUtil.paging(current_page, total_page, listUrl);
@@ -109,41 +118,18 @@ public class BuyController {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("productNum", productNum);
+		
+		List<String> listImage = new ArrayList<String>();
+		listImage = myUtil.getImgSrc(dto.getContent());
 
 		// dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
 		
 		model.addAttribute("dto", dto);
+		model.addAttribute("listImage", listImage);
 		model.addAttribute("menuItem", "main");
 		model.addAttribute("mode", "created");
 		return ".buy.product";
 	}
-
-/*
-	@RequestMapping(value = "purchase", method = RequestMethod.GET)
-	public String productForm(Model model) throws Exception {
-		
-		return ".buy.purchase";
-	}
-	
-	@RequestMapping(value = "", method = RequestMethod.POST)
-	public String insertOrderinfo(
-			Orderinfo dto,
-			HttpSession session
-			) throws Exception{
-		
-		SessionInfo info=(SessionInfo)session.getAttribute("member");
-		
-		try {
-			dto.setMemberIdx(info.getMemberIdx());
-			service.insertOrderinfo(dto);
-		} catch (Exception e) {
-		}
-		
-		return "redirect:/buy/material";
-	}
-*/
-	
-
 	
 	@RequestMapping(value = "addcart", method = RequestMethod.POST)
 	public String cartSubmit(
@@ -236,10 +222,18 @@ public class BuyController {
 		}
 		dto.setCount(count);
 		
+		int total=0;
+		int reserves=0;
+		
+		total+=(dto.getPrice()*dto.getCount())+2500;
+		reserves+=(dto.getReserves()*dto.getCount());
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("productNum", productNum);
 		
 		model.addAttribute("dto", dto);
+		model.addAttribute("total", total);
+		model.addAttribute("reserves", reserves);
 		
 		return ".buy.order.order";
 	}
@@ -260,7 +254,7 @@ public class BuyController {
 		} catch (Exception e) {
 		}
 		
-		return ".buy.material";
+		return "redirect:/buy/orderCheck";
 	}
 	
 	@RequestMapping(value = "orderCart", method = RequestMethod.POST)
@@ -275,8 +269,8 @@ public class BuyController {
 			int total=0;
 			int reserves=0;
 			for(Cart dto:listCart) {
-				total+=dto.getcPrice();
-				reserves+=dto.getReserves();
+				total+=(dto.getcPrice()*dto.getCount())+2500;
+				reserves+=(dto.getReserves()*dto.getCount());
 			}
 			
 			model.addAttribute("listCart", listCart);
@@ -289,25 +283,32 @@ public class BuyController {
 		return ".buy.order.order";
 	}
 	
-	@RequestMapping(value = "orderCartsubmit", method = RequestMethod.POST)
-	public String orderCartsubmit(
-			Orderinfo dto,
-			@RequestParam List<String> cIds,
+	@RequestMapping(value = "orderCheck")
+	public String orderCheck(
+			HttpServletRequest req,
+			Model model,
 			HttpSession session
 			) throws Exception {
+		SessionInfo info=(SessionInfo) session.getAttribute("member");
 		
-		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		long memberIdx=info.getMemberIdx();
 		
-		try {
-			
-			dto.setMemberIdx(info.getMemberIdx());
-			service.insertOrderinfo(dto);
-			service.deleteCart(cIds);
-		} catch (Exception e) {
+		
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("memberIdx", memberIdx);
+		List<Orderinfo> list=service.listOrder(map);
+		
+		for(Orderinfo dto:list) {
+			dto.setOrderId(dto.getOrderId());
 		}
 		
-		return ".buy.material";
+		model.addAttribute("order", list);
+
+		return ".buy.order.orderCheck";
+		
 	}
+	
 	
 
 	
