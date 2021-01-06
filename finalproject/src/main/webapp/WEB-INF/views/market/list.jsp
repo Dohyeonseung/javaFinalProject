@@ -10,7 +10,7 @@
 	padding: 10px 5px 10px;
 	margin: 5px;
 	margin-bottom: 50px;
-	border: 1px solid #DAD9FF;
+	border: none;
 	cursor: pointer;
 }
 .subject {
@@ -18,7 +18,7 @@
      height:25px;
      line-height:25px;
      margin:5px auto;
-     border-top: 1px solid #DAD9FF;
+     border-top: 1px solid #cccccc;
      display: inline-block;
      white-space:nowrap;
      overflow:hidden;
