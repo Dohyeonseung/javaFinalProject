@@ -8,6 +8,8 @@ public class ConsumerQNA {
 	// 질문
 	private int qnaNum;
 	private int state;
+	private int score;
+	private String questionType;
 	private String userId;
 	private String userName;
 	private String q_subject;
@@ -25,6 +27,24 @@ public class ConsumerQNA {
 	private String originalFileName;
 
 	private List<MultipartFile> upload;
+	
+	
+
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+	public String getQuestionType() {
+		return questionType;
+	}
+
+	public void setQuestionType(String questionType) {
+		this.questionType = questionType;
+	}
 
 	public int getState() {
 		return state;

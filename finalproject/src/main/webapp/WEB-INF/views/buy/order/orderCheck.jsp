@@ -74,6 +74,7 @@ ul li {
 	width: 800px;
 	border-bottom: 1px solid #e6e6e6;
 	display: flex;
+	justify-content: space-between;
 }
 
 .item-seller {
@@ -86,14 +87,19 @@ ul li {
 .info-body {
 	padding: 18px 0px;
 	display: flex;
+	flex-direction: column;
 }
 
 .left-box {
-	width: 400px;
+	width: 150px;
+}
+
+.middle-box {
+	width: 450px;
 }
 
 .right-box {
-	width: 400px;
+	width: 200px;
 }
 
 .image-box {
@@ -212,98 +218,58 @@ $(function(){
 </script>
 
 	<div id="wrap">
-		<c:if test="${not empty cart }">
+		<c:if test="${not empty order }">
 		<div class="body-container">
 			<div class="body-header">
-				<h3>장바구니</h3>
-				<h6>장바구니<span style="color: #b3b3b3;">>주문결제>주문완료</span></h6>
+				<h3>주문내역</h3>
+				<h6><span style="color: #b3b3b3; display: none;">장바구니>주문결제>주문완료</span></h6>
 			</div>
 			<form name="cartForm" method="post">
 			<div class="body-content">
 				<div class="item-wrapper" style="float: left;">
-			<div>
-				<input type="checkbox" class="itemAll" id="itemAll">
-				<label for="itemAll"></label>
-				<span style="font-size: 18px; font-family: 맑은 고딕, Malgun Gothic; font-weight: bold; padding-left: 8px;">전체선택</span>
-			</div>
-			<c:forEach var="dto" items="${cart}" varStatus="status">
+			<c:forEach var="dto" items="${order}" varStatus="status">
 						<div class="item-seller">
-							&nbsp;&nbsp;&nbsp;${dto.seller}
+							주문번호&nbsp;&nbsp;&nbsp;${dto.orderId}
 						</div>
 					<div class="info-box">
 					<div class="left-box">
-								<div class="info-body">
-									<div style="line-height: 150px;">
-										<input type="checkbox" name="cIds" id="item${dto.cId}" value="${dto.cId}">
-    									<label for="item${dto.cId}"></label>
-									</div>
-									<div class="image-box">
-										<img alt=""
-											src="${pageContext.request.contextPath}/uploads/ms/${dto.imageFilename}">
-									</div>
-									<span
-										style="padding-left: 20px; font-family: 맑은 고딕, Malgun Gothic; font-weight: 600;">
-										${dto.cName} </span>
-								</div>
-							</div>
+						<div class="info-body">
+							<span style="padding-left: 20px; font-family: 맑은 고딕, Malgun Gothic; font-weight: 600; padding: 10px; border-bottom: 1px solid black;">날짜</span>
+							<span style="padding-left: 20px; font-family: 맑은 고딕, Malgun Gothic; font-weight: 600; padding: 10px;">${dto.order_date}</span>
+						</div>
+						</div>
+					<div class="middle-box">
+						<div class="info-body">
+							<span style="padding-left: 20px; font-family: 맑은 고딕, Malgun Gothic; font-weight: 600; padding: 10px; border-bottom: 1px solid black;">상품정보</span>
+							<span style="padding-left: 20px; font-family: 맑은 고딕, Malgun Gothic; font-weight: 600; padding: 10px;">상품정보</span>
+						</div>
+					</div>
 					<div class="right-box">
-						<div class="info-body" style="flex-direction: column;">
-						<div class="option">
-						<span>수량</span>
-						</div>
-						<div class="item-price">
-						<div style="display: flex; justify-content: space-between;">
-							<div>
-								<button type="button" class="minus" style="width: 30px; height: 30px; background: white; border: 1px solid #a6a6a6;">-</button>
-								<input type="text" class="count" name="count" min="1" max="${dto.stock}" style="width: 50px; height: 28px; text-align: center; border: 1px solid #a6a6a6;" value="${dto.count}">
-								<button type="button" class="plus"  style="width: 30px; height: 30px; background: white; border: 1px solid #a6a6a6;">+</button>
-							</div>
-							<div style="font-size: 24px; font-weight: bold;">
-								<span class="format-money">${dto.cPrice}</span> 원
-							</div>
-							</div>
-							<div style="margin-top: 20px; border: 1px solid #e4e4e4; padding: 10px;">
-								상품금액 : <span class="format-money">${dto.cPrice}</span> 원 <br>
-								적립금 : <span class="format-money">${dto.reserves}</span> 원
-							</div>
-						</div>
+						<div class="info-body">
+							<span style="padding-left: 20px; font-family: 맑은 고딕, Malgun Gothic; font-weight: 600; padding: 10px; border-bottom: 1px solid black;">상태</span>
+							<span style="padding-left: 20px; font-family: 맑은 고딕, Malgun Gothic; font-weight: 600; padding: 10px;">상태</span>
 						</div>
 					</div>
 					<div>
 						<div class="info-body">
-						<i class="fas fa-times" style="font-size: 24px; padding-left: 10px; cursor: pointer;"  onclick="deleteCart('${dto.cId}');"></i>
 						</div>
 					</div>
 					</div>
 			</c:forEach>
 				</div>
-				<div style="float: left; margin-top: 95px;">
-			<div style="border-top: 1px solid #d9d9d9; width: 400px; padding: 20px; font-size: 20px;">
-				<ul>
-					<li><span>상품 금액</span><span class="right">120,000원</span></li>
-					<li><span>적립금</span><span class="right">6000원</span></li>
-					<li>&nbsp;</li>
-					<li><span>총 주문금액</span><span class="right">120,000원</span></li>
-				</ul>
-			</div>
-			<div style="width: 442px;">
-				<button id="btnDeleteList" style="width: 60px; height: 60px; border: none; background: #1e1e1e; float: left;"><i class="far fa-trash-alt" style="color: white; font-size: 28px;"></i></button>
-				<button type="button" onclick="orderSubmit();" style="width: 382px; height: 60px; border: none; background: #FAE500; float: left; font-size: 22px;">주문하기</button>
-			</div>
-			</div>
 			</div>
 			</form>
 		</div>
 			</c:if>
-			<c:if test="${empty cart }">
+			<c:if test="${empty order }">
 				<div class="body-container">
 					<div style="display: flex; align-items: center; min-height: 500px;">
 					<table style="margin: auto; vertical-align: middle;">
 						<tr>
-							<td style="font-size: 72px; text-align: center;"><i class="fas fa-cart-plus"></i></td>
+							<td style="font-size: 72px; text-align: center;"><i class="fas fa-shopping-basket"></i></td>
 						</tr>
 						<tr>
-							<td style="font-size: 24px; text-align: center; padding-bottom: 50px;">장바구니에 담긴 상품이 없습니다.</td>
+							<td style="font-size: 24px; text-align: center; padding-bottom: 50px;">주문 내역이 없습니다.</td>
 						</tr>
 						<tr>
 							<td><div style="margin: 0px auto; float: center; width: 80%;"><input type="button" value="홈으로 가기" style="width: 100%; height: 50px; font-size: 18px;" onclick="javascript:location.href='${pageContext.request.contextPath}';"></div></td>

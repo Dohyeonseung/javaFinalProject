@@ -167,5 +167,46 @@ public class SalesServiceImpl implements SalesService {
 		return result;
 	}
 
+	@Override
+	public Sales readOrderInfo(int orderNum) {
+		Sales dto = null;
+		try {
+			dto = dao.selectOne("sales.readOrderInfo", orderNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
+	}
+
+	@Override
+	public void insertOrderProcessing(Sales dto) throws Exception {
+		try {
+			dao.insertData("sales.insertOrderProcessing", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	@Override
+	public List<Sales> orderProcessingList(int orderNum) {
+		List<Sales> list = null;
+		try {
+			list = dao.selectList("sales.orderProcessingList", orderNum);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public void updateOrderProcessing(Map<String, Object> map) throws Exception {
+		try {
+			dao.updateData("sales.updateOrderProcessing", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
 
 }

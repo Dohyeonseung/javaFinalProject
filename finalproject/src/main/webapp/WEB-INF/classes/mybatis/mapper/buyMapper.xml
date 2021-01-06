@@ -8,13 +8,43 @@
 		SELECT NVL(COUNT(*), 0)
 		FROM product p
 		JOIN seller s ON p.userId = s.userId
+		<where>
+			<if test="keyword!=null and keyword!='' ">
+				<include refid="where-list"/>
+			</if>
+		</where> 
 	</select>
+	
+	<sql id="where-list">
+		<choose>
+			<when test="condition == 'all' ">
+			   ( INSTR(productName, #{keyword}) &gt; 0
+		          OR DBMS_LOB.INSTR(content, #{keyword}) &gt; 0 )
+			</when>
+			<when test="condition == 'created_date' ">
+			   ( TO_CHAR(created, 'YYYYMMDD') = #{keyword}
+		          OR TO_CHAR(created, 'YYYY-MM-DD') = #{keyword} )
+			</when>
+			<when test="condition == 'content'">
+			    DBMS_LOB.INSTR(content, #{keyword}) &gt; 0
+			</when>
+			<otherwise>
+			    INSTR(${condition}, #{keyword}) &gt; 0
+			</otherwise>
+		</choose>
+	</sql>
 
 	<!-- 상품 리스트 읽기 -->
 	<select id="listProduct" parameterType="map" resultType="com.sp.app.buy.Product">
-		SELECT productNum, userId, productName, price, content,
+		SELECT productNum, p.userId, productName, price, content, s.userName,
 			TO_CHAR(created_date, 'YYYY-MM-DD') created_date, imageFileName, categoryNum
-		FROM product
+		FROM product p
+		JOIN seller s ON p.userId=s.userId
+		<where>
+			<if test="keyword != null and keyword != ''">
+				<include refid="where-list"/>
+			</if>
+		</where>
 		ORDER BY productNum DESC
 		OFFSET ${offset} ROWS FETCH FIRST#{rows} ROWS ONLY
 	</select>
@@ -77,7 +107,25 @@
 	</insert>
 	
 	
-		<insert id="insertdelivery" parameterType="com.sp.app.buy.Orderinfo">
+	<!-- 주문 항목 조회 -->
+	<select id="listOrderinfo" parameterType="map" resultType="com.sp.app.buy.Orderinfo">
+		SELECT orderId, memberIdx, total_price, order_state,
+				 TO_CHAR(order_date, 'YYYY-MM-DD') order_date, Addr1, Addr2,
+				 reserves
+		FROM orderinfo
+		WHERE memberIdx=#{memberIdx}
+		ORDER BY order_date DESC
+	</select>
+	
+	<!-- 주문 항목 상세 조회 -->
+	<select id="listOrder_detail" parameterType="map" resultType="com.sp.app.buy.Orderinfo">
+		SELECT orderId_detail, count, productName, price, orderId
+		FROM orderinfo
+		WHERE orderId=#{orderId}
+	</select>
+	
+	
+	<insert id="insertdelivery" parameterType="com.sp.app.buy.Orderinfo">
 		INSERT INTO delivery(orderId, Addr1, Addr2, zip,
 				 customer, tel, othertel, content) VALUES
 				 (#{orderId}, #{Addr1, jdbcType=VARCHAR}

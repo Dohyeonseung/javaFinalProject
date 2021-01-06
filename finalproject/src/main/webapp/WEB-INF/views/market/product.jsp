@@ -20,7 +20,7 @@ ul li {
 	list-style: none;
 }
 
-img {
+.market_img {
 	width: 100%;
 	height: 100%;
 }
@@ -187,7 +187,7 @@ function test() {
 		<form name="orderForm" method="post">
 			<div class="thumbnail">
 				<div class="thumbnail_main">
-					<img src="${pageContext.request.contextPath}/uploads/product/${dto.imageFileName}">
+					<img class="market_img" src="${pageContext.request.contextPath}/uploads/product/${dto.imageFileName}">
 				</div>
 			</div>
 			<div class="iteminfo">

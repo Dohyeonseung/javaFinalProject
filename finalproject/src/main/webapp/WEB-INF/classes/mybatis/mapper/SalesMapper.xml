@@ -170,4 +170,40 @@
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	</select>
 	
+		<!-- 주문상세정보 -->
+	<select id="readOrderInfo" parameterType="Integer" resultType="com.sp.app.admin.sales.Sales">
+		SELECT o.orderNum, o.orderDate, p.productCode, o.orderer, p.productName, o.buyCount, o.amountPrice, o.orderAddress, o.orderTel, o.orderState, o.reqMessage
+			FROM CorpOrderInfo o
+			JOIN CorpProduct p ON p.productCode = o.productCode
+			WHERE o.orderNum = #{orderNum}
+			ORDER BY o.orderDate DESC
+			FETCH FIRST 1 ROWS ONLY
+	</select>
+	
+	<!-- 주문처리등록 -->
+	<insert id="insertOrderProcessing" parameterType="com.sp.app.admin.sales.Sales">
+		INSERT INTO orderProcessing(orderCode, p_num, orderSendDate, o_memo, orderNum)
+			VALUES (#{orderCode}, orderProcessing_seq.NEXTVAL, SYSDATE, #{o_memo}, #{orderNum})
+	</insert>
+	
+	<!-- 상품 상태변경 업데이트-->
+	<update id="updateOrderProcessing" parameterType="map">
+		UPDATE CorpOrderInfo SET orderState = #{orderState} WHERE orderNum = #{orderNum}
+	</update>
+	
+	<!-- 주문상세정보 리스트 -->
+	<select id="orderProcessingList" parameterType="Integer" resultType="com.sp.app.admin.sales.Sales">
+		SELECT p_num, orderSendDate, o_memo, orderCode
+		FROM orderProcessing p
+		JOIN CorpOrderInfo o ON o.orderNum = p.orderNum
+		WHERE p.orderNum = #{orderNum}
+		ORDER BY p_num DESC
+		OFFSET 0 ROWS FETCH FIRST 10 ROWS ONLY
+	</select>
+	
+	<!-- 차트리스트 -->
+	<select id="salesChartList" resultType="com.sp.app.admin.sales.Sales">
+	
+	</select>
+	
 </mapper>

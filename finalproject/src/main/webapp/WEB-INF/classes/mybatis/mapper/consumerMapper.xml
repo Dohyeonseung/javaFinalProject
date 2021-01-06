@@ -14,8 +14,23 @@
 
 	<!-- 질문 등록 -->
 	<insert id="insertQna" parameterType="com.sp.app.consumer.ConsumerQNA">
-	 	INSERT INTO consumerQna(qnaNum, userId, subject, content, created) VALUES (#{qnaNum}, #{userId}, #{q_subject}, #{q_content}, SYSDATE)
+	 	INSERT INTO consumerQna(qnaNum, userId, subject, content, created, questionType) VALUES (#{qnaNum}, #{userId}, #{q_subject}, #{q_content}, SYSDATE, #{questionType})
 	</insert>
+	
+	<!-- 내문의내역 리스트 -->
+	<select id="myQNAList" parameterType="String" resultType="com.sp.app.consumer.ConsumerQNA">
+		SELECT qnaNum, questionType, subject q_subject, created q_created, state 
+		FROM consumerQNA 
+		WHERE userId = #{value}
+	</select>
+	
+	<!-- 문의내용 -->
+	<select id="myQNAread" parameterType="Integer" resultType="com.sp.app.consumer.ConsumerQNA">
+		SELECT c.userId, m1.userName, questionType, subject q_subject, content q_content, created q_created, a_subject, a_content, a_created, state, qnaNum, score
+		FROM consumerQNA c
+		JOIN member1 m1 ON c.userId = m1.userId
+		WHERE qnaNum = #{num}
+	</select>
 	
 	<!-- 자주하는 질문 등록 -->
 	<insert id="insertFaq" parameterType="com.sp.app.consumer.ConsumerFAQ">
@@ -45,6 +60,19 @@
 		</where>
 	</select>
 	
+	<!-- 관리자 QNA 리스트 갯수 -->
+	<select id="adminQNACount" parameterType="Integer" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM consumerQNA c
+		JOIN member1 m ON c.userId = m.userId
+		<where>
+			state = 0
+			<if test="questionType > 0">
+				AND questionType = #{questionType}
+			</if>
+		</where>
+	</select>
+	
 	<!-- 자주보는 질문 Best10 리스트 출력 -->
 	<select id="populList" parameterType="map" resultType="com.sp.app.consumer.ConsumerFAQ">
 		SELECT num faqnum, subject f_subject, questionType
@@ -54,6 +82,14 @@
 		</where>
 		ORDER BY views DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<select id="populRead" parameterType="Integer" resultType="com.sp.app.consumer.ConsumerFAQ">
+		SELECT subject f_subject, content f_content, created, questionType
+		FROM consumerFaq
+		<where>
+			num = #{value}
+		</where>
 	</select>
 	
 	<!-- 자주하는 질문 리스트 -->
@@ -69,4 +105,72 @@
 		ORDER BY num DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	</select>
+	
+	<!-- 답변 별점 -->
+	<update id="answerReviewSubmit" parameterType="map">
+		UPDATE consumerQNA SET review = #{content}, score = #{score} 
+		WHERE qnaNum = #{qnaNum}
+	</update>
+	
+	<!-- 답변대기중인 QNA 리스트 -->
+	<select id="qnaList" parameterType="map" resultType="com.sp.app.consumer.ConsumerQNA">
+		SELECT qnaNum, c.userId, m.userName, subject q_subject, created q_created, questionType, state
+		FROM consumerQNA c
+		JOIN member1 m ON c.userId = m.userId
+		<where>
+			state = 0
+			<if test="questionType > 0">
+				AND questionType = #{questionType}
+			</if>
+		</where>
+		ORDER BY qnaNum ASC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<!-- 판매자신청 개인정보 조회 -->
+	<select id="readInfo" parameterType="String" resultType="com.sp.app.consumer.SellerInfo">
+		SELECT userName, TO_CHAR(birth, 'YYYY-MM-DD') birth, email, tel, addr1, addr2
+		FROM member1 m1
+		JOIN member2 m2 ON m1.userId = m2.userId 
+		<where>
+			m1.userId = #{value}
+		</where>
+	</select>
+	
+	<!-- 판매자 등록 -->
+	<insert id="sellerFirst" parameterType="com.sp.app.consumer.SellerInfo">
+		INSERT INTO seller(userId, userName, imageName, tel, addr1, bankName, bankOwner, bankNumber, created) 
+					VALUES(#{userId}, #{userName}, #{fileName}, #{tel}, #{addr}, #{bankName}, #{bankOwner}, #{bankNumber}, SYSDATE)
+	</insert>
+	
+	<!-- 판매자 신청 리스트 조회 -->
+	<select id="sellerList" resultType="com.sp.app.consumer.SellerInfo">
+		SELECT userId, userName, tel, addr1 addr, regNum enable, bankName, bankNumber, bankOwner, imagename fileName, created
+		FROM seller
+		ORDER BY created desc, enable
+	</select>
+	
+	<!-- 판매자 권한 수정 -->
+	<update id="sellerChange" parameterType="map">
+		UPDATE seller SET regNum = #{state}
+		<where>
+			userId = #{userId}
+		</where>
+	</update>
+	
+	<!-- 판매 신청 인원수 -->
+	<select id="sellerListCount" parameterType="Integer" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) 
+		FROM seller
+		<where>
+			regNum = #{num}
+		</where>
+	</select>
+	
+	<!-- 판매 전체 인원수 -->
+	<select id="sellerListCountAll" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) 
+		FROM seller
+	</select>
+	
 </mapper>

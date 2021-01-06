@@ -149,7 +149,7 @@ $(function(){
 		<ul class="nav">
 			<li> <a href="${pageContext.request.contextPath}/admin/home" style="padding: 0 20px 0 20px;">관리홈</a> </li>
 			<li> <a href="${pageContext.request.contextPath}/admin/management/list" style="padding: 0 20px 0 20px;">회원관리</a> </li>
-			<li> <a href="${pageContext.request.contextPath}/admin/authority/list" style="padding: 0 20px 0 20px;">권한승인</a> </li>
+			<li> <a href="${pageContext.request.contextPath}/admin/authority/sellerList" style="padding: 0 20px 0 20px;">권한승인</a> </li>
 			<li> <a href="${pageContext.request.contextPath}/admin/bbsManagement/deck" style="padding: 0 20px 0 20px;">게시판관리</a> </li>
 			<li> <a href="${pageContext.request.contextPath}/admin/adminSales/saleshome">판매관리</a>
 				<ul>

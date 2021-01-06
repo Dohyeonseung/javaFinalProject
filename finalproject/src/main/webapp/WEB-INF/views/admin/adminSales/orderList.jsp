@@ -109,19 +109,19 @@ a {
 			    	<c:when test="${dto.orderState == 0}">
 			    		<span>발송대기</span>
 			    	</c:when>
-			    	<c:when test="${dto.statement == 1}">
+			    	<c:when test="${dto.orderState == 1}">
 			    		<span>발송완료</span>
 			    	</c:when>
-			    	<c:when test="${dto.statement == 2}">
+			    	<c:when test="${dto.orderState == 2}">
 			    		<span>발송지연</span>
 			    	</c:when>
-			    	<c:when test="${dto.statement == 3}">
+			    	<c:when test="${dto.orderState == 3}">
 			    		<span>주문취소</span>
 			    	</c:when>
 			    </c:choose>
 		      </td>
 		      <td width="30">
-		      <a href="#" class="orderList_a"><i class="fas fa-toggle-on" style="color: #1e1e1e;"></i></a>
+		      <a href="${pageContext.request.contextPath}/admin/adminSales/infoOrder?orderNum=${dto.orderNum}&page=${page}" class="orderList_a"><i class="fas fa-toggle-on" style="color: #1e1e1e;"></i></a>
 		      </td>
 		  </tr>
 		 </c:forEach>

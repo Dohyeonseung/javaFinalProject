@@ -36,7 +36,7 @@ img{
 }
 
 .goodsImage {
-	width: 250px;
+	width: 200px;
 	height: 200px;
 }
 
@@ -46,9 +46,10 @@ img{
 }
 
 .ingredient {
-	width: 1160px; 
+	width: 1200px; 
 	min-height: 380px; 
 	margin: auto;
+	margin-top: 50px;
 }
 
 </style>
@@ -58,6 +59,37 @@ function article(productNum) {
 	var url="${articleUrl}&productNum="+productNum;
 	location.href=url;
 }
+function searchList() {
+	var f=document.searchForm;
+	f.submit();
+}
+
+$(function(){
+	Number.prototype.format = function(){
+	    if(this==0) return 0;
+
+	    var reg = /(^[+-]?\d+)(\d{3})/;
+	    var n = (this + '');
+
+	    while (reg.test(n)) n = n.replace(reg, '$1' + ',' + '$2');
+
+	    return n;
+	};
+
+	// 문자열 타입에서 쓸 수 있도록 format() 함수 추가
+	String.prototype.format = function(){
+	    var num = parseFloat(this);
+	    if( isNaN(num) ) return "0";
+
+	    return num.format();
+	};
+	
+	jQuery('.format-money').text(function() {
+	    jQuery(this).text(
+	        jQuery(this).text().format()
+	    );
+	});
+});
 </script>
 
 <div id="wrap">
@@ -72,8 +104,8 @@ function article(productNum) {
 							</div>
 							<ul>
 								<li>${dto.productName}</li>
-								<li><span style="font-weight: bold; color: crimson;">${dto.price}</span> 원</li>
-								<li>${dto.userId}</li>
+								<li><span style="font-weight: bold; color: crimson;" class="format-money">${dto.price}</span> 원</li>
+								<li>${dto.userName}</li>
 							</ul>
 						</div>
 				</div>
@@ -90,13 +122,13 @@ function article(productNum) {
 		<table style="width: 100%; margin: 10px auto; border-spacing: 0px;">
 		   <tr height="40">
 		      <td align="center">
-		          <form name="searchForm" action="${pageContext.request.contextPath}/photo/list" method="post">
+		          <form name="searchForm" action="${pageContext.request.contextPath}/buy/material" method="post">
 		              <select name="condition" class="selectField">
 		                  <option value="all" ${condition=="all"?"selected='selected'":""}>모두</option>
-		                  <option value="subject" ${condition=="subject"?"selected='selected'":""}>제목</option>
+		                  <option value="productName" ${condition=="productName"?"selected='selected'":""}>상품 이름</option>
 		                  <option value="content" ${condition=="content"?"selected='selected'":""}>내용</option>
-		                  <option value="userName" ${condition=="userName"?"selected='selected'":""}>작성자</option>
-		                  <option value="created" ${condition=="created"?"selected='selected'":""}>등록일</option>
+		                  <option value="userName" ${condition=="userName"?"selected='selected'":""}>판매자</option>
+		                  <option value="created_date" ${condition=="created_date"?"selected='selected'":""}>등록일</option>
 		            </select>
 		            <input type="text" name="keyword" value="${keyword}" class="boxTF">
 		            <button type="button" class="btn" onclick="searchList()">검색</button>

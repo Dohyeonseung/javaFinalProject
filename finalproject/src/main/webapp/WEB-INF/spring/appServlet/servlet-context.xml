@@ -85,5 +85,7 @@
         </beans:property>
         <beans:property name="defaultErrorView" value=".error.error"/>
     </beans:bean>
+    
+    <resources mapping="/images/**" location="file:///D:/test2/" />
 	
 </beans:beans>
