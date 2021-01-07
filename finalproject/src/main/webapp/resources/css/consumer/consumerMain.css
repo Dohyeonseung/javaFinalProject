@@ -1,0 +1,123 @@
+#helpCenter {
+	width: auto;
+	height: auto;
+	text-align: center;
+}
+
+#helpSpace {
+	display: inline-block;
+	width: 1160px;
+	height: 100%;
+	text-align: left;
+}
+
+#categori {
+	margin: 30px;
+	margin-left: 0px;
+}
+
+#left_space {
+	font-family: "맑은 고딕";
+	font-size: 24px;
+	font-weight: 900;
+	margin-top: 100px;
+	width: 50%;
+	float: left;
+}
+
+#right_space {
+	float: left;
+}
+
+#helpService {
+	width: 1160px;
+}
+
+#populCategori {
+	text-align: center;
+	width: 1160px;
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+
+#populCategori ol {
+	list-style: none;
+	display: inline-block;
+}
+
+#populCategori li {
+	float: left;
+	margin-right: 30px;
+}
+
+#populList {
+	text-align: center;
+	width: 1160px;
+}
+
+#helpList li {
+	width: 530px;
+	height: 30px;
+	text-align: left;
+	float: left;
+	margin-top: 5px;
+	margin-left: 25px;
+	margin-right: 25px;
+}
+
+#helpCallTable td {
+	margin-left: 35px;
+	margin-right: 35px;
+}
+
+.helpCategori_btn {
+	width: 200px;
+	height: 120px;
+	border-radius: 5px;
+	color: #1e1e1e;
+	background: #FFFFFF;
+	transition: all 0.9s, color 0.3s;
+	font-size: 30px;
+}
+
+.helpCategori_btn:hover {
+	box-shadow: 0 120px 0 0 rgba(0, 0, 0, 0.25) inset, 0 -120px 0 0
+		rgba(0, 0, 0, 0.25) inset;
+	color: #FFFFFF;
+}
+
+.openBtn {
+	margin: 0px;
+	width: 20px;
+}
+
+#modal {
+	position: relative;
+	width: auto;
+	height: auto;
+	z-index: 3;
+}
+
+#modal .modal_content {
+	position: fixed;
+	margin: auto;
+	width: 600px; 
+	height: 800px;
+	padding: 20px;
+	background: #fff;
+	border: 2px solid #666;
+	overflow: auto;
+}
+
+#modal .modal_content td {
+	margin-bottom: 10px;
+}
+
+#modal .modal_content input {
+	border: 0px;
+	border-bottom: 2px solid black;
+}
+
+#modal .modal_content img {
+	max-width: 600px;
+}

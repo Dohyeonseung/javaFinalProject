@@ -18,10 +18,14 @@
 	</insert>
 	
 	<!-- 내문의내역 리스트 -->
-	<select id="myQNAList" parameterType="String" resultType="com.sp.app.consumer.ConsumerQNA">
+	<select id="myQNAList" parameterType="map" resultType="com.sp.app.consumer.ConsumerQNA">
 		SELECT qnaNum, questionType, subject q_subject, created q_created, state 
 		FROM consumerQNA 
-		WHERE userId = #{value}
+		<where>
+			userId = #{userId}
+		</where>
+		ORDER BY qnaNum DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
 	</select>
 	
 	<!-- 문의내용 -->
@@ -70,6 +74,16 @@
 			<if test="questionType > 0">
 				AND questionType = #{questionType}
 			</if>
+		</where>
+	</select>
+	
+	<!-- 내문의내역 리스트 갯수 -->
+	<select id="myHistoryDataCount" parameterType="String" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM consumerQNA c
+		JOIN member1 m ON c.userId = m.userId
+		<where>
+			c.userId = #{value}
 		</where>
 	</select>
 	
@@ -172,5 +186,13 @@
 		SELECT NVL(COUNT(*), 0) 
 		FROM seller
 	</select>
+	
+	<!-- qna 답변 등록 -->
+	<update id="qnaAnswer" parameterType="map">
+		UPDATE consumerQNA SET a_subject = #{subject}, a_content = #{content}, a_created = SYSDATE, score = '0', state = '1'
+		<where>
+			qnaNum = #{qnaNum}
+		</where>
+	</update>
 	
 </mapper>

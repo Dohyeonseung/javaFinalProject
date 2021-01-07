@@ -5,7 +5,7 @@ import java.util.Map;
 
 public interface ConsumerService {
 //	질문 등록
-	public void insertQna(ConsumerQNA dto, String pathname) throws Exception;
+	public void insertQna(ConsumerQNA dto) throws Exception;
 
 //	답변 등록
 	public void insertAnswer(ConsumerQNA dto, String pathname) throws Exception;
@@ -29,7 +29,7 @@ public interface ConsumerService {
 	public void insertFAQ(ConsumerFAQ dto) throws Exception;
 	
 //	내문의내역 리스트 조회
-	public List<ConsumerQNA> listQNA(String userId) throws Exception;
+	public List<ConsumerQNA> listQNA(Map<String, Object> map) throws Exception;
 	
 //	내문의내역 읽기
 	public ConsumerQNA readQNA(int num) throws Exception;
@@ -51,6 +51,10 @@ public interface ConsumerService {
 	
 //	판매자 기초 기본정보 등록
 	public void sellerFirst(SellerInfo dto) throws Exception;
-	
 
+//	내문의내역 dataCount
+	public int myHistoryDataCount(String userId) throws Exception;
+	
+//	답변등록
+	public void qnaAnswer(Map<String, Object> map) throws Exception;
 }

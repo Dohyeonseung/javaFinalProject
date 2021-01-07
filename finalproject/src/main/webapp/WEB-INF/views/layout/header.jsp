@@ -93,7 +93,14 @@ $(document).ready(function(){
                   <td><a href="${pageContext.request.contextPath}/ms/list">재료 판매</a></td>
                   <td><a href="${pageContext.request.contextPath}/buy/material">재료구매</a></td>
                   <td><a href="${pageContext.request.contextPath}/region/main">지역모임</a></td>
-                  <td><a href="${pageContext.request.contextPath}/consumer/myHistory">1:1문의(Q&A)</a></td>
+                  <td>
+                  	<c:if test="${sessionScope.member.userId=='admin'}">
+                  		<a href="${pageContext.request.contextPath}/consumer/faq/created">FAQ등록</a>
+                  	</c:if>
+                  	<c:if test="${sessionScope.member.userId!='admin'}">
+                  		<a href="${pageContext.request.contextPath}/consumer/qna/created">1:1문의(Q&A)</a>
+                  	</c:if>
+                  </td>
                </tr>
                <tr>
                   <td><a href="#">이용안내</a></td>
@@ -107,7 +114,14 @@ $(document).ready(function(){
                   <td><a href="${pageContext.request.contextPath}/cp/list">완제품 판매</a></td>
                   <td><a href="${pageContext.request.contextPath}/buy/complete">완제품구매</a></td>
                   <td><a href="${pageContext.request.contextPath}/qna/list">묻고 답하기</a></td>
-                  <td><a href="#"></a></td>
+                  <td>
+                  	<c:if test="${sessionScope.member.userId=='admin'}">
+                  		<a href="${pageContext.request.contextPath}/consumer/listAdmin">문의내역확인</a>
+                  	</c:if>
+                  	<c:if test="${sessionScope.member.userId!='admin'}">
+                  		<a href="${pageContext.request.contextPath}/consumer/myHistory">내문의내역</a>
+                  	</c:if>
+                  </td>
                   
                </tr>
                <tr>
@@ -115,7 +129,11 @@ $(document).ready(function(){
                   <td></td>
                   <td><a href="${pageContext.request.contextPath}/market/list">D-Market</a></td>
                   <td><a href="${pageContext.request.contextPath}/notice/list">공지사항</a></td>
-                  <td><a href="#"></a></td>
+                  <td>
+                  	<c:if test="${sessionScope.member.userId!='admin'}">
+                  		<a href="${pageContext.request.contextPath}/consumer/sellerSubject">판매자신청</a>
+                  	</c:if>
+				  </td>
                </tr>
             </table>
       </div>

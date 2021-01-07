@@ -3,6 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <style type="text/css">
+body {
+	text-align: center;
+}
+
 #helpCenter {
 	width: auto;
 	height: auto;
@@ -24,6 +28,7 @@
 #historyList {
 	display: inline-block;
 	width: 1000px;
+	min-height: 800px;
 }
 
 #historyTable {
@@ -48,45 +53,11 @@
 	font-weight: 900;
 }
 
-.questionContent {
-	display: inline-block;
-	width: 900px;
-	margin-top: 15px;
-}
-
-.questionContent table {
-	width: 900px;
-	border: 1px solid black;
-	text-align: left;
-	margin-bottom: 15px;
-}
-
-.answerContent {
-	display: inline-block;
-	width: 900px;
-	margin-top: 15px;
-}
-
-.answerContent table {
-	width: 900px;
-	border: 1px solid black;
-	text-align: left;
-	margin-bottom: 15px;
-}
-
-.answerReview {
-	display: inline-block;
-}
-
-.star_rating {font-size:0; letter-spacing:-4px;}
 .star_rating a {
-    font-size:22px;
-    letter-spacing:0;
-    display:inline-block;
-    margin-left:5px;
     color:#ccc;
-    text-decoration:none;
 }
+
+
 .star_rating a:first-child {margin-left:0;}
 .star_rating a.on {color:#777;}
 
@@ -116,7 +87,7 @@ $(function() {
 	$(document).on("click", ".test", function() {
 		var qnaNum = $(this).attr("data-qnaNum");
 		var score = $(this).parent().parent().prev().find("a[class='on']").length;
-		var content = $(this).parent().parent().prev().find("#reviewContent").val();
+		var content = $("#reviewContent").val();
 		
 		if(!content) {
 			alert("후기 내용을 입력해주세요.");
@@ -160,51 +131,62 @@ function printQNA(data) {
 	
 	var out = "";
 	out = "<td colspan='4' style='border-bottom: 1px solid black;'>";
-	out += "<div style='width: 1000px; text-align: center;'>";
-	out += "<div class='questionContent'>";
-	out += "<table>";
-	out += "<tr>";
-	out += "<td>분류&nbsp;<input type='text' readonly='readonly' value='" + data.dto.questionType + "'></td>";
-	out += "<td>제목&nbsp;<input type='text' readonly='readonly' value='" + data.dto.q_subject + "'></td>";
-	out += "<td>날짜&nbsp;<input type='text' readonly='readonly' value='" + data.dto.q_created + "'></td>";
-	out += "</tr>";
-	out += "<tr>";
-	out += "<td colspan='3'>"
-	out += "<textarea readonly='readonly' style='width: 800px; resize: none;'>" + data.dto.q_content + "</textarea>";
-	out += "</td>";
-	out += "</tr>";
-	out += "</table>";
-	out += "</div>";
-	
+	out += "<div style='width: 1000px; height: 800px; max-width: 1000px; max-height: 800px;'>";
+	out += "<div class='questionContent' style='width: 480px; height: 600px; max-width: 480px; max-height: 600px; background-color: #ebebeb; float: left; border-radius: 15px; margin: 15px 10px 15px 10px;'>";
+	out += "<table style='width: 460px; height: 580px; max-width: 460px; max-height: 580px; border-spacing: 0; margin: 10px;'>";
+	out += "<tr style='margin-bottom: 10px;'>";
+	out += "<td style='width: 460px; height: 50px; max-width: 460px; max-height: 50px; padding: 0;'>";
+	out += "<div style='width: 360px; height: 40px; max-width: 460px; max-height: 50px; background-color: #FFFFFF; border-radius: 5px; margin-bottom: 5px; margin-top: 5px;'>";
+	out += "<span style='margin-left: 5px;'>질문 : </span><input type='text' value='" + data.dto.q_subject + "' readonly='readonly' style='width: 300px; height: 30px; margin: 5px 5px 5px 0px; border: 0; border-bottom: 2px solid black;'>";
+	out += "</div></td></tr>";
+	out += "<tr style='margin-bottom: 10px;'>";
+	out += "<td style='width: 460px; height: 50px; max-width: 460px; max-height: 50px; padding: 0;'>";
+	out += "<div style='width: 360px; height: 40px; max-width: 460px; max-height: 50px; background-color: #FFFFFF; border-radius: 5px; margin-bottom: 5px; margin-top: 5px;'>";
+	out += "<span style='margin-left: 5px;'>날짜 : </span><input type='text' value='" + data.dto.q_created + "' readonly='readonly' style='width: 300px; height: 30px; margin: 5px 5px 5px 0px; border: 0; border-bottom: 2px solid black;'>";
+	out += "</div></td></tr><tr>";
+	out += "<td style='width: 460px; height: 480px; max-width: 460px; max-height: 480px; padding: 0;'>";
+	out += "<div style='width: 460px; height: 475px; max-width: 460px; max-height: 475px; background-color: #FFFFFF; border-radius: 5px; margin-top: 5px;'>";
+	out += "<textarea readonly='readonly' style='width: 440px; height: 455px; resize: none; border: 0; margin: 10px; overflow: auto;'>" + data.dto.q_content + "</textarea>";
+	out += "</div></td></tr></table></div>";
 	if(data.dto.state != 0) {
-		out += "<div class='answerContent'>";
-		out += "<table>";
+		out += "<div class='answerContent' style='width: 480px; height: 400px; max-width: 480px; max-height: 400px; background-color: #ebebeb; float: left; border-radius: 15px; margin: 15px 10px 15px 10px;'>";
+		out += "<table style='width: 460px; height: 380px; max-width: 460px; max-height: 380px; border-spacing: 0; margin: 10px;'>";
+		out += "<tr style='margin-bottom: 10px;'>";
+		out += "<td style='width: 460px; height: 50px; max-width: 460px; max-height: 50px; padding: 0;'>";
+		out += "<div style='width: 360px; height: 40px; max-width: 460px; max-height: 50px; background-color: #FFFFFF; border-radius: 5px; margin-bottom: 5px; margin-top: 5px;'>";
+		out += "<span style='margin-left: 5px;'>답변 : </span><input type='text' value='" + data.dto.a_subject + "' readonly='readonly' style='width: 300px; height: 30px; margin: 5px 5px 5px 0px; border: 0; border-bottom: 2px solid black;'>";
+		out += "</div></td></tr>";
+		out += "<tr style='margin-bottom: 10px;'>";
+		out += "<td style='width: 460px; height: 50px; max-width: 460px; max-height: 50px; padding: 0;'>";
+		out += "<div style='width: 360px; height: 40px; max-width: 460px; max-height: 50px; background-color: #FFFFFF; border-radius: 5px; margin-bottom: 5px; margin-top: 5px;'>";
+		out += "<span style='margin-left: 5px;'>날짜 : </span><input type='text' value='" + data.dto.a_created + "' readonly='readonly' style='width: 300px; height: 30px; margin: 5px 5px 5px 0px; border: 0; border-bottom: 2px solid black;'>";
+		out += "</div></td></tr>";
 		out += "<tr>";
-		out += "<td>문의답변&nbsp;	<input type='text' readonly='readonly' value='" + data.dto.a_subject + "'></td>";
-		out += "<td>날짜&nbsp;<input type='text' readonly='readonly' value='" + data.dto.a_created + "'></td>";
-		out += "</tr>";
-		out += "<tr>";
-		out += "<td colspan='2'><textarea readonly='readonly' style='width: 800px; resize: none;'>" + data.dto.a_content + "</textarea></td>";
-		out += "</tr>";
-		out += "</table>";
-			if(data.dto.score < 1) {
-				out += "<hr>";
-				out += "<h3 style='text-align: left; margin-top: 5px; margin-left: 10px;'>ㅣ 답변후기</h3>";
-				out += "</div>";
-				out += "<div class='answerReview'>";
-				out += "<table>";
-				out += "<tr>";
-				out += "<td rowspan='2'><textarea id='reviewContent' style='resize: none; width: 350px; height: 50px; padding: 10px;'></textarea></td>";
-				out += "<td><p class='star_rating'><a class='on'>★</a><a class='on'>★</a><a class='on'>★</a><a>★</a><a>★</a></p></td>";
-				out += "</tr>";
-				out += "<tr>";
-				out += "<td><button class='test' data-qnaNum='" + data.dto.qnaNum + "'>보내기</button></td>";
-				out += "</tr>";
-				out += "</table>";
-				out += "</div>";
-			}
+		out += "<td style='width: 460px; height: 270px; max-width: 460px; max-height: 270px; padding: 0;'>";
+		out += "<div style='width: 460px; height: 265px; max-width: 460px; max-height: 265px; background-color: #FFFFFF; border-radius: 5px; margin-top: 5px;'>";
+		out += "<textarea readonly='readonly' style='width: 440px; height: 245px; resize: none; border: 0; margin: 10px; overflow: auto;'>" + data.dto.a_content + "</textarea>";
+		out += "</div></td></tr></table>";
 		out += "</div>";
+		if(data.dto.score < 1) {
+			out += "<div class='answerReview' style='width: 480px; height: 160px; max-width: 480px; max-height: 160px; background-color: #ebebeb; float: left; border-radius: 15px; margin: 15px 10px 15px 10px;'>";
+			out += "<table style='width: 460px; height: 141px; max-width: 460px; max-height: 141px; border-spacing: 0; margin: 10px;'>";
+			out += "<tr style='margin-bottom: 10px;'>";
+			out += "<td colspan='2' style='width: 460px; height: 21px; max-width: 460px; max-height: 21px; padding: 0;'>";
+			out += "<div style='width: 140px; height: 21px; max-width: 140px; max-height: 21px; background-color: #FFFFFF; border-radius: 5px; margin-bottom: 5px; margin-top: 5px;'>";
+			out += "<span style='margin-left: 5px; margin-top: 2px;'>후기 : </span><span class='star_rating' style='margin: 10px 0px 10px 0px; border: 0;'><a class='on'>★</a><a class='on'>★</a><a class='on'>★</a><a>★</a><a>★</a></span>";
+			out += "</div></td></tr>";
+			out += "<tr>";
+			out += "<td style='width: 400px; height: 100px; max-width: 400px; max-height: 100px; padding: 0;'>";
+			out += "<div style='width: 400px; height: 95px; max-width: 400px; max-height: 95px; background-color: #FFFFFF; border-radius: 5px; margin-top: 5px;'>";
+			out += "<textarea id='reviewContent' style='width: 380px; height: 75px; resize: none; border: 0; margin: 10px; overflow: auto;'></textarea>";
+			out += "</div></td>";
+			out += "<td>";
+			out += "<button class='test' data-qnaNum='" + data.dto.qnaNum + "' style='width: 50px; height: 97px; margin: 6px; margin-top: 10px;'>등록</button>";
+			out += "</td></tr></table>";
+			out += "</div>";
+		}
 	}
+	out += "</div>";
 	
 	$("#anw" + data.dto.qnaNum).append(out);
 }
@@ -231,6 +213,12 @@ function printQNA(data) {
 					<td class="historyTitle" style="width: 10%">상태</td>
 				</tr>
 				
+				<c:if test="${empty list}">
+					<tr>
+						<td colspan="4">등록된 QNA가 존재하지 않습니다.</td>
+					</tr>
+				</c:if>
+				
 				<c:forEach var="dto" items="${list}">
 					<tr class="question" data-num="${dto.qnaNum}">
 						<td>${dto.questionType=='1'?'DIY':questionType=='2'?'계정이용':questionType=='3'?'판매신청':'기타'}</td>
@@ -244,7 +232,15 @@ function printQNA(data) {
 					</tr>
 				</c:forEach>
 			</table>
+			
+			<table style="width: 100%; margin: 30px 0 30px 0; border-spacing: 0px;">
+			   <tr height="35">
+				 <td align="center" width="300" style="margin-right: 35px;">
+				 	${paging}
+				 </td>
+			   </tr>
+			</table>
+			
 		</div>
-		
 	</div>
 </div>

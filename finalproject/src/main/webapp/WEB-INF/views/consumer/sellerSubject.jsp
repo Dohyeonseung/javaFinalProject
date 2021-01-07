@@ -9,7 +9,7 @@ div, body {
 	margin: 0;
 }
 
-td {
+#mContainor td {
 	border: 1px solid black;
 }
 
@@ -22,6 +22,7 @@ td {
 #subContainor {
 	width: 1280px;
 	margin: auto;
+	text-align: center;
 }
 
 
@@ -90,14 +91,70 @@ a:hover {
 	text-align: center;
 }
 
+.help_btn {
+	width: 100px;
+	height: 60px;
+	border-radius: 5px;
+	color: #1e1e1e;
+	background: #FFFFFF;
+	transition: all 0.9s, color 0.3s;
+	font-size: 20px;
+}
+
+.help_btn:hover {
+	box-shadow: 0 120px 0 0 rgba(0, 0, 0, 0.25) inset, 0 -120px 0 0
+		rgba(0, 0, 0, 0.25) inset;
+	color: #FFFFFF;
+}
 </style>
 <script src="https://cdn.rawgit.com/eligrey/FileSaver.js/5ed507ef8aa53d8ecfea96d96bc7214cd2476fd2/FileSaver.min.js"></script>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <script type="text/javascript">
 $(function(){
+	$("#bankName").change(function() {
+		var bankName = $("#bankName option:selected").val();
+		
+		switch (bankName){
+		    case "국민은행": $("#bankImage").attr("src", "${pageContext.request.contextPath}/resources/images_help/kbstar.jpg"); break;
+		    case "우리은행": $("#bankImage").attr("src", "${pageContext.request.contextPath}/resources/images_help/we.jpg"); break;
+		    case "신한은행": $("#bankImage").attr("src", "${pageContext.request.contextPath}/resources/images_help/sinhan.jpg"); break;
+		    case "기업은행": $("#bankImage").attr("src", "${pageContext.request.contextPath}/resources/images_help/giup.jpg"); break;
+		    default: alert("오류");
+		}
+	});
+	
+	$("#proImage").click(function() {
+		$("#imageChange").click();
+	});
+	
+	$("#imageChange").change(function() {
+		setImageFromFile(this, '#proImage');
+	});
+	
+	$("#man").click(function() {
+		$(this).css('color', 'red');
+		$("#woman").css('color', 'black');
+	});
+	
+	$("#woman").click(function() {
+		$(this).css('color', 'red');
+		$("#man").css('color', 'black');
+	});
+	
+	function setImageFromFile(input, expression) {
+	    if (input.files && input.files[0])
+	    {
+	        var reader = new FileReader();
+	 
+	            reader.onload = function (e) {
+	                $(expression).attr('src', e.target.result);
+	           }
+	           reader.readAsDataURL(input.files[0]);
+	     }
+	}
+	
     $("#save").click(function() {
     	var userName = document.getElementById("userName").value;
-    	alert(userName);
     	var tel = document.getElementById("tel").value;
     	var addr = document.getElementById("addr").value;
     	var bankName = document.getElementById("bankName").value;
@@ -123,6 +180,7 @@ $(function(){
 				url : "${pageContext.request.contextPath}/consumer/ImgSaveTest",
 				success : function(data) {
 					console.log(data);
+					alert("정상적으로 신청되었습니다.");
 					location.href = "${pageContext.request.contextPath}/consumer/main";
 				},
 				error : function(a, b, c) {
@@ -137,16 +195,19 @@ $(function(){
 </script>
 <div id="mContainor">
 	<div id="subContainor">
-		<div id="title_box">
-			<h1 style="margin-top: 15px;">
+		<div id="title_box" style="text-align: center; width: 1000px; height: auto; background: #fff; display: inline-block;">
+			<h1 style="margin-top: 15px; text-align: left;">
 				<i class="fas fa-edit"></i>&nbsp;판매자 등록
 			</h1>
 		</div>
-		<div id="info" style="text-align: center; width: 1000px; height: 700px; background: #fff;">
+		<div id="info" style="text-align: center; width: 1000px; height: 600px; background: #fff; display: inline-block;">
 			<div id="element" style="width: 900px; height: auto; display: inline-block; margin-top: 15px;">
 				<table style="border-spacing: 0; width: 900px; margin-bottom: 30px;">
 					<tr>
-						<td rowspan="5" style="width: 300px; height: 300px;"><img style="width: 100%; height: 100%;" src="${pageContext.request.contextPath}/resources/img/1609817015.jpg"></td>
+						<td rowspan="5" style="width: 200px; height: 300px;">
+							<input id="imageChange" type="file" accept="image/*" style="z-index: -1; position: fixed;">
+							<img id="proImage" style="width: 200px; height: 300px; max-width: 200px; max-height: 300px; min-width: 200px; min-height: 300px;" src="${pageContext.request.contextPath}/resources/images_help/no_Image.png">
+						</td>
 						<td rowspan="3" style="width: 60px;">성명</td>
 						<td style="width: 60px;">
 							<span>한 글</span>
@@ -174,7 +235,7 @@ $(function(){
 							<span>연령</span>
 						</td>
 						<td style="width: 145px;">
-							<input type="text" id="age" value="${dto.age}" style="border: none;">
+							<input type="text" id="age" value="${dto.age}세" style="border: none;">
 						</td>
 					</tr>
 					<tr>
@@ -182,7 +243,7 @@ $(function(){
 							<span>성 별</span>
 						</td>
 						<td style="width: 160px;">
-							<input type="text" id="sex" value="${dto.sex}" style="border: none;">
+							<a id="man" style="color: red;">남자</a>&nbsp;ㅣ&nbsp;<a id="woman">여자</a>
 						</td>
 						<td style="width: 60px;">
 							<span>국 적</span>
@@ -196,7 +257,7 @@ $(function(){
 							<span>주 소 지</span>
 						</td>
 						<td colspan="5">
-							<input type="text" id="addr" value="${dto.addr}" style="border: none;">
+							<input type="text" id="addr" value="${dto.addr}" style="border: none; width: 500px;">
 						</td>
 					</tr>
 					<tr>
@@ -221,24 +282,26 @@ $(function(){
 			<div style="display: inline-block; margin-top: 30px;">
 				<table style="border-spacing: 0; width: 900px; height: 200px; margin-bottom: 30px;">
 					<tr>
-						<td style="width: 20%">은행명</td>
-						<td style="width: 30%">
-							<img style="width: 150px; height: 150px;" src="${pageContext.request.contextPath}/resources/images_help/kbstar.jpg">
-							<select id="bankName">
+						<td rowspan="2" style="width: 20%; font-size: 42px;">은행</td>
+						<td rowspan="2" style="width: 30%;">
+							<div style="width: 270px; height: auto; text-align: center;">
+								<img id="bankImage" style="width: 150px; height: 150px; max-width: 150px; max-height: 150px;" src="${pageContext.request.contextPath}/resources/images_help/kbstar.jpg">
+							</div>
+							<select id="bankName" data-html2canvas-ignore="true">
 								<option value="국민은행">국민은행</option>
 								<option value="우리은행">우리은행</option>
 								<option value="신한은행">신한은행</option>
 								<option value="기업은행">기업은행</option>
 							</select>
 						</td>
-						<td style="width: 20%">예금주</td>
-						<td style="width: 30%">
+						<td style="width: 20%; font-size: 30px;">예금주</td>
+						<td style="width: 30%; font-size: 20px;">
 							<input id="bankOwner" type="text" style="border: none;">
 						</td>
 					</tr>
 					<tr>
-						<td>계좌 번호</td>
-						<td colspan="3">
+						<td style="font-size: 30px;">계좌 번호</td>
+						<td style="font-size: 20px;">
 							<input id="bankNumber" type="text" style="border: none;">
 						</td>
 					</tr>
@@ -246,8 +309,10 @@ $(function(){
 			</div>
 		</div>
 		
-		<div>
-		   <button type="button" id="save">저장하기</button>
+		<div style="text-align: right; width: 1000px; height: auto; background: #fff; display: inline-block;">
+			<hr style="margin-bottom: 10px;">
+		   <button class="help_btn" type="button" onclick="javascript:history.back();">돌아가기</button>
+		   <button class="help_btn" type="button" id="save">제출하기</button>
 		</div>
 	</div>
 </div>

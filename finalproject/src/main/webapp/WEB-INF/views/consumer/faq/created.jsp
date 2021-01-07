@@ -150,7 +150,7 @@ function send() {
 			
 			<div id="agree_button">
 				<button class="btn_style" type="button" onclick="send();">FAQ 등록</button>
-				<button class="btn_style" type="button" onclick="${pageContext.request.contextPath}/consumer/list">등록 취소</button>
+				<button class="btn_style" type="button" onclick="javascript:location.href='${pageContext.request.contextPath}/consumer/list';">등록 취소</button>
 			</div>
 		</form>
 	</div>

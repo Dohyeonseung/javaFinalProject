@@ -1,6 +1,5 @@
 package com.sp.app.consumer;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.net.URLDecoder;
 import java.util.HashMap;
@@ -81,14 +80,11 @@ public class ConsumerController {
 	@RequestMapping(value = "qna/created", method = RequestMethod.POST)
 	public String createdSubmit(ConsumerQNA dto, HttpSession session) throws Exception {
 
-		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
 
 		try {
-			String root = session.getServletContext().getRealPath("/");
-			String pathname = root + "uploads" + File.separator + "consumer";
-
 			dto.setUserId(info.getUserId());
-			service.insertQna(dto, pathname);
+			service.insertQna(dto);
 		} catch (Exception e) {
 		}
 
@@ -97,14 +93,44 @@ public class ConsumerController {
 
 //	내문의내역
 	@RequestMapping(value = "myHistory", method = RequestMethod.GET)
-	public String myHistoryForm(HttpSession session, Model model) throws Exception {
+	public String myHistoryForm(HttpSession session, Model model, @RequestParam(value = "page", defaultValue = "1") int current_page, HttpServletRequest req) throws Exception {
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
 		List<ConsumerQNA> list = null;
 		String userId = info.getUserId();
+		int offset = 0;
+		int rows = 10;
+		int dataCount = 0;
+		int total_page = 0;
+		
+		dataCount = service.myHistoryDataCount(userId);
+		
+		if (dataCount != 0) {
+			total_page = myUtil.pageCount(rows, dataCount);
+		}
+		
+		if (total_page < current_page) {
+			current_page = total_page;
+		}
+		
+		offset = (current_page - 1) * rows;
+		if (offset < 0) {
+			offset = 0;
+		}
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("userId", userId);
+		map.put("offset", offset);
+		map.put("rows", rows);
 
-		list = service.listQNA(userId);
+		list = service.listQNA(map);
+		
+		String cp = req.getContextPath();
+		String listUrl = cp + "/consumer/myHistory";
+
+		String paging = myUtil.paging(current_page, total_page, listUrl);
 
 		model.addAttribute("list", list);
+		model.addAttribute("paging", paging);
 
 		return ".consumer.myHistory";
 	}
@@ -255,6 +281,18 @@ public class ConsumerController {
 		model.addAttribute("paging", paging);
 
 		return ".consumer.listAdmin";
+	}
+	
+	@RequestMapping(value = "listAdminSubmit")
+	public String listAdminSubmit(@RequestParam String content, @RequestParam String subject, @RequestParam int qnaNum) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("qnaNum", qnaNum);
+		map.put("subject", subject);
+		map.put("content", content);
+		
+		service.qnaAnswer(map);
+		
+		return "redirect:/consumer/listAdmin";
 	}
 
 	@RequestMapping(value = "sellerSubject")

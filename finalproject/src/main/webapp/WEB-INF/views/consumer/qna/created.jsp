@@ -15,7 +15,7 @@ div, body {
 
 #subContainor {
 	width: 1280px;
-	height: 2000px;
+	height: auto;
 	margin: auto;
 }
 
@@ -172,19 +172,6 @@ function sendQNA() {
 					</td>
 					<td>
 						<textarea name="q_content" style="width: 760px; height: 300px; overflow: auto; resize: none;"></textarea>
-					</td>
-				</tr>
-				
-				<tr style="border-bottom: 1px solid #101010;">
-					<td class="category_id">
-						파일 첨부
-					</td>
-					<td valign="top" style="padding-top: 18px;">
-						<input name="upload" type="file" multiple="multiple">
-						<p>
-							첨부파일은 최대 5개, 10MB까지 등록 가능하며<br>
-							파일 형식은 jpg, gif, psd, png, tif, zip, ms, office, 아래한글(hwp), pdf 만 가능합니다.
-						</p>
 					</td>
 				</tr>
 			</table>
