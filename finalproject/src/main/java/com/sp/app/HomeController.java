@@ -13,44 +13,29 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.sp.app.completeSell.CompleteSell;
-import com.sp.app.completeSell.CompleteSellService;
-import com.sp.app.materialSell.MaterialSell;
-import com.sp.app.materialSell.MaterialSellService;
-import com.sp.app.reservationSell.ReservationSell;
-import com.sp.app.reservationSell.ReservationSellService;
+import com.sp.app.buy.BuyService;
+import com.sp.app.buy.Product;
 
 
 @Controller
 public class HomeController {
 	@Autowired
-	private MaterialSellService service1;
-	@Autowired
-	private CompleteSellService service2;
-	@Autowired
-	private ReservationSellService service3;
-
+	private BuyService service1;
+	
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model,
 			HttpServletRequest req
 			) {
 		
-		String cp=req.getContextPath();
 		Map<String, Object> map = new HashMap<>();
-			
+		map.put("offset", 0);	
+		map.put("rows", 10);	
 	
-		List<MaterialSell> list1=service1.listMaterialSell(map);
-		List<CompleteSell> list2=service2.listCompleteSell(map);
-		List<ReservationSell> list3=service3.listReservationSell(map);
-		 
-		String articleUrl1=cp+"/ms/article?page=1";
-		String articleUrl2=cp+"/cp/article?page=1";
-		String articleUrl3=cp+"/rv/article?page=1";
+		List<Product> list1=service1.listProduct_mat(map);
+		List<Product> list2=service1.listProduct_complete(map);
+		List<Product> list3=service1.listProduct_rsv(map);
 		
-		model.addAttribute("articleUrl1",articleUrl1);
-		model.addAttribute("articleUrl1",articleUrl2);
-		model.addAttribute("articleUrl1",articleUrl3);
 		
 		
 		model.addAttribute("list1",list1);

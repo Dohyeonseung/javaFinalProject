@@ -10,8 +10,8 @@
 	
 	
 	
-	<c:forEach var="dto" items="${list}">	
-		  <tr>
+	<c:forEach var="dto" items="${list}" >	
+		  <tr >
 		  	<c:choose>
 			    <c:when test="${dto.starScore eq 1}">
 			        <td colspan="3" style="color: #FAE500;">★</td>
@@ -33,13 +33,19 @@
 		    <td style="width:20%;">${dto.userName} &nbsp;&nbsp;&nbsp;  ${dto.created}</td>
 		
 		  </tr>
-		  <tr>
-		    <td colspan="2" style="height: 60px;">${dto.content}</td>
+		  <tr style= "width:100%;">
+		    <td colspan="2" style="height: 60px; width: 100%; border-bottom:1px solid #e5e5e5;">${dto.content}</td>
+		    
+		     
 		  </tr>
+		 
  	</c:forEach>
+ 	
+ 	
 	<tr height='40'>
+	
 		<td colspan='2' align='center'>
-			${dataCount==0?"작성된 리뷰가 없습니다.":paging}
+			${dataCount==0?"":paging}
 		</td>
 	</tr>    
 	</tbody>

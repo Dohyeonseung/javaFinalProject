@@ -185,11 +185,13 @@
 	 		
 		 <div id="box2-1"><span style="font-size: 20px; font-weight: bold;">재료구매</span></div>
 		<div class="swiper-container">
-	<div class="swiper-wrapper">
+	<div class="swiper-wrapper" >
 		<c:forEach var="dto" items="${list1}">
-			<div class="swiper-slide"><img alt="" src="${pageContext.request.contextPath}/uploads/ms/${dto.imageFilename}"></div>
-			<p>${dto.productName}<p>
-			<p>${dto.price}<p>
+			<div class="swiper-slide" style="display: flex; flex-direction: column;"><img src="${pageContext.request.contextPath}/uploads/ms/${dto.imageFilename}">
+			<p style="border: 1px solid #e5e5e5; width: 75%; margin-top: 20px;"></p>
+				<p style="margin-top: 10px;">제품명:${dto.productName}<p>
+				<p>가격:${dto.price}<p>
+			</div>
 		</c:forEach>  
 	</div>
 
@@ -198,7 +200,7 @@
 	<div class="swiper-button-prev" style="background-image:url('${pageContext.request.contextPath}/resources/img/slider_left.JPG')"></div><!-- 이전 버튼 -->
 
 	<!-- 페이징 -->
-	<div class="swiper-pagination"></div>
+	<div class="swiper-pagination" style="display: none;"></div>
 </div>
 		
 		
@@ -207,9 +209,11 @@
 <div class="swiper-container">
 	<div class="swiper-wrapper">
 		<c:forEach var="dto" items="${list2}">
-			<div class="swiper-slide"><img alt="" src="${pageContext.request.contextPath}/uploads/cp/${dto.imageFilename}"></div>
-			<p>${dto.productName}<p>
-			<p>${dto.price}<p>
+			<div class="swiper-slide" style="display: flex; flex-direction: column;"><img alt="" src="${pageContext.request.contextPath}/uploads/cp/${dto.imageFilename}">
+				<p style="border: 1px solid #e5e5e5; width: 75%; margin-top: 20px;"></p>
+				<p style="margin-top: 10px;">제품명:${dto.productName}<p>
+				<p>가격:${dto.price}<p>
+			</div>
 		</c:forEach>  
 	</div>
 
@@ -218,17 +222,19 @@
 	<div class="swiper-button-prev" style="background-image:url('${pageContext.request.contextPath}/resources/img/slider_left.JPG')"></div><!-- 이전 버튼 -->
 
 	<!-- 페이징 -->
-	<div class="swiper-pagination"></div>
+	<div class="swiper-pagination" style="display: none;"></div>
 </div>
 
 
 	 <div id="box2-1"><span style="font-size: 20px; font-weight: bold;">완제품구매</span></div>
 		<div class="swiper-container">
-	<div class="swiper-wrapper">
+	<div class="swiper-wrapper" >
 		<c:forEach var="dto" items="${list3}">
-			<div class="swiper-slide"><img alt="" src="${pageContext.request.contextPath}/uploads/rv/${dto.imageFilename}"></div>
-			<p>${dto.productName}<p>
-			<p>${dto.price}<p>
+			<div class="swiper-slide" style="display: flex; flex-direction: column;"><img alt="" src="${pageContext.request.contextPath}/uploads/rv/${dto.imageFilename}">
+			<p style="border: 1px solid #e5e5e5; width: 75%; margin-top: 20px;"></p>
+				<p style="margin-top: 10px;">제품명:${dto.productName}<p>
+				<p>가격:${dto.price}<p>
+			</div>
 		</c:forEach>  
 	</div>
 
@@ -237,7 +243,7 @@
 	<div class="swiper-button-prev" style="background-image:url('${pageContext.request.contextPath}/resources/img/slider_left.JPG')"></div><!-- 이전 버튼 -->
 
 	<!-- 페이징 -->
-	<div class="swiper-pagination"></div>
+	<div class="swiper-pagination" style="display: none;"></div>
 </div>
 
 		
