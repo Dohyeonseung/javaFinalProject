@@ -96,7 +96,7 @@ function soldOut() {
 			        <div class="imgLayout">
 			        <c:choose>
 			        	<c:when test="${dto.productCount == 0}">
-			        		<img src="${pageContext.request.contextPath}/resources/images/soldout.png" width="180"
+			        		<img src="${pageContext.request.contextPath}/resources/img/soldout.png" width="180"
 			                   	height="180" border="0" onclick="soldOut();">
 			        	</c:when>
 			        	<c:when test="${dto.productCount != 0}">
