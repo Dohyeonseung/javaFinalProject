@@ -65,7 +65,7 @@ input:focus {
 <script type="text/javascript">
 function deleteCompleteSell(productNum) {
 	var q = "productNum="+productNum+"&page=${page}";
-	var url = "${pageContext.request.contextPath}/cp/delete?" + q;
+	var url = "${pageContext.request.contextPath}/rv/delete?" + q;
 
 	if(confirm("위 자료를 삭제 하시 겠습니까 ? ")) {
 			location.href=url;
@@ -74,7 +74,7 @@ function deleteCompleteSell(productNum) {
 
 function updateCompleteSell(productNum) {
 	var q = "productNum="+productNum+"&page=${page}";
-	var url = "${pageContext.request.contextPath}/cp/update?" + q;
+	var url = "${pageContext.request.contextPath}/rv/update?" + q;
 
 	location.href=url;
 }

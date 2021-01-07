@@ -74,7 +74,6 @@ function searchList() {
             </select>
 		<table style="border-color:#e5e5e5;  width: 100%; border-spacing: 0px; border-collapse: collapse; border-radius:50%; " >
 			<tr align="center" bgcolor="white" height="35"  style="border-bottom: 2px solid #e5e5e5;"> 
-				<th width="40" style="color: #1e1e1e;">번호 </th>
 				<th width="100" style="color:#1e1e1e;">게시일</th>
 				<th style="color:#1e1e1e;">분류/제목/가격</th>
 				<th width="40" style="color: #1e1e1e;">재고</th>
@@ -82,7 +81,6 @@ function searchList() {
 			</tr>
 		 <c:forEach var="dto" items="${list}">
 			<tr class="shoplistbox" align="center" bgcolor="#ffffff" height="50" style="border-bottom: 1px solid #e5e5e5;"> 
-				<td >${dto.listNum}</td>
 			    <td height="100" >${dto.created_date}</td>
 			    <td  height="50px" style="display: flex; flex-direction: row; justify-content: center;">
 					<div>
@@ -103,7 +101,7 @@ function searchList() {
 		<table style="width: 100%; border-spacing: 0px;">
 			<tr height="35">
 				<td align="center">
-					${mselldataCount==0?"":paging }
+					${mselldataCount==0?"등록된 게시물이 없습니다.":paging }
 				</td>
 			</tr>
 		</table>

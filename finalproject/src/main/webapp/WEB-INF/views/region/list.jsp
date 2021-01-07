@@ -21,7 +21,7 @@ justify-content: center;
      height:25px;
      line-height:25px;
      margin:5px auto;
-     border-top: 1px solid #DAD9FF;
+     border-top: 1px solid #e5e5e5; 
      
      display: inline-block;
      white-space:nowrap;
@@ -37,13 +37,32 @@ justify-content: center;
 }
 
 .category h3{
-	border: 3px solid #eee;
+	border-bottom: 1px solid #e5e5e5;
+	height: 40px;
 }
 
 .category ul {
 	margin: 0;
 	padding: 0;
 	list-style: none; 
+}
+.regionBox{
+ list-style: none; 
+ text-align: center;
+ font-size: 18px;
+}
+
+.regionBox li{
+	height: 36px;
+	line-height: 36px;
+}
+
+.regionBox li:hover{
+	background: #e5e5e5;
+	
+}
+.regionBox li a:hover{
+	color: white;
 }
 </style>
 
@@ -59,9 +78,9 @@ function article(listNum) {
 }
 </script>
 <div class="bigbox">
-<div class="category" style="width: 200px; margin-left: 50px; margin-top: 150px; font-size: 30px;">
-		<h3 align="center">지역</h3>
-		<ul style="list-style: none;">
+<div class="category" style="width: 150px;  margin-top: 150px; font-size: 16px;">
+		<h3 align="center" style="margin-bottom: 20px;">지역</h3>
+		<ul class="regionBox">
 		<li><a href="${pageContext.request.contextPath}/region/main">모두보기</a></li>
 		<li><a href="${pageContext.request.contextPath}/region/main?region=1">서울</a></li>
 		<li><a href="${pageContext.request.contextPath}/region/main?region=2">경기</a></li>
@@ -128,7 +147,7 @@ function article(listNum) {
 			                   제목:${dto.subject}
 			             </span>
 			             </c:if>
-			         <span style="border-bottom: 1px solid #DAD9FF;"><i class="far fa-thumbs-up"></i>좋아요 : ${dto.regionLikeCount}</span>
+			         <span><i class="far fa-thumbs-up"></i>좋아요 : ${dto.regionLikeCount}</span>
 			         </div>
 			     </td>
 			     

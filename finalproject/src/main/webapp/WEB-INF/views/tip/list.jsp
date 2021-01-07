@@ -37,13 +37,33 @@ justify-content: center;
 }
 
 .category h3{
-	border: 3px solid #eee;
+	border-bottom: 1px solid #e5e5e5;
+	height: 40px;
 }
 
 .category ul {
 	margin: 0;
 	padding: 0;
 	list-style: none; 
+}
+
+.regionBox{
+ list-style: none; 
+ text-align: center;
+ font-size: 18px;
+}
+
+.regionBox li{
+	height: 36px;
+	line-height: 36px;
+}
+
+.regionBox li:hover{
+	background: #e5e5e5;
+	
+}
+.regionBox li a:hover{
+	color: white;
 }
 </style>
 
@@ -60,8 +80,8 @@ function article(listNum) {
 </script>
 <div class="bigbox">
 <div class="category" style="width: 200px; margin-left: 50px; margin-top: 150px; font-size: 30px;">
-		<h3 align="center">카테고리</h3>
-		<ul>
+		<h3 align="center" style="margin-bottom: 20px;">카테고리</h3>
+		<ul class="regionBox" >
 			<li><a href="${pageContext.request.contextPath}/tip/main">모두보기</a></li>
 			<c:forEach var="dto" items="${listCategory}">
 		        		<li><a href="${pageContext.request.contextPath}/tip/main?categoryNum=${dto.categoryNum}">${dto.category}</a></li>

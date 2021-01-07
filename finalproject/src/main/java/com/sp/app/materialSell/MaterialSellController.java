@@ -50,7 +50,7 @@ public class MaterialSellController {
 		
 		String userId=info.getUserId();
 		   
-		   int rows=6;
+		   int rows=8;
 		   int total_page=0;
 		   int dataCount=0;
 		   

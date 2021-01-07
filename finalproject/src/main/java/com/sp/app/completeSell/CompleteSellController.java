@@ -126,6 +126,7 @@ public class CompleteSellController {
 	
 	@PostMapping("created") //포스트 방식 크리에티드
 	   public String createdSubmit(CompleteSell dto, 
+			   @RequestParam String price,
 			   HttpServletRequest req,
 			   HttpSession session) throws Exception {
 		 SessionInfo info = (SessionInfo)session.getAttribute("member");
@@ -134,7 +135,8 @@ public class CompleteSellController {
 	      
 	      try {
 	    	  dto.setUserId(info.getUserId());//세션에 등록되있는 아이디를가져와 dto에 UserId에 배치
-		         service.insertCompleteSell(dto, pathname);
+	    	  dto.setReserves(Long.toString((Long.parseLong(price)/20)));
+	    	  service.insertCompleteSell(dto, pathname);
 		} catch (Exception e) {
 		}
 	      
