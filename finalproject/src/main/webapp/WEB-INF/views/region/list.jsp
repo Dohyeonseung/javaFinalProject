@@ -128,7 +128,7 @@ function article(listNum) {
 			                   제목:${dto.subject}
 			             </span>
 			             </c:if>
-			         <span style="border-bottom: 1px solid #DAD9FF;">좋아요 : ${dto.regionLikeCount}</span>
+			         <span style="border-bottom: 1px solid #DAD9FF;"><i class="far fa-thumbs-up"></i>좋아요 : ${dto.regionLikeCount}</span>
 			         </div>
 			     </td>
 			     
