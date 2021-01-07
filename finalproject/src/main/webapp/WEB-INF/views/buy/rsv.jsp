@@ -169,7 +169,7 @@ $(function(){
 				<div class="imgLayout" style="display:flex; align-items:center; flex-direction:column;" >
 				<div style="height: 465px; ">
 					<a href="${articleUrl}&productNum=${dto.productNum}" style="text-decoration: none;height: 100%; "> <img
-					src="${pageContext.request.contextPath}/uploads/cp/${dto.imageFilename}"
+					src="${pageContext.request.contextPath}/uploads/rv/${dto.imageFilename}"
 						width="456" height="456" border="0"
 						onclick="javascript:article('${dto.productNum}');"></a>
 				</div>	

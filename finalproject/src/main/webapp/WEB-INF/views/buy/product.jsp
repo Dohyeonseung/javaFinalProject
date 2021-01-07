@@ -387,7 +387,7 @@ img {
 }
 
 .image_list li {
-	margin: 25px;
+	margin: 20px;
 }
 
 .iteminfo {
@@ -475,7 +475,7 @@ cursor: pointer;
 	<div id="msellBody">
 		<div id="materialSell_AT">
 			<div class="thumbnail">
-			
+			<c:if test="${dto.division==0}">
 				<div class="thumbnail_main">
 	        			<div class="image_list">
 	        				<ul>
@@ -489,6 +489,37 @@ cursor: pointer;
 	        				<img src="${pageContext.request.contextPath}/uploads/ms/${dto.imageFilename}" id="thumbnail_in">
 	        			</div>
 	        	</div>
+			</c:if>
+			<c:if test="${dto.division==2}">
+				<div class="thumbnail_main">
+	        			<div class="image_list">
+	        				<ul>
+	        					<li><img src="${pageContext.request.contextPath}/uploads/rv/${dto.imageFilename}" class="image-list"></li>
+			        			<c:forEach var="vo" items="${listImage}">
+			        					<li><img src="${vo}" class="image-list"></li>
+			        		    </c:forEach>
+			        		</ul>
+	        			</div>
+	        			<div class="thumbnail_in">
+	        				<img src="${pageContext.request.contextPath}/uploads/rv/${dto.imageFilename}" id="thumbnail_in">
+	        			</div>
+	        	</div>
+			</c:if>
+			<c:if test="${dto.division==1}">
+				<div class="thumbnail_main">
+	        			<div class="image_list">
+	        				<ul>
+	        					<li><img src="${pageContext.request.contextPath}/uploads/cp/${dto.imageFilename}" class="image-list"></li>
+			        			<c:forEach var="vo" items="${listImage}">
+			        					<li><img src="${vo}" class="image-list"></li>
+			        		    </c:forEach>
+			        		</ul>
+	        			</div>
+	        			<div class="thumbnail_in">
+	        				<img src="${pageContext.request.contextPath}/uploads/cp/${dto.imageFilename}" id="thumbnail_in">
+	        			</div>
+	        	</div>
+			</c:if>
 			</div>
 			
 			<c:if test="${dto.division=='2'}">
@@ -503,6 +534,7 @@ cursor: pointer;
 				<div style="margin-top: 16px;">
 					<button type="button" style="background-color: #1e1e1e; color: white; border: none; outline: none;" class="priceBtn" onclick="">적립금<br><span class="format-money"> ${dto.reserves} </span>원</button>
 					<button type="button" style="background-color: #ffeb00; border: none; outline: none;" class="priceBtn" onclick="">가격<br><span class="format-money"> ${dto.price} </span>원</button>
+					<input type="hidden" name="cPrice" value="${dto.price}">
 				</div>
 			</div>
 						<div class="info_content" style="margin-bottom: 40px;">

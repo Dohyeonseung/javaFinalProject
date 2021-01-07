@@ -16,6 +16,7 @@ public interface BuyService {
 
 	public void insertOrderinfo(Orderinfo dto) throws Exception; // 주문하기
 	public List<Orderinfo> listOrder(Map<String, Object> map); // 주문 기록 조회
+	public List<Orderinfo> listOrder_detail(Map<String, Object> map); // 주문 상 조회
 
 	public void insertCart(Cart dto) throws Exception; // 장바구니 넣기
 	public List<Cart> listCart(Map<String, Object> map); // 장바구니 리스트

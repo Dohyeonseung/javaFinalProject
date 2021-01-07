@@ -119,7 +119,7 @@
 	
 	<select id="listCart" parameterType="map" resultType="com.sp.app.buy.Cart">
 		SELECT cId, c.userId, c.productNum, count, cName, p.imageFilename, p.stock,
-				cPrice, seller, TO_CHAR(get_date, 'YYYY-MM-DD') get_date, c.reserves
+				cPrice, seller, TO_CHAR(get_date, 'YYYY-MM-DD') get_date, c.reserves,p.division
 		FROM cart c
 		JOIN product p ON c.productNum=p.productNum
 		WHERE c.userId=#{userId}
@@ -172,11 +172,14 @@
 	
 	<!-- 주문 항목 상세 조회 -->
 	<select id="listOrder_detail" parameterType="map" resultType="com.sp.app.buy.Orderinfo">
-		SELECT orderId_detail, count, productName, price, orderId
-		FROM orderinfo
-		WHERE orderId=#{orderId}
+		SELECT orderId_detail, count, d.productName, s.userName, TO_CHAR(order_date, 'YYYY-MM-DD') order_date,
+				d.price, d.orderId, p.imageFilename, memberIdx
+		FROM order_detail d
+		JOIN product p ON d.productNum=p.productNum
+		JOIN orderinfo o ON d.orderId=o.orderId
+		JOIN seller s ON p.userId=s.userId
+		WHERE memberIdx=#{memberIdx}
 	</select>
-	
 	
 	<insert id="insertdelivery" parameterType="com.sp.app.buy.Orderinfo">
 		INSERT INTO delivery(orderId, Addr1, Addr2, zip,
