@@ -84,36 +84,6 @@ function updateCompleteSell(productNum) {
 	f.submit();
 }
 	
-	$(function(){	
-	
-	var date1 = "${dto.created_date}";
-	var date2 = "${dto.countDate}";
-
-function diffDayTime(date1, date2){
-		var sy = parseInt(date1.substr(0, 4));
-	    var sm = parseInt(date1.substr(5, 2));
-	    var sd = parseInt(date1.substr(8, 2));
-	    
-	    var cy = parseInt(date2.substr(0, 4));
-	    var cm = parseInt(date2.substr(5, 2));
-	    var cd = parseInt(date2.substr(8, 2));
-		
-
-	   var calculDate1 = new Date(sy, sm-1, sd, 24, 0, 0, 0);
-	   var calculDate2 = new Date(cy, cm-1, cd, 24, 0, 0, 0);
-	   
-	   var elapsedMSec = calculDate1.getTime()-calculDate2.getTime();
-	   var elapsedDay = Math.floor((elapsedMSec)/1000/60/60/24);
-	   
-	   
-	   
-		   alet(elapsedMSec);
-
-	  
-	   
-	   $("#demo").html(elapsedDay);
-}
-});
 </script>
 <div class="bigBox">
 <div class="body-container" style="width: 1000px;">

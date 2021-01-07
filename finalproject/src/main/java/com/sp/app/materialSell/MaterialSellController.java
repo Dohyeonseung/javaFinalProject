@@ -63,7 +63,7 @@ public class MaterialSellController {
 		   map.put("sortCol", sortCol);		   
 		   map.put("keyword", keyword);
 		   
-		   dataCount=service.dataCount(map); //카운트 값 가져옴 
+		   dataCount=service.mselldataCount(map); //카운트 값 가져옴 
 		   
 		   if(dataCount!=0) {
 			   total_page=myUtil.pageCount(rows, dataCount);//마이유틸에 페이지 전체페이지구하는 메소드
@@ -106,7 +106,7 @@ public class MaterialSellController {
 		   model.addAttribute("list",list);
 		   model.addAttribute("articleUrl",articleUrl);
 		   model.addAttribute("page", current_page);
-		   model.addAttribute("dataCount",dataCount);
+		   model.addAttribute("mselldataCount",dataCount);
 		   model.addAttribute("total_page",total_page);
 		   model.addAttribute("paging",paging);
 		   model.addAttribute("keyword",keyword);

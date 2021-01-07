@@ -43,7 +43,7 @@ public class MaterialSellServiceImpl implements MaterialSellService {
 		return list;
 	}
 	@Override
-	public int dataCount(Map<String, Object> map) {
+	public int mselldataCount(Map<String, Object> map) {
 		int result =0;
 		
 		try {

@@ -209,7 +209,7 @@
 <div class="swiper-container">
 	<div class="swiper-wrapper">
 		<c:forEach var="dto" items="${list2}">
-			<div class="swiper-slide" style="display: flex; flex-direction: column;"><img alt="" src="${pageContext.request.contextPath}/uploads/cp/${dto.imageFilename}">
+			<div class="swiper-slide" style="display: flex; flex-direction: column;"><img src="${pageContext.request.contextPath}/uploads/cp/${dto.imageFilename}">
 				<p style="border: 1px solid #e5e5e5; width: 75%; margin-top: 20px;"></p>
 				<p style="margin-top: 10px;">제품명:${dto.productName}<p>
 				<p>가격:${dto.price}<p>
@@ -230,7 +230,7 @@
 		<div class="swiper-container">
 	<div class="swiper-wrapper" >
 		<c:forEach var="dto" items="${list3}">
-			<div class="swiper-slide" style="display: flex; flex-direction: column;"><img alt="" src="${pageContext.request.contextPath}/uploads/rv/${dto.imageFilename}">
+			<div class="swiper-slide" style="display: flex; flex-direction: column;"><img src="${pageContext.request.contextPath}/uploads/rv/${dto.imageFilename}">
 			<p style="border: 1px solid #e5e5e5; width: 75%; margin-top: 20px;"></p>
 				<p style="margin-top: 10px;">제품명:${dto.productName}<p>
 				<p>가격:${dto.price}<p>

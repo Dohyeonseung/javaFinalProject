@@ -30,7 +30,7 @@ public class HomeController {
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("offset", 0);	
-		map.put("rows", 10);	
+		map.put("rows", 8);	
 	
 		List<Product> list1=service1.listProduct_mat(map);
 		List<Product> list2=service1.listProduct_complete(map);
