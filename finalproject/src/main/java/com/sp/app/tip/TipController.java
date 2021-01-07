@@ -42,7 +42,7 @@ public class TipController {
 			String cp = req.getContextPath();
 			
 			
-			int rows = 6;
+			int rows = 8;
 			int total_page;
 			int dataCount;
 			

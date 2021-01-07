@@ -18,7 +18,7 @@
 
 <div class="body-container" style="width: 700px;">
 	<div style="height: 50px;"></div>
-	<div>
+	<div style="font-size: 20px;">
 		<ul style="list-style: none;">
 		 <li style="float: left; margin-right: 8px;">
 		 	<a href="${pageContext.request.contextPath}/">홈</a>
@@ -33,9 +33,7 @@
 		
 		</ul>
 	</div>
-    <div class="body-title">
-        <h3><i class="far fa-hand-peace"></i> 뭐든 물어봐 </h3>
-    </div>
+    
     
 	<div>
 		<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
@@ -47,7 +45,7 @@
 		</table>
 		
 		<table style="width: 100%; margin: 0px auto; border-spacing: 0px; border-collapse: collapse;">
-		  <tr align="center" bgcolor="#eeeeee" height="35" style="border-top: 2px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
+		  <tr align="center" bgcolor="#fff" height="35" style="border-top: 2px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
 		      <th width="60" style="color: #787878;">번호</th>
 		      <th style="color: #787878;">제목</th>
 		      <th width="100" style="color: #787878;">작성자</th>
@@ -55,7 +53,7 @@
 		  </tr>
 		 
 		 <c:forEach var="dto" items="${list}">
-		  <tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
+		  <tr align="center" bgcolor="#ffffff" height="35" style=" border-bottom: 1px solid #cccccc;"> 
 		      <td>${dto.listNum}</td>
 		      <td align="left" style="padding-left: 10px;">
 			           <c:forEach var="n" begin="1" end="${dto.depth}">

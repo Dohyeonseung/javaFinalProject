@@ -73,7 +73,7 @@ function article(listNum) {
 		 </div>
 <div class="body-container" style="width: 800px; margin: 0px;">
 	<div style="height: 50px;"></div>
-	<div>
+	<div style="font-size: 20px;">
 		<ul style="list-style: none;">
 		 <li style="float: left; margin-right: 8px;">
 		 	<a href="${pageContext.request.contextPath}/">홈</a>
@@ -88,10 +88,6 @@ function article(listNum) {
 		
 		</ul>
 	</div>
-    <div class="body-title">
-        <h3><i class="far fa-building"></i>지역 게시판</h3>
-    </div>
-    
     
     <div>
 		<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">

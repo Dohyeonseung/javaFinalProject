@@ -70,7 +70,7 @@ function article(listNum) {
 		 </div>
 <div class="body-container" style="width: 800px; margin: 0px;">
 	<div style="height: 50px;"></div>
-	<div>
+	<div style="font-size: 20px;">
 		<ul style="list-style: none;">
 		 <li style="float: left; margin-right: 8px;">
 		 	<a href="${pageContext.request.contextPath}/">홈</a>
@@ -85,10 +85,6 @@ function article(listNum) {
 		
 		</ul>
 	</div>
-    <div class="body-title">
-        <h3><i class="fas fa-dolly-flatbed"></i> D.I.Y Tip</h3>
-    </div>
-    
     
     <div>
 		<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
@@ -108,7 +104,7 @@ function article(listNum) {
                  <c:if test="${status.index==0}">
                        <tr>
                  </c:if>
-                 <c:if test="${status.index!=0 && status.index%3==0}">
+                 <c:if test="${status.index!=0 && status.index%4==0}">
                         <c:out value="</tr><tr>" escapeXml="false"/>
                  </c:if>
 			     <td width="210" align="center" style="padding-bottom: 30px">
@@ -129,15 +125,15 @@ function article(listNum) {
 			                   제목:${dto.subject}
 			             </span>
 			             </c:if>
-			         <span style="border-bottom: 1px solid #DAD9FF; ;">좋아요 : ${dto.tipLikeCount}</span>
+			         <span style="border-bottom: 1px solid #DAD9FF;"><i class="far fa-thumbs-up"></i>좋아요 : ${dto.tipLikeCount}</span>
 			         </div>
 			     </td>
 			     
 </c:forEach>
 
 <c:set var="n" value="${list.size()}"/>
-<c:if test="${n>0&&n%3!=0}">
-		        <c:forEach var="i" begin="${n%3+1}" end="3" step="1">
+<c:if test="${n>0&&n%4!=0}">
+		        <c:forEach var="i" begin="${n%4+1}" end="4" step="1">
 			         <td width="210">
 			             <div class="imgLayout">&nbsp;</div>
 			         </td>

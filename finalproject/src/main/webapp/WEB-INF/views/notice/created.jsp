@@ -54,9 +54,21 @@ $(function(){
 
 <div class="body-container" style="width: 800px;">
 	<div style="height: 50px;"></div>
-    <div class="body-title">
-        <h3><i class="fas fa-bullhorn"></i> 공지사항 </h3>
-    </div>
+	<div style="font-size: 20px;">
+		<ul style="list-style: none;">
+		 <li style="float: left; margin-right: 8px;">
+		 	<a href="${pageContext.request.contextPath}/">홈</a>
+		 	<span>></span>
+		 </li>
+		 <li style="float: left; margin-right: 8px;">
+		 	<span>커뮤니티 ></span>
+		 </li>
+		 <li>
+		 	<a href="${pageContext.request.contextPath}/notice/list">공지사항</a>
+		 </li>
+		
+		</ul>
+	</div>
     
     <div>
 		<form name="noticeForm" method="post" enctype="multipart/form-data">

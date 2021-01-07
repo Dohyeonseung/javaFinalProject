@@ -99,9 +99,22 @@ function check() {
 
 
 <div class="body-container" style="width: 830px;">
-    <div class="body-title">
-        <h3><i class="far fa-building"></i>지역 게시물 올리기</h3>
-    </div>
+	<div style="height: 50px;"></div>
+    <div style="font-size: 20px;">
+		<ul style="list-style: none;">
+		 <li style="float: left; margin-right: 8px;">
+		 	<a href="${pageContext.request.contextPath}/">홈</a>
+		 	<span>></span>
+		 </li>
+		 <li style="float: left; margin-right: 8px;">
+		 	<span>커뮤니티 ></span>
+		 </li>
+		 <li>
+		 	<a href="${pageContext.request.contextPath}/tip/main">지역 게시판</a>
+		 </li>
+		
+		</ul>
+	</div>
     
     <div>
 			<form name="tipForm" method="post" enctype="multipart/form-data" onsubmit="return submitContents(this);">

@@ -29,9 +29,21 @@
 
 <div class="body-container" style="width: 700px;">
 	<div style="height: 50px;"></div>
-    <div class="body-title">
-        <h3><i class="far fa-hand-peace"></i> 답변형 게시판 </h3>
-    </div>
+    <div style="font-size: 20px;">
+		<ul style="list-style: none;">
+		 <li style="float: left; margin-right: 8px;">
+		 	<a href="${pageContext.request.contextPath}/">홈</a>
+		 	<span>></span>
+		 </li>
+		 <li style="float: left; margin-right: 8px;">
+		 	<span>커뮤니티 ></span>
+		 </li>
+		 <li>
+		 	<a href="${pageContext.request.contextPath}/qna/list">묻고 답하기</a>
+		 </li>
+		
+		</ul>
+	</div>
     
     <div>
 			<form name="qnaForm" method="post">

@@ -12,7 +12,7 @@
 
 <div class="body-container" style="width: 800px;">
 	<div style="height: 50px;"></div>
-	<div>
+	<div style="font-size: 20px;">
 		<ul style="list-style: none;">
 		 <li style="float: left; margin-right: 8px;">
 		 	<a href="${pageContext.request.contextPath}/">홈</a>
@@ -27,9 +27,6 @@
 		
 		</ul>
 	</div>
-    <div class="body-title" align="center">
-        <h3><i class="fas fa-bullhorn"></i> 공지사항 </h3>
-    </div>
     
     <div>
 		<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
