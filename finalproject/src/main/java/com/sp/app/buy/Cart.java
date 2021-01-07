@@ -12,6 +12,7 @@ public class Cart {
 	private int reserves;
 	private String imageFilename;
 	private int stock;
+	private int division;
 	
 	public int getStock() {
 		return stock;
@@ -78,5 +79,11 @@ public class Cart {
 	}
 	public void setReserves(int reserves) {
 		this.reserves = reserves;
+	}
+	public int getDivision() {
+		return division;
+	}
+	public void setDivision(int division) {
+		this.division = division;
 	}
 }

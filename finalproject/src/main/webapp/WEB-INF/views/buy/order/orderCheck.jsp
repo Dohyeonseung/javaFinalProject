@@ -58,7 +58,7 @@ ul li {
 
 .body-content {
 	margin: auto;
-	width: 1200px;
+	width: 800px;
 	display: flex;
 	justify-content: space-between;
 	padding-top: 50px;
@@ -103,9 +103,9 @@ ul li {
 }
 
 .image-box {
-	width: 150px;
-	height: 150px;
-	margin: 0px 20px;
+	width: 80px;
+	height: 80px;
+	margin: 20px;
 }
 .image-box img {
 	width: 100%;
@@ -231,28 +231,42 @@ $(function(){
 						<div class="item-seller">
 							주문번호&nbsp;&nbsp;&nbsp;${dto.orderId}
 						</div>
+					<div class="info-box" style="background: #e8e8e8;">
+							<span style="padding-left: 20px; font-family: 맑은 고딕, Malgun Gothic; font-weight: 600; padding: 10px;">날짜</span>
+							<span style="padding-left: 20px; font-family: 맑은 고딕, Malgun Gothic; font-weight: 600; padding: 10px;">상품정보</span>
+							<span style="padding-left: 20px; font-family: 맑은 고딕, Malgun Gothic; font-weight: 600; padding: 10px;">판매자</span>
+					</div>
 					<div class="info-box">
 					<div class="left-box">
 						<div class="info-body">
-							<span style="padding-left: 20px; font-family: 맑은 고딕, Malgun Gothic; font-weight: 600; padding: 10px; border-bottom: 1px solid black;">날짜</span>
 							<span style="padding-left: 20px; font-family: 맑은 고딕, Malgun Gothic; font-weight: 600; padding: 10px;">${dto.order_date}</span>
 						</div>
 						</div>
 					<div class="middle-box">
 						<div class="info-body">
-							<span style="padding-left: 20px; font-family: 맑은 고딕, Malgun Gothic; font-weight: 600; padding: 10px; border-bottom: 1px solid black;">상품정보</span>
-							<span style="padding-left: 20px; font-family: 맑은 고딕, Malgun Gothic; font-weight: 600; padding: 10px;">상품정보</span>
+							<div style="display: flex;">
+								<div class="image-box">
+									<img src="${pageContext.request.contextPath}/uploads/ms/${dto.imageFilename}">
+								</div>
+									<div style="margin-top: 20px; display: flex; flex-direction: column;">
+										<span>${dto.userName}</span>
+										<span>상품명 : ${dto.productName}</span>
+										<span>가격 : ${dto.price}</span>
+									</div>
+								
+							</div>
 						</div>
 					</div>
 					<div class="right-box">
 						<div class="info-body">
-							<span style="padding-left: 20px; font-family: 맑은 고딕, Malgun Gothic; font-weight: 600; padding: 10px; border-bottom: 1px solid black;">상태</span>
-							<span style="padding-left: 20px; font-family: 맑은 고딕, Malgun Gothic; font-weight: 600; padding: 10px;">상태</span>
+							<div>
+								<div style="width: 100px; float: right; text-align: right; margin-right: 10px;">
+									${dto.userName}
+								</div>
+							</div>
 						</div>
 					</div>
 					<div>
-						<div class="info-body">
-						</div>
 					</div>
 					</div>
 			</c:forEach>

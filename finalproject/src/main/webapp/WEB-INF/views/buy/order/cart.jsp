@@ -111,6 +111,7 @@ ul li {
 
 <script type="text/javascript">
 
+
 $(function() {
     $("#itemAll").click(function() {
 	   if($(this).is(":checked")) {
@@ -123,7 +124,6 @@ $(function() {
     $("#btnDeleteList").click(function(){
 		// var cnt = $("input[name=haks]:checkbox:checked").length;
 		var cnt = $("input[name=cIds]:checked").length;
-
          if (cnt == 0) {
         	 // 버튼이 안 보이게 처리해야 함
         	 alert("삭제할 게시물을 먼저 선택 하세요 !!!");
@@ -237,10 +237,21 @@ $(function(){
 										<input type="checkbox" name="cIds" id="item${dto.cId}" value="${dto.cId}">
     									<label for="item${dto.cId}"></label>
 									</div>
-									<div class="image-box">
-										<img alt=""
-											src="${pageContext.request.contextPath}/uploads/ms/${dto.imageFilename}">
-									</div>
+									<c:if test="${dto.division==0}">
+										<div class="image-box">
+											<img src="${pageContext.request.contextPath}/uploads/ms/${dto.imageFilename}">
+										</div>
+									</c:if>
+									<c:if test="${dto.division==2}">
+										<div class="image-box">
+											<img src="${pageContext.request.contextPath}/uploads/rv/${dto.imageFilename}">
+										</div>
+									</c:if>
+									<c:if test="${dto.division==1}">
+										<div class="image-box">
+											<img src="${pageContext.request.contextPath}/uploads/cp/${dto.imageFilename}">
+										</div>
+									</c:if>
 									<span
 										style="padding-left: 20px; font-family: 맑은 고딕, Malgun Gothic; font-weight: 600;">
 										${dto.cName} </span>
@@ -278,14 +289,18 @@ $(function(){
 			</c:forEach>
 				</div>
 				<div style="float: left; margin-top: 95px;">
+				
+<!--  
 			<div style="border-top: 1px solid #d9d9d9; width: 400px; padding: 20px; font-size: 20px;">
 				<ul>
-					<li><span>상품 금액</span><span class="right">120,000원</span></li>
-					<li><span>적립금</span><span class="right">6000원</span></li>
+					<li><span>상품 금액</span><span class="right">원</span></li>
+					<li><span>적립금</span><span class="right">원</span></li>
 					<li>&nbsp;</li>
-					<li><span>총 주문금액</span><span class="right">120,000원</span></li>
+					<li><span>총 주문금액</span><span class="right">${dto.total}원</span></li>
 				</ul>
 			</div>
+-->			
+
 			<div style="width: 442px;">
 				<button id="btnDeleteList" style="width: 60px; height: 60px; border: none; background: #1e1e1e; float: left;"><i class="far fa-trash-alt" style="color: white; font-size: 28px;"></i></button>
 				<button type="button" onclick="orderSubmit();" style="width: 382px; height: 60px; border: none; background: #FAE500; float: left; font-size: 22px;">주문하기</button>
@@ -312,5 +327,7 @@ $(function(){
 					</div>
 				</div>
 			</c:if>
+			
+			
 	</div>
 

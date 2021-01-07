@@ -23,6 +23,7 @@ public class Orderinfo {
 	private String zip;
 	private String customer;
 	private String content;
+	private String userName;
 	
 	private int cId;
 	
@@ -31,6 +32,8 @@ public class Orderinfo {
 	private List<Integer> counts;
 	private List<Integer> prices;
 	private List<Integer> cIds;
+	private String imageFilename;
+	
 	
 	public int getOrderId() {
 		return orderId;
@@ -164,6 +167,30 @@ public class Orderinfo {
 	public void setZip(String zip) {
 		this.zip = zip;
 	}
+	public String getCustomer() {
+		return customer;
+	}
+	public void setCustomer(String customer) {
+		this.customer = customer;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public int getcId() {
+		return cId;
+	}
+	public void setcId(int cId) {
+		this.cId = cId;
+	}
 	public List<Integer> getProductNums() {
 		return productNums;
 	}
@@ -182,7 +209,6 @@ public class Orderinfo {
 	public void setCounts(List<Integer> counts) {
 		this.counts = counts;
 	}
-	
 	public List<Integer> getPrices() {
 		return prices;
 	}
@@ -195,24 +221,10 @@ public class Orderinfo {
 	public void setcIds(List<Integer> cIds) {
 		this.cIds = cIds;
 	}
-	public int getcId() {
-		return cId;
+	public String getImageFilename() {
+		return imageFilename;
 	}
-	public void setcId(int cId) {
-		this.cId = cId;
+	public void setImageFilename(String imageFilename) {
+		this.imageFilename = imageFilename;
 	}
-	public String getCustomer() {
-		return customer;
-	}
-	public void setCustomer(String customer) {
-		this.customer = customer;
-	}
-	public String getContent() {
-		return content;
-	}
-	public void setContent(String content) {
-		this.content = content;
-	}
-	
-
 }

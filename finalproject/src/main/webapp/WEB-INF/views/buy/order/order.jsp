@@ -267,8 +267,8 @@ $(function(){
 						</tr>
 						<tr>
 							<th>배송지&nbsp;<span style="color: red;">*</span> </th> <td><input type="text" name="zip" id="zip""
-			                       class="boxTF" style="width: 60%;" readonly="readonly">
-			            <button type="button" class="btn" onclick="daumPostcode();">우편번호</button></td>
+			                       class="boxTF" style="width: 247px;" readonly="readonly">
+			            <button type="button" style="height: 28px; width: 70px;" onclick="daumPostcode();">우편번호</button></td>
 						</tr>
 						<tr>
 							<th><td><input type="text" name="Addr1" id="Addr1" maxlength="50" 
@@ -328,7 +328,7 @@ $(function(){
 							
 							<div style="display: flex;">
 								<div class="image-box">
-									<img alt="" src="${pageContext.request.contextPath}/resources/img/slider1.jpg">
+									<img alt="" src="${pageContext.request.contextPath}/uploads/ms/${dto.imageFilename}">
 								</div>
 								<div class="content-box">
 									<div><span style="font-size: 20px; font-weight: bold;">${dto.productName}</span></div>
@@ -375,7 +375,7 @@ $(function(){
 				  				<c:forEach var="vo" items="${listCart}">
 									<div style="display: flex; width: 400px;">
 										<div class="image-box">
-											<img alt="" src="${pageContext.request.contextPath}/resources/img/slider1.jpg">
+											<img alt="" src="${pageContext.request.contextPath}/uploads/ms/${dto.imageFilename}">
 										</div>
 										<div class="content-box">
 											<div><span style="font-size: 20px; font-weight: bold;">${vo.cName}</span></div>
@@ -397,7 +397,7 @@ $(function(){
 							</div>
 						</div>
 				  	
-						<div style="margin: 20px 0px;">
+						<div style="margin: 20px 0px; width: 450px;">
 							<span style="font-size: 24px;">최종 결제금액</span>
 							<div>
 								<table style="width: 100%; border-spacing: 5px;">
@@ -417,7 +417,7 @@ $(function(){
 				  </c:if>
 					
 					<div style="padding: 10px 0px; ">
-						<button type="button" id="btnDeleteList" onclick="orderConfirm();" style="background: #FAE500; width: 100%; border: none; font-size: 24px;">결제하기</button>
+						<button type="button" id="btnDeleteList" onclick="orderConfirm();" style="background: #FAE500; width: 450px; border: none; font-size: 24px;">결제하기</button>
 					</div>
 				</div>
 		</div>

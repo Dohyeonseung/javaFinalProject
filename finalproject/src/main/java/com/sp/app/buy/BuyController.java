@@ -329,6 +329,7 @@ public class BuyController {
 		model.addAttribute("articleUrl", articleUrl);
 		
 		
+		
 		return ".buy.order.cart";
 	}
 	
@@ -441,11 +442,9 @@ public class BuyController {
 		
 		long memberIdx=info.getMemberIdx();
 		
-		
-		
 		Map<String, Object> map = new HashMap<>();
 		map.put("memberIdx", memberIdx);
-		List<Orderinfo> list=service.listOrder(map);
+		List<Orderinfo> list=service.listOrder_detail(map);
 		
 		for(Orderinfo dto:list) {
 			dto.setOrderId(dto.getOrderId());
