@@ -82,12 +82,13 @@
 <div class="body-container">
         	<div class="photo-gallery">
         		<ul class="slider">
-        				<li><a href="#"><img src="${pageContext.request.contextPath}/resources/img/slider_main1.jpg"></a></li>
-        				<li><a href="#"><img src="${pageContext.request.contextPath}/resources/img/slider_main2.jpg"></a></li>
-        				<li><a href="#"><img src="${pageContext.request.contextPath}/resources/img/slider_main3.jpg"></a></li>
-        				<li><a href="#"><img src="${pageContext.request.contextPath}/resources/img/slider_main4.png"></a></li>
+        				<li><a href="#"><img src="${pageContext.request.contextPath}/resources/img/diymainSlider1.jpg"></a></li>
+        				<li><a href="#"><img src="${pageContext.request.contextPath}/resources/img/diymainSlider2.jpg"></a></li>
+        				<li><a href="#"><img src="${pageContext.request.contextPath}/resources/img/diymainSlider3.jpg"></a></li>
+        				<li><a href="#"><img src="${pageContext.request.contextPath}/resources/img/diymainSlider4.jpg"></a></li>
+        				<li><a href="#"><img src="${pageContext.request.contextPath}/resources/img/diymainSlider5.jpg"></a></li>
         				<li><a href="#"><img src="${pageContext.request.contextPath}/resources/img/slider_main5.jpg"></a></li>
-        				<li><a href="#"><img src="${pageContext.request.contextPath}/resources/img/slider3.jpg"></a></li>
+        				
         		</ul>
         	</div>
 
@@ -196,8 +197,8 @@
 	</div>
 
 	<!-- 네비게이션 -->
-	<div class="swiper-button-next" style="background-image:url('${pageContext.request.contextPath}/resources/img/slider_right.JPG')"></div><!-- 다음 버튼 (오른쪽에 있는 버튼) -->
-	<div class="swiper-button-prev" style="background-image:url('${pageContext.request.contextPath}/resources/img/slider_left.JPG')"></div><!-- 이전 버튼 -->
+	<div class="swiper-button-next" style="background-image:url('${pageContext.request.contextPath}/resources/img/arrowright.png')"></div><!-- 다음 버튼 (오른쪽에 있는 버튼) -->
+	<div class="swiper-button-prev" style="background-image:url('${pageContext.request.contextPath}/resources/img/arrowleft.png')"></div><!-- 이전 버튼 -->
 
 	<!-- 페이징 -->
 	<div class="swiper-pagination" style="display: none;"></div>
@@ -218,8 +219,8 @@
 	</div>
 
 	<!-- 네비게이션 -->
-	<div class="swiper-button-next" style="background-image:url('${pageContext.request.contextPath}/resources/img/slider_right.JPG')"></div><!-- 다음 버튼 (오른쪽에 있는 버튼) -->
-	<div class="swiper-button-prev" style="background-image:url('${pageContext.request.contextPath}/resources/img/slider_left.JPG')"></div><!-- 이전 버튼 -->
+	<div class="swiper-button-next" style="background-image:url('${pageContext.request.contextPath}/resources/img/arrowright.png')"></div><!-- 다음 버튼 (오른쪽에 있는 버튼) -->
+	<div class="swiper-button-prev" style="background-image:url('${pageContext.request.contextPath}/resources/img/arrowleft.png')"></div><!-- 이전 버튼 -->
 
 	<!-- 페이징 -->
 	<div class="swiper-pagination" style="display: none;"></div>
@@ -239,8 +240,8 @@
 	</div>
 
 	<!-- 네비게이션 -->
-	<div class="swiper-button-next" style="background-image:url('${pageContext.request.contextPath}/resources/img/slider_right.JPG')"></div><!-- 다음 버튼 (오른쪽에 있는 버튼) -->
-	<div class="swiper-button-prev" style="background-image:url('${pageContext.request.contextPath}/resources/img/slider_left.JPG')"></div><!-- 이전 버튼 -->
+	<div class="swiper-button-next" style="background-image:url('${pageContext.request.contextPath}/resources/img/arrowright.png')"></div><!-- 다음 버튼 (오른쪽에 있는 버튼) -->
+	<div class="swiper-button-prev" style="background-image:url('${pageContext.request.contextPath}/resources/img/arrowleft.png')"></div><!-- 이전 버튼 -->
 
 	<!-- 페이징 -->
 	<div class="swiper-pagination" style="display: none;"></div>
