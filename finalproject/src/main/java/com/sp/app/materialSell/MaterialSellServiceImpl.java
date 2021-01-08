@@ -47,7 +47,7 @@ public class MaterialSellServiceImpl implements MaterialSellService {
 		int result =0;
 		
 		try {
-			result=dao.selectOne("ms.dataCount");
+			result=dao.selectOne("ms.dataCount", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
